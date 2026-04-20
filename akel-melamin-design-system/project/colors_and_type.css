@@ -14,26 +14,31 @@
   --mist:         #E4E2DB;   /* dividers, input borders                    */
   --stone:        #B8B5AC;   /* muted type, disabled                       */
   --slate:        #6E6B63;   /* secondary type                             */
-  --graphite:     #2A2A28;   /* primary type, headlines                    */
-  --ink:          #111110;   /* display type, highest contrast             */
+  --graphite:     #1A1A18;   /* primary type, headlines — softened black   */
+  --ink:          #000000;   /* pure black — display, dark band, highest   */
 
-  /* ---------- COLOR — BRAND ACCENT ---------- */
-  /* Terracotta is the UI accent — CTAs, highlights, eyebrow rules.      */
-  /* Warm, earthy, reads as "crafted" rather than "alarm."                */
-  --terracotta:      #B8472A;
-  --terracotta-dark: #96391F;   /* hover / pressed                          */
-  --terracotta-ink:  #6F2A17;   /* type on paper, editorial                 */
+  /* ---------- COLOR — BRAND RED ---------- */
+  /* The logo red. Loud, confident, Turkish-retail-honest.                */
+  /* Used on CTAs, accents, rules, highlights. Dominant yet rationed.     */
+  --red:          #CD181E;   /* primary brand red (sampled from logo)      */
+  --red-dark:     #A6111A;   /* hover / pressed                             */
+  --red-deep:     #7A0C13;   /* pressed / deep editorial                    */
+  --red-ink:      #7A0C13;   /* type on paper (same as deep — alias)        */
+  --red-soft:     rgba(205, 24, 30, 0.12);   /* focus rings, tints          */
 
-  /* Logo red is reserved for the mark itself. Sampled from the PNG.     */
-  /* Do NOT use in UI — keeps the logo the only red object on the page.  */
-  --logo-red:        #CE171B;
+  /* Legacy aliases — kept so existing `var(--red)` refs still work. */
+  /* The name is vestigial; the colour is now pure logo red.               */
+  --terracotta:      var(--red);
+  --terracotta-dark: var(--red-dark);
+  --terracotta-ink:  var(--red-ink);
+  --logo-red:        var(--red);
 
   /* ---------- COLOR — SEMANTIC ---------- */
   --fg:           var(--graphite);
   --fg-muted:     var(--slate);
   --fg-subtle:    var(--stone);
   --fg-display:   var(--ink);
-  --fg-accent:    var(--terracotta);
+  --fg-accent:    var(--red);
 
   --bg:           var(--paper);
   --bg-elevated:  var(--paper-soft);
@@ -45,7 +50,7 @@
 
   --success:      #2C4A3E;
   --warning:      #B8721F;
-  --danger:       #B8472A;
+  --danger:       var(--red);
 
   /* ---------- TYPE — FAMILIES ---------- */
   /* Bricolage Grotesque — variable optical-size + width grotesk with     */
@@ -254,4 +259,4 @@ hr {
   margin: var(--space-6) 0;
 }
 
-::selection { background: var(--terracotta); color: #fff; }
+::selection { background: var(--red); color: #fff; }
