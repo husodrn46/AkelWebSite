@@ -1,0 +1,257 @@
+/* ============================================================
+   Akel Melamin — Foundations
+   Color & Type tokens
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400;12..96,75..100,500;12..96,75..100,600;12..96,75..100,700;12..96,75..100,800&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ---------- COLOR — NEUTRALS ---------- */
+  /* Paper: the foundational off-white. Warm, quiet, premium.            */
+  --paper:        #F7F6F3;   /* page background                            */
+  --paper-soft:   #FBFAF7;   /* lifted surfaces, cards on darker ground    */
+  --bone:         #EEECE6;   /* section break, muted fill                  */
+  --mist:         #E4E2DB;   /* dividers, input borders                    */
+  --stone:        #B8B5AC;   /* muted type, disabled                       */
+  --slate:        #6E6B63;   /* secondary type                             */
+  --graphite:     #2A2A28;   /* primary type, headlines                    */
+  --ink:          #111110;   /* display type, highest contrast             */
+
+  /* ---------- COLOR — BRAND ACCENT ---------- */
+  /* Terracotta is the UI accent — CTAs, highlights, eyebrow rules.      */
+  /* Warm, earthy, reads as "crafted" rather than "alarm."                */
+  --terracotta:      #B8472A;
+  --terracotta-dark: #96391F;   /* hover / pressed                          */
+  --terracotta-ink:  #6F2A17;   /* type on paper, editorial                 */
+
+  /* Logo red is reserved for the mark itself. Sampled from the PNG.     */
+  /* Do NOT use in UI — keeps the logo the only red object on the page.  */
+  --logo-red:        #CE171B;
+
+  /* ---------- COLOR — SEMANTIC ---------- */
+  --fg:           var(--graphite);
+  --fg-muted:     var(--slate);
+  --fg-subtle:    var(--stone);
+  --fg-display:   var(--ink);
+  --fg-accent:    var(--terracotta);
+
+  --bg:           var(--paper);
+  --bg-elevated:  var(--paper-soft);
+  --bg-muted:     var(--bone);
+  --bg-inverse:   var(--ink);
+
+  --border:       var(--mist);
+  --border-strong:#D4D1C8;
+
+  --success:      #2C4A3E;
+  --warning:      #B8721F;
+  --danger:       #B8472A;
+
+  /* ---------- TYPE — FAMILIES ---------- */
+  /* Bricolage Grotesque — variable optical-size + width grotesk with     */
+  /* engineered character. Full Turkish diacritics. Chosen to avoid       */
+  /* convergent defaults (Space Grotesk, Inter, etc.).                    */
+  --font-display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+  /* Fraunces — variable serif with optical sizing. Editorial warmth that */
+  /* reinforces "manufacturer, crafted" positioning. Used at body sizes   */
+  /* with low opsz for readability and at larger sizes for pull-quotes.   */
+  --font-serif:   'Fraunces', 'Georgia', 'Times New Roman', serif;
+  /* Body sans — keep workhorse for forms / spec tables.                  */
+  --font-body:    'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ---------- TYPE — SIZE / LEADING ---------- */
+  --fs-display-xl: clamp(3.5rem, 7vw, 6.5rem);   /* hero                  */
+  --fs-display:    clamp(2.5rem, 5vw, 4.5rem);   /* section headline      */
+  --fs-h1:         clamp(2rem, 3.5vw, 3rem);
+  --fs-h2:         clamp(1.5rem, 2.5vw, 2rem);
+  --fs-h3:         1.25rem;
+  --fs-lead:       1.125rem;
+  --fs-body:       1rem;
+  --fs-small:      0.875rem;
+  --fs-caption:    0.75rem;
+  --fs-micro:      0.6875rem;  /* eyebrow labels, meta                    */
+
+  --lh-tight:   1.05;
+  --lh-snug:    1.2;
+  --lh-normal:  1.5;
+  --lh-relaxed: 1.65;
+
+  /* ---------- TYPE — TRACKING ---------- */
+  --tr-display: -0.02em;
+  --tr-tight:   -0.01em;
+  --tr-normal:  0;
+  --tr-wide:    0.04em;
+  --tr-eyebrow: 0.14em;   /* ALL-CAPS LABELS                              */
+
+  /* ---------- SPACING ---------- */
+  /* 4px base scale                                                       */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+
+  /* ---------- RADIUS ---------- */
+  /* Restrained — industrial aesthetic. Nothing pillowy.                  */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-pill: 999px;
+
+  /* ---------- SHADOW ---------- */
+  /* Soft, warm, never blue-black. Shadows on paper are subtle.           */
+  --shadow-1: 0 1px 2px rgba(42, 42, 40, 0.04);
+  --shadow-2: 0 2px 8px rgba(42, 42, 40, 0.06), 0 1px 2px rgba(42, 42, 40, 0.04);
+  --shadow-3: 0 8px 24px rgba(42, 42, 40, 0.08), 0 2px 4px rgba(42, 42, 40, 0.04);
+  --shadow-4: 0 16px 48px rgba(42, 42, 40, 0.10), 0 4px 8px rgba(42, 42, 40, 0.04);
+
+  /* ---------- LAYOUT ---------- */
+  --page-max:     1360px;
+  --page-gutter:  clamp(20px, 4vw, 48px);
+
+  /* ---------- MOTION ---------- */
+  --ease-out:   cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in:    cubic-bezier(0.4, 0, 0.6, 1);
+  --ease-inout: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast:   120ms;
+  --dur-med:    220ms;
+  --dur-slow:   420ms;
+}
+
+/* ============================================================
+   Base reset + semantic elements
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg, video { display: block; max-width: 100%; }
+
+/* Semantic type elements (use directly, or style-match with the utility classes) */
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tr-display);
+  color: var(--fg-display);
+  margin: 0;
+  text-wrap: balance;
+}
+
+h2, .h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tr-tight);
+  color: var(--fg-display);
+  margin: 0;
+  text-wrap: balance;
+}
+
+h3, .h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tr-tight);
+  color: var(--fg);
+  margin: 0;
+}
+
+p, .p {
+  margin: 0;
+  font-size: var(--fs-body);
+  line-height: var(--lh-relaxed);
+  color: var(--fg);
+  text-wrap: pretty;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tr-display);
+  color: var(--fg-display);
+  text-wrap: balance;
+}
+
+.display-xl {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-display-xl);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  color: var(--fg-display);
+  text-wrap: balance;
+}
+
+.lead {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-relaxed);
+  color: var(--fg-muted);
+  text-wrap: pretty;
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-micro);
+  line-height: 1;
+  letter-spacing: var(--tr-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg-accent);
+}
+
+.meta {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--fs-caption);
+  line-height: 1.2;
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.caption {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-normal);
+  color: var(--fg-muted);
+}
+
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.9375em;
+  color: var(--fg);
+}
+
+a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: var(--space-6) 0;
+}
+
+::selection { background: var(--terracotta); color: #fff; }

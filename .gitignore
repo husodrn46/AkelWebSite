@@ -1,0 +1,42 @@
+# Build output (Cloudflare Pages generates it during deploy)
+dist/
+
+# Node
+node_modules/
+npm-debug.log*
+.npm/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+
+# Tooling
+.cache/
+.parcel-cache/
+.wrangler/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*~
+
+# Server logs
+/tmp/akel-*.log
+
+# Temp files the design bundle leaves behind
+akel-melamin-design-system/project/tmp/
+akel-melamin-design-system/project/debug-site.jpg
+
+# Excel lock files when open
+~$*.xlsx
+
+# Secrets (just in case)
+.env
+.env.local
+*.key

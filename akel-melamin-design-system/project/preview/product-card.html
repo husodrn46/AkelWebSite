@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Product card</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 24px; margin: 0; background: var(--paper); display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+  .card { background: var(--paper-soft); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+  .ph { aspect-ratio: 4/3; background: var(--bone); display: grid; place-items: center; color: var(--stone); font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; }
+  .body { padding: 16px; }
+  .eyebrow { font-family: var(--font-display); font-weight: 600; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta); }
+  .name { font-family: var(--font-display); font-weight: 700; font-size: 16px; letter-spacing: -0.01em; color: var(--ink); margin: 6px 0 8px; }
+  .spec { font-family: var(--font-mono); font-size: 11px; color: var(--slate); display: flex; gap: 10px; font-variant-numeric: tabular-nums; }
+</style></head>
+<body>
+  <div class="card">
+    <div class="ph">PRODUCT</div>
+    <div class="body"><span class="eyebrow">Yemek takımı</span><div class="name">Zarif 24-piece dinner set</div><div class="spec"><span>24 pcs</span><span>·</span><span>Ø 28 cm</span><span>·</span><span>40'HC 600</span></div></div>
+  </div>
+  <div class="card">
+    <div class="ph">PRODUCT</div>
+    <div class="body"><span class="eyebrow">Tepsi</span><div class="name">Oval servis tepsisi</div><div class="spec"><span>45 × 30 cm</span><span>·</span><span>720 g</span><span>·</span><span>40'HC 3,200</span></div></div>
+  </div>
+</body></html>

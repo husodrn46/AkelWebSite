@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Iconography</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="https://unpkg.com/lucide@latest"></script>
+<style>
+  body { padding: 20px; margin: 0; display: grid; grid-template-columns: repeat(6, 1fr); gap: 16px 12px; }
+  .cell { display: flex; flex-direction: column; align-items: center; gap: 6px; color: var(--graphite); }
+  .cell svg { stroke-width: 1.75; width: 22px; height: 22px; }
+  .k { font-family: var(--font-mono); font-size: 9.5px; color: var(--slate); letter-spacing: 0.02em; }
+</style></head>
+<body>
+  <div class="cell"><i data-lucide="package"></i><span class="k">package</span></div>
+  <div class="cell"><i data-lucide="truck"></i><span class="k">truck</span></div>
+  <div class="cell"><i data-lucide="globe"></i><span class="k">globe</span></div>
+  <div class="cell"><i data-lucide="factory"></i><span class="k">factory</span></div>
+  <div class="cell"><i data-lucide="download"></i><span class="k">download</span></div>
+  <div class="cell"><i data-lucide="mail"></i><span class="k">mail</span></div>
+  <div class="cell"><i data-lucide="phone"></i><span class="k">phone</span></div>
+  <div class="cell"><i data-lucide="map-pin"></i><span class="k">map-pin</span></div>
+  <div class="cell"><i data-lucide="search"></i><span class="k">search</span></div>
+  <div class="cell"><i data-lucide="arrow-right"></i><span class="k">arrow-right</span></div>
+  <div class="cell"><i data-lucide="menu"></i><span class="k">menu</span></div>
+  <div class="cell"><i data-lucide="shield-check"></i><span class="k">shield-check</span></div>
+  <script>lucide.createIcons();</script>
+</body></html>

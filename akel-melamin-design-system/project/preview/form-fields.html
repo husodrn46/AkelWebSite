@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Form fields</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 24px; margin: 0; display: grid; grid-template-columns: 1fr 1fr; gap: 14px 16px; }
+  .field { display: flex; flex-direction: column; gap: 6px; }
+  .lbl { font-family: var(--font-display); font-weight: 600; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--graphite); }
+  .input, .select { font-family: var(--font-body); font-size: 14px; padding: 10px 12px; border: 1px solid var(--border); border-radius: 2px; background: var(--paper-soft); color: var(--graphite); outline: none; transition: border var(--dur-fast); }
+  .input:focus { border-color: var(--terracotta); box-shadow: 0 0 0 2px rgba(184,71,42,.18); }
+  .select { appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--slate) 50%), linear-gradient(-45deg, transparent 50%, var(--slate) 50%); background-position: calc(100% - 16px) 50%, calc(100% - 11px) 50%; background-size: 5px 5px, 5px 5px; background-repeat: no-repeat; padding-right: 32px; }
+  .hint { font-size: 11px; color: var(--slate); }
+</style></head>
+<body>
+  <div class="field"><label class="lbl">Company · Şirket</label><input class="input" placeholder="[Company name]"></div>
+  <div class="field"><label class="lbl">Country · Ülke</label>
+    <select class="select"><option>[Country]</option><option>[Country]</option></select>
+  </div>
+  <div class="field"><label class="lbl">Order volume (pcs / yr)</label><input class="input" placeholder="e.g. 50,000"></div>
+  <div class="field"><label class="lbl">Incoterms</label>
+    <select class="select"><option>FOB Istanbul</option><option>CIF Casablanca</option></select>
+  </div>
+</body></html>

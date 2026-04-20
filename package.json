@@ -1,0 +1,16 @@
+{
+  "name": "akel-melamin-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Akel Melamin — B2B marketing site. Static React app, deployed on Cloudflare Pages.",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "dev": "python3 -m http.server 4600 --bind 0.0.0.0 --directory akel-melamin-design-system/project",
+    "data": "python3 scripts/excel-to-products.py",
+    "update": "npm run data && npm run build"
+  },
+  "devDependencies": {
+    "esbuild": "^0.24.0"
+  }
+}

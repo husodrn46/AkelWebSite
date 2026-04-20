@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Akel Melamin — Distributor pitch deck</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<script src="deck-stage.js"></script>
+<style>
+  body { margin: 0; background: #000; }
+  deck-stage section {
+    background: var(--paper);
+    color: var(--graphite);
+    font-family: var(--font-body);
+    display: flex; flex-direction: column;
+    padding: 96px 120px;
+    overflow: hidden;
+  }
+  .eyebrow { font-family: var(--font-display); font-weight: 600; font-size: 18px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta); }
+  h1.title { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.035em; color: var(--ink); margin: 0; line-height: 0.98; text-wrap: balance; }
+  h2.title { font-family: var(--font-display); font-weight: 700; letter-spacing: -0.03em; color: var(--ink); margin: 0; line-height: 1; text-wrap: balance; }
+  .lead { font-size: 28px; line-height: 1.4; color: var(--slate); max-width: 22ch; margin: 0; }
+  .meta { font-family: var(--font-mono); font-size: 16px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--slate); }
+  .logo { height: 72px; width: auto; }
+
+  /* -------- Slide 1: Title -------- */
+  .s-title { justify-content: space-between; }
+  .s-title__top { display: flex; justify-content: space-between; align-items: flex-start; }
+  .s-title__main h1 { font-size: 180px; }
+  .s-title__main h1 .accent { color: var(--terracotta); }
+  .s-title__foot { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--border); padding-top: 24px; }
+
+  /* -------- Slide 2: Manufacturer at a glance -------- */
+  .s-glance h2 { font-size: 96px; max-width: 22ch; margin-top: 16px; }
+  .s-glance__grid { margin-top: 96px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); }
+  .s-glance__cell { background: var(--paper); padding: 40px 32px; display: flex; flex-direction: column; gap: 14px; min-height: 220px; justify-content: flex-end; }
+  .s-glance__big { font-family: var(--font-display); font-weight: 700; font-size: 84px; letter-spacing: -0.03em; color: var(--ink); line-height: 1; font-variant-numeric: tabular-nums; }
+  .s-glance__sm { font-family: var(--font-mono); font-size: 14px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--slate); }
+
+  /* -------- Slide 3: Product families -------- */
+  .s-fam { background: var(--bone) !important; }
+  .s-fam h2 { font-size: 88px; margin-top: 16px; max-width: 18ch; }
+  .s-fam__grid { margin-top: 72px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .s-fam__card { background: var(--paper-soft); border-radius: 4px; padding: 32px; min-height: 260px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: var(--shadow-1); }
+  .s-fam__shape { width: 60%; aspect-ratio: 1; border-radius: 50%; background: var(--graphite); align-self: center; }
+  .s-fam__card:nth-child(2) .s-fam__shape { border-radius: 6px; aspect-ratio: 3/2; width: 76%; background: var(--slate); }
+  .s-fam__card:nth-child(3) .s-fam__shape { width: 46%; background: var(--terracotta); }
+  .s-fam__card:nth-child(4) .s-fam__shape { width: 64%; background: var(--ink); }
+  .s-fam__card:nth-child(5) .s-fam__shape { width: 40%; border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%; background: var(--graphite); }
+  .s-fam__card:nth-child(6) .s-fam__shape { background: var(--terracotta); width: 56%; }
+  .s-fam__card:nth-child(7) .s-fam__shape { background: var(--ink); width: 52%; border-radius: 8px; }
+  .s-fam__card:nth-child(8) { background: var(--ink); color: var(--paper); justify-content: center; align-items: center; text-align: center; }
+  .s-fam__card:nth-child(8) .s-fam__shape { display: none; }
+  .s-fam__card:nth-child(8) .s-fam__label { color: var(--paper); font-size: 28px; }
+  .s-fam__label { font-family: var(--font-display); font-weight: 700; font-size: 22px; letter-spacing: -0.012em; color: var(--ink); margin-top: 16px; }
+  .s-fam__count { font-family: var(--font-mono); font-size: 14px; color: var(--slate); margin-top: 4px; }
+
+  /* -------- Slide 4: Export markets -------- */
+  .s-export { background: var(--ink) !important; color: var(--paper) !important; }
+  .s-export .eyebrow { color: var(--terracotta); }
+  .s-export h2 { color: var(--paper); font-size: 96px; margin-top: 16px; max-width: 16ch; }
+  .s-export__grid { margin-top: 72px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.12); }
+  .s-export__col { background: var(--ink); padding: 40px 32px; }
+  .s-export__region { font-family: var(--font-mono); font-size: 13px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--terracotta); margin-bottom: 20px; display: block; }
+  .s-export__col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 14px; }
+  .s-export__col li { font-family: var(--font-display); font-weight: 600; font-size: 24px; color: var(--paper); }
+
+  /* -------- Slide 5: Partnership CTA -------- */
+  .s-cta { justify-content: space-between; }
+  .s-cta h1 { font-size: 160px; max-width: 14ch; }
+  .s-cta__row { display: flex; justify-content: space-between; align-items: flex-end; gap: 48px; border-top: 1px solid var(--border); padding-top: 48px; }
+  .s-cta__contact { display: flex; flex-direction: column; gap: 10px; }
+  .s-cta__line { font-family: var(--font-display); font-weight: 500; font-size: 28px; color: var(--graphite); }
+  .s-cta__line strong { font-weight: 700; color: var(--ink); }
+  .s-cta .accent-bar { width: 160px; height: 8px; background: var(--terracotta); }
+</style>
+</head>
+<body>
+
+<deck-stage width="1920" height="1080">
+
+  <!-- 01 TITLE -->
+  <section class="s-title" data-label="Title">
+    <div class="s-title__top">
+      <img class="logo" src="../assets/akel-logo-cropped.png" alt="Akel Melamin">
+      <span class="meta">Distributor brief · [YEAR]</span>
+    </div>
+    <div class="s-title__main">
+      <span class="eyebrow">[CITY] · Türkiye · Since [YEAR]</span>
+      <h1 style="margin-top:32px;">Tableware,<br>made to <span class="accent">scale.</span></h1>
+    </div>
+    <div class="s-title__foot">
+      <p class="lead">A Turkish melamine manufacturer for retail chains and export distributors.</p>
+      <span class="meta">[akelmelamin.com]</span>
+    </div>
+  </section>
+
+  <!-- 02 GLANCE -->
+  <section class="s-glance" data-label="At a glance">
+    <span class="eyebrow">The plant, in numbers</span>
+    <h2 class="title">One location. [XX] million pieces a year.</h2>
+    <div class="s-glance__grid">
+      <div class="s-glance__cell"><span class="s-glance__big">[XX,XXX] m²</span><span class="s-glance__sm">Plant floor</span></div>
+      <div class="s-glance__cell"><span class="s-glance__big">[XX]</span><span class="s-glance__sm">Production lines</span></div>
+      <div class="s-glance__cell"><span class="s-glance__big">[XX,XXX]</span><span class="s-glance__sm">Pieces per day</span></div>
+      <div class="s-glance__cell"><span class="s-glance__big">[XX]+</span><span class="s-glance__sm">SKUs in catalog</span></div>
+      <div class="s-glance__cell"><span class="s-glance__big">[XX]</span><span class="s-glance__sm">Export markets</span></div>
+      <div class="s-glance__cell"><span class="s-glance__big">[XX] yrs</span><span class="s-glance__sm">In production</span></div>
+      <div class="s-glance__cell"><span class="s-glance__big">[CERT]</span><span class="s-glance__sm">Food-contact</span></div>
+      <div class="s-glance__cell"><span class="s-glance__big">[CERT]</span><span class="s-glance__sm">Quality system</span></div>
+    </div>
+  </section>
+
+  <!-- 03 FAMILIES -->
+  <section class="s-fam" data-label="Product families">
+    <span class="eyebrow">Catalog · [YEAR]</span>
+    <h2 class="title">Seven families. One plant.</h2>
+    <div class="s-fam__grid">
+      <div class="s-fam__card"><div class="s-fam__shape"></div><div><span class="s-fam__label">Dinner sets</span><div class="s-fam__count">48 SKUs</div></div></div>
+      <div class="s-fam__card"><div class="s-fam__shape"></div><div><span class="s-fam__label">Serving trays</span><div class="s-fam__count">62 SKUs</div></div></div>
+      <div class="s-fam__card"><div class="s-fam__shape"></div><div><span class="s-fam__label">Bowls</span><div class="s-fam__count">54 SKUs</div></div></div>
+      <div class="s-fam__card"><div class="s-fam__shape"></div><div><span class="s-fam__label">Plates</span><div class="s-fam__count">71 SKUs</div></div></div>
+      <div class="s-fam__card"><div class="s-fam__shape"></div><div><span class="s-fam__label">Serveware</span><div class="s-fam__count">38 SKUs</div></div></div>
+      <div class="s-fam__card"><div class="s-fam__shape"></div><div><span class="s-fam__label">Kids series</span><div class="s-fam__count">26 SKUs</div></div></div>
+      <div class="s-fam__card"><div class="s-fam__shape"></div><div><span class="s-fam__label">Decorative</span><div class="s-fam__count">19 SKUs</div></div></div>
+      <div class="s-fam__card"><span class="s-fam__label">+ Private<br>label</span></div>
+    </div>
+  </section>
+
+  <!-- 04 EXPORT -->
+  <section class="s-export" data-label="Export markets">
+    <span class="eyebrow">Markets we serve</span>
+    <h2 class="title">[XX] countries. One point of origin.</h2>
+    <div class="s-export__grid">
+      <div class="s-export__col"><span class="s-export__region">[Region 1]</span><ul><li>[Country]</li><li>[Country]</li><li>[Country]</li><li>[Country]</li></ul></div>
+      <div class="s-export__col"><span class="s-export__region">[Region 2]</span><ul><li>[Country]</li><li>[Country]</li><li>[Country]</li><li>[Country]</li></ul></div>
+      <div class="s-export__col"><span class="s-export__region">[Region 3]</span><ul><li>[Country]</li><li>[Country]</li><li>[Country]</li><li>[Country]</li></ul></div>
+      <div class="s-export__col"><span class="s-export__region">[Region 4]</span><ul><li>[Country]</li><li>[Country]</li><li>[Country]</li></ul></div>
+    </div>
+  </section>
+
+  <!-- 05 CTA -->
+  <section class="s-cta" data-label="Contact">
+    <div>
+      <span class="eyebrow">Become a distributor</span>
+      <h1 class="title" style="margin-top:32px;">Let's ship your<br>next container.</h1>
+    </div>
+    <div class="s-cta__row">
+      <div class="s-cta__contact">
+        <div class="accent-bar"></div>
+        <span class="s-cta__line"><strong>[export@example.com]</strong></span>
+        <span class="s-cta__line">[+90 XXX XXX XX XX]</span>
+        <span class="meta">[Address] · Türkiye</span>
+      </div>
+      <img class="logo" src="../assets/akel-logo-cropped.png" alt="" style="height:96px;">
+    </div>
+  </section>
+
+</deck-stage>
+
+</body>
+</html>

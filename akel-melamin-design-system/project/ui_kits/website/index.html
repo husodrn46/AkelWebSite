@@ -1,0 +1,3284 @@
+<!DOCTYPE html>
+<html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Akel Melamin — Her Sofrada Kaliteye Yer Açın</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<style>
+/* ============================================================
+   Akel Melamin — Foundations
+   Color & Type tokens
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400;12..96,75..100,500;12..96,75..100,600;12..96,75..100,700;12..96,75..100,800&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+:root {
+  /* ---------- COLOR — NEUTRALS ---------- */
+  /* Paper: the foundational off-white. Warm, quiet, premium.            */
+  --paper:        #F7F6F3;   /* page background                            */
+  --paper-soft:   #FBFAF7;   /* lifted surfaces, cards on darker ground    */
+  --bone:         #EEECE6;   /* section break, muted fill                  */
+  --mist:         #E4E2DB;   /* dividers, input borders                    */
+  --stone:        #B8B5AC;   /* muted type, disabled                       */
+  --slate:        #6E6B63;   /* secondary type                             */
+  --graphite:     #2A2A28;   /* primary type, headlines                    */
+  --ink:          #111110;   /* display type, highest contrast             */
+
+  /* ---------- COLOR — BRAND ACCENT ---------- */
+  /* Terracotta is the UI accent — CTAs, highlights, eyebrow rules.      */
+  /* Warm, earthy, reads as "crafted" rather than "alarm."                */
+  --terracotta:      #B8472A;
+  --terracotta-dark: #96391F;   /* hover / pressed                          */
+  --terracotta-ink:  #6F2A17;   /* type on paper, editorial                 */
+
+  /* Logo red is reserved for the mark itself. Sampled from the PNG.     */
+  /* Do NOT use in UI — keeps the logo the only red object on the page.  */
+  --logo-red:        #CE171B;
+
+  /* ---------- COLOR — SEMANTIC ---------- */
+  --fg:           var(--graphite);
+  --fg-muted:     var(--slate);
+  --fg-subtle:    var(--stone);
+  --fg-display:   var(--ink);
+  --fg-accent:    var(--terracotta);
+
+  --bg:           var(--paper);
+  --bg-elevated:  var(--paper-soft);
+  --bg-muted:     var(--bone);
+  --bg-inverse:   var(--ink);
+
+  --border:       var(--mist);
+  --border-strong:#D4D1C8;
+
+  --success:      #2C4A3E;
+  --warning:      #B8721F;
+  --danger:       #B8472A;
+
+  /* ---------- TYPE — FAMILIES ---------- */
+  /* Space Grotesk: geometric grotesk, engineered feel. Full Turkish     */
+  /* diacritics (ş ğ ı İ ç ö ü). Tight tracking at display sizes.        */
+  --font-display: 'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+  /* Fraunces: editorial serif, variable opsz — used on pull quotes,     */
+  /* hero accent, and band titles to carry "crafted manufacturer" tone.   */
+  --font-serif:   'Fraunces', 'Georgia', 'Times New Roman', serif;
+  --font-body:    'Bricolage Grotesque', 'Helvetica Neue', Arial, sans-serif;
+  --font-mono:    'JetBrains Mono', ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ---------- TYPE — SIZE / LEADING ---------- */
+  --fs-display-xl: clamp(3.5rem, 7vw, 6.5rem);   /* hero                  */
+  --fs-display:    clamp(2.5rem, 5vw, 4.5rem);   /* section headline      */
+  --fs-h1:         clamp(2rem, 3.5vw, 3rem);
+  --fs-h2:         clamp(1.5rem, 2.5vw, 2rem);
+  --fs-h3:         1.25rem;
+  --fs-lead:       1.125rem;
+  --fs-body:       1rem;
+  --fs-small:      0.875rem;
+  --fs-caption:    0.75rem;
+  --fs-micro:      0.6875rem;  /* eyebrow labels, meta                    */
+
+  --lh-tight:   1.05;
+  --lh-snug:    1.2;
+  --lh-normal:  1.5;
+  --lh-relaxed: 1.65;
+
+  /* ---------- TYPE — TRACKING ---------- */
+  --tr-display: -0.02em;
+  --tr-tight:   -0.01em;
+  --tr-normal:  0;
+  --tr-wide:    0.04em;
+  --tr-eyebrow: 0.14em;   /* ALL-CAPS LABELS                              */
+
+  /* ---------- SPACING ---------- */
+  /* 4px base scale                                                       */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-7:  48px;
+  --space-8:  64px;
+  --space-9:  96px;
+  --space-10: 128px;
+
+  /* ---------- RADIUS ---------- */
+  /* Restrained — industrial aesthetic. Nothing pillowy.                  */
+  --radius-sm: 2px;
+  --radius-md: 4px;
+  --radius-lg: 8px;
+  --radius-pill: 999px;
+
+  /* ---------- SHADOW ---------- */
+  /* Soft, warm, never blue-black. Shadows on paper are subtle.           */
+  --shadow-1: 0 1px 2px rgba(42, 42, 40, 0.04);
+  --shadow-2: 0 2px 8px rgba(42, 42, 40, 0.06), 0 1px 2px rgba(42, 42, 40, 0.04);
+  --shadow-3: 0 8px 24px rgba(42, 42, 40, 0.08), 0 2px 4px rgba(42, 42, 40, 0.04);
+  --shadow-4: 0 16px 48px rgba(42, 42, 40, 0.10), 0 4px 8px rgba(42, 42, 40, 0.04);
+
+  /* ---------- LAYOUT ---------- */
+  --page-max:     1360px;
+  --page-gutter:  clamp(20px, 4vw, 48px);
+
+  /* ---------- MOTION ---------- */
+  --ease-out:   cubic-bezier(0.2, 0.8, 0.2, 1);
+  --ease-in:    cubic-bezier(0.4, 0, 0.6, 1);
+  --ease-inout: cubic-bezier(0.4, 0, 0.2, 1);
+  --dur-fast:   120ms;
+  --dur-med:    220ms;
+  --dur-slow:   420ms;
+}
+
+/* ============================================================
+   Base reset + semantic elements
+   ============================================================ */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+img, svg, video { display: block; max-width: 100%; }
+
+/* Semantic type elements (use directly, or style-match with the utility classes) */
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-variation-settings: "wdth" 88, "opsz" 72;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tr-display);
+  color: var(--fg-display);
+  margin: 0;
+  text-wrap: balance;
+}
+.pull-serif {
+  font-family: var(--font-serif);
+  font-weight: 400; font-style: italic;
+  font-variation-settings: "opsz" 144, "SOFT" 40, "WONK" 1;
+  color: var(--terracotta);
+  letter-spacing: -0.01em;
+}
+
+h2, .h2 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tr-tight);
+  color: var(--fg-display);
+  margin: 0;
+  text-wrap: balance;
+}
+
+h3, .h3 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--tr-tight);
+  color: var(--fg);
+  margin: 0;
+}
+
+p, .p {
+  margin: 0;
+  font-size: var(--fs-body);
+  line-height: var(--lh-relaxed);
+  color: var(--fg);
+  text-wrap: pretty;
+}
+
+.display {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--tr-display);
+  color: var(--fg-display);
+  text-wrap: balance;
+}
+
+.display-xl {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--fs-display-xl);
+  line-height: 0.98;
+  letter-spacing: -0.03em;
+  color: var(--fg-display);
+  text-wrap: balance;
+}
+
+.lead {
+  font-size: var(--fs-lead);
+  line-height: var(--lh-relaxed);
+  color: var(--fg-muted);
+  text-wrap: pretty;
+}
+
+.eyebrow {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: var(--fs-micro);
+  line-height: 1;
+  letter-spacing: var(--tr-eyebrow);
+  text-transform: uppercase;
+  color: var(--fg-accent);
+}
+
+.meta {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--fs-caption);
+  line-height: 1.2;
+  letter-spacing: var(--tr-wide);
+  text-transform: uppercase;
+  color: var(--fg-muted);
+}
+
+.caption {
+  font-size: var(--fs-caption);
+  line-height: var(--lh-normal);
+  color: var(--fg-muted);
+}
+
+code, .mono {
+  font-family: var(--font-mono);
+  font-size: 0.9375em;
+  color: var(--fg);
+}
+
+a { color: inherit; text-underline-offset: 3px; text-decoration-thickness: 1px; }
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--border);
+  margin: var(--space-6) 0;
+}
+
+::selection { background: var(--terracotta); color: #fff; }
+
+/* ============================================================
+   ATMOSPHERE — grain overlay, drafting grid, custom cursor
+   ============================================================ */
+
+/* Grain overlay on the whole canvas — paper-texture feel, 0.055 opacity.
+   Attached to body so it doesn't get trapped inside kit-scroll's stacking. */
+body::before {
+  content: "";
+  position: fixed; inset: 0;
+  z-index: 1; pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.165  0 0 0 0 0.165  0 0 0 0 0.157  0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='0.55'/></svg>");
+  background-size: 240px 240px;
+  opacity: 0.06;
+  mix-blend-mode: multiply;
+}
+
+/* Drafting grid — shows in hero only; technical-drawing vibe */
+.kit-scroll::after {
+  content: "";
+  position: absolute; top: 0; left: 0; right: 0; height: 100vh;
+  z-index: 0; pointer-events: none;
+  background-image:
+    linear-gradient(to right, rgba(110,107,99,0.045) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(110,107,99,0.045) 1px, transparent 1px);
+  background-size: 48px 48px;
+  mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 0%, black 55%, transparent 100%);
+}
+
+/* Custom cursor — terracotta disk + crosshair on primary CTA / hero */
+.cursor-dot, .cursor-ring {
+  position: fixed; top: 0; left: 0; pointer-events: none; z-index: 10000;
+  transform: translate(-50%, -50%);
+  mix-blend-mode: multiply;
+}
+.cursor-dot {
+  width: 6px; height: 6px; background: var(--terracotta);
+  border-radius: 50%;
+  transition: width 160ms var(--ease-out), height 160ms var(--ease-out), opacity 200ms;
+}
+.cursor-ring {
+  width: 28px; height: 28px;
+  border: 1px solid var(--terracotta);
+  border-radius: 50%;
+  transition: width 260ms var(--ease-out), height 260ms var(--ease-out),
+              border-width 200ms var(--ease-out), opacity 200ms,
+              transform 80ms linear;
+}
+.cursor-ring.is-on-magnet {
+  width: 54px; height: 54px; border-width: 1.5px;
+}
+.cursor-dot.is-hidden, .cursor-ring.is-hidden { opacity: 0; }
+@media (pointer: coarse), (prefers-reduced-motion: reduce) {
+  .cursor-dot, .cursor-ring { display: none !important; }
+}
+
+/* Tall vertical section numbers — editorial signature on the left rail */
+.section-num {
+  position: absolute; left: clamp(8px, 2vw, 24px); top: 48px;
+  font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: 0.18em; text-transform: uppercase; color: var(--stone);
+  writing-mode: vertical-rl; transform: rotate(180deg);
+  transform-origin: left top;
+  display: flex; align-items: center; gap: 10px;
+  z-index: 2;
+}
+.section-num::before {
+  content: ""; width: 1px; height: 56px; background: var(--border-strong);
+  display: inline-block; transform-origin: center;
+}
+@media (max-width: 960px) { .section-num { display: none; } }
+
+/* ============================================================
+   MAXIMALIST LAYER — watermark, marquee, tilt, rings,
+   letter-cascade, scroll progress, sweep-fill buttons,
+   floating decorative marks
+   ============================================================ */
+
+/* Scroll progress bar (top of viewport) */
+.scroll-progress {
+  position: fixed; top: 0; left: 0; height: 3px;
+  background: var(--terracotta); width: 0%;
+  z-index: 100; pointer-events: none;
+  box-shadow: 0 0 12px rgba(184,71,42,0.4);
+  transition: width 80ms linear;
+}
+.scroll-progress::after {
+  content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 40px;
+  background: linear-gradient(to right, transparent, var(--terracotta));
+}
+
+/* Enormous faint watermark behind hero text — editorial signature */
+.hero__watermark {
+  position: absolute; pointer-events: none; user-select: none;
+  font-family: var(--font-serif);
+  font-style: italic; font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 100, "WONK" 1;
+  font-size: clamp(10rem, 22vw, 22rem);
+  letter-spacing: -0.06em; line-height: 0.8;
+  color: var(--bone); z-index: 0;
+  top: 40px; right: 0;
+  mix-blend-mode: multiply; opacity: 0.38;
+  transform: translateZ(0);
+  white-space: nowrap;
+}
+.hero__watermark-sub {
+  position: absolute; top: 28px; left: var(--page-gutter);
+  font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: 0.3em; color: var(--stone);
+  text-transform: uppercase; z-index: 0;
+}
+.hero > * { position: relative; z-index: 1; }
+
+/* Rotating circular badge — top-right of the contained banner */
+.hero__ring {
+  position: absolute; width: 120px; height: 120px;
+  right: calc(var(--page-gutter) + 20px); top: 20px;
+  animation: ring-spin 28s linear infinite;
+  z-index: 3;
+  pointer-events: none;
+}
+.hero__ring svg { width: 100%; height: 100%; overflow: visible; }
+.hero__ring text {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.22em; fill: var(--graphite);
+  text-transform: uppercase;
+}
+.hero__ring::after {
+  content: "®"; position: absolute; inset: 0; display: grid; place-items: center;
+  font-family: var(--font-serif); font-weight: 400; font-style: italic;
+  font-variation-settings: "opsz" 144, "SOFT" 40;
+  font-size: 32px; color: var(--terracotta);
+}
+@keyframes ring-spin { to { transform: rotate(360deg); } }
+@media (max-width: 960px) { .hero__ring { display: none; } }
+
+/* Photo stack — multiple product photos crossfading */
+.hero__photo-stack { position: absolute; inset: 0; overflow: hidden; }
+.hero__photo-stack img {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  object-fit: cover; object-position: center 55%;
+  mix-blend-mode: multiply;
+  opacity: 0; transform: scale(1.04);
+  transition: opacity 800ms var(--ease-out), transform 1400ms var(--ease-out);
+}
+.hero__photo-stack img.is-active {
+  opacity: 1; transform: scale(1);
+}
+.hero__photo-nav {
+  position: absolute; bottom: 16px; right: 16px; display: flex; gap: 6px;
+  z-index: 3;
+}
+.hero__photo-nav button {
+  width: 22px; height: 4px; padding: 0; background: rgba(42,42,40,0.25);
+  border: 0; cursor: pointer; transition: background 200ms, width 300ms;
+}
+.hero__photo-nav button.is-on { background: var(--terracotta); width: 36px; }
+
+/* Infinite marquee ticker band — runs between sections */
+.marquee {
+  position: relative; overflow: hidden;
+  background: var(--ink); color: var(--paper);
+  padding: 22px 0; margin: var(--space-7) 0;
+  border-top: 1px solid rgba(247,246,243,0.1);
+  border-bottom: 1px solid rgba(247,246,243,0.1);
+}
+.marquee__track {
+  display: flex; gap: 48px; white-space: nowrap;
+  animation: marquee-run 42s linear infinite;
+  will-change: transform;
+}
+.marquee--reverse .marquee__track { animation-direction: reverse; animation-duration: 56s; }
+.marquee__item {
+  font-family: var(--font-display); font-weight: 700;
+  font-variation-settings: "wdth" 75, "opsz" 96;
+  font-size: clamp(1.5rem, 3vw, 2.75rem);
+  letter-spacing: -0.025em;
+  display: inline-flex; align-items: center; gap: 48px;
+  flex-shrink: 0;
+}
+.marquee__item--italic {
+  font-family: var(--font-serif); font-style: italic; font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 60, "WONK" 1;
+  color: var(--terracotta);
+}
+.marquee__bullet {
+  width: 8px; height: 8px; border-radius: 50%;
+  background: var(--terracotta); display: inline-block; flex-shrink: 0;
+}
+@keyframes marquee-run {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.marquee:hover .marquee__track { animation-play-state: paused; }
+
+/* Split-text letter cascade — wrap each letter to animate individually */
+.split-text { display: inline-block; }
+.split-text .letter {
+  display: inline-block;
+  opacity: 0; transform: translateY(28px) rotate(6deg);
+  transition: opacity 600ms var(--ease-out), transform 700ms var(--ease-out);
+}
+.split-text.is-in .letter {
+  opacity: 1; transform: translateY(0) rotate(0);
+}
+.split-text .letter[data-char=" "] { width: 0.28em; }
+@media (prefers-reduced-motion: reduce) {
+  .split-text .letter { opacity: 1 !important; transform: none !important; }
+}
+
+/* 3D tilt wrapper — used on product & category cards */
+.tilt {
+  transform-style: preserve-3d;
+  transition: transform 200ms var(--ease-out);
+  will-change: transform;
+}
+.tilt__inner { transform: translateZ(20px); transition: transform 300ms var(--ease-out); }
+.tilt:hover .tilt__inner { transform: translateZ(30px); }
+
+/* Button sweep fill — progress-bar-style on hover */
+.btn--primary { position: relative; overflow: hidden; isolation: isolate; }
+.btn--primary::before {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--terracotta-dark);
+  transform: translateX(-101%);
+  transition: transform 420ms var(--ease-out);
+}
+.btn--primary:hover::before { transform: translateX(0); }
+.btn--primary { transition: color 200ms; }
+
+/* Animated underline for link buttons */
+.btn--link { position: relative; }
+.btn--link::after {
+  content: ""; position: absolute; left: 0; right: 100%; bottom: 2px;
+  height: 1px; background: var(--terracotta);
+  transition: right 320ms var(--ease-out);
+}
+.btn--link:hover::after { right: 0; }
+
+/* Floating decorative ® glyphs — editorial scatter */
+.deco-reg {
+  position: absolute; pointer-events: none;
+  font-family: var(--font-serif); font-style: italic;
+  font-variation-settings: "opsz" 144, "SOFT" 40;
+  font-size: 96px; color: var(--terracotta);
+  opacity: 0.08; z-index: 0;
+  animation: deco-drift 9s var(--ease-inout) infinite alternate;
+}
+.deco-reg--1 { top: 30%; right: 2%; animation-delay: -2s; }
+.deco-reg--2 { top: 72%; left: 1%; font-size: 72px; animation-delay: -5s; }
+@keyframes deco-drift {
+  from { transform: translateY(0) rotate(0); }
+  to   { transform: translateY(-24px) rotate(-6deg); }
+}
+
+/* Diagonal arrow floating beside stats */
+.deco-arrow {
+  position: absolute; right: clamp(12px, 4vw, 48px); top: -42px;
+  width: 80px; height: 80px; color: var(--terracotta);
+  animation: arrow-pulse 2.2s var(--ease-inout) infinite;
+  pointer-events: none;
+}
+.deco-arrow svg { width: 100%; height: 100%; }
+@keyframes arrow-pulse {
+  0%, 100% { transform: translateY(0) rotate(-30deg); }
+  50%      { transform: translateY(6px) rotate(-30deg); }
+}
+
+/* Category card hover — photo zoom + lift rotate */
+.cat-card { perspective: 1000px; }
+.cat-card:hover { transform: translateY(-4px); }
+.cat-card__ph { transition: transform 420ms var(--ease-out), box-shadow 320ms var(--ease-out); }
+.cat-card:hover .cat-card__ph { transform: rotate(-0.8deg) scale(1.01); }
+
+/* Product card hover — price-style reveal from bottom */
+.product-card { position: relative; overflow: visible; }
+.product-card__ph { transform: translateZ(0); transition: transform 380ms var(--ease-out), box-shadow 320ms var(--ease-out); }
+.product-card:hover .product-card__ph { transform: translateY(-6px) rotate(0.4deg); }
+.product-card__spec-reveal {
+  position: absolute; left: 0; right: 0; bottom: 64px;
+  background: var(--ink); color: var(--paper);
+  padding: 10px 14px;
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.06em; text-transform: uppercase;
+  transform: translateY(12px); opacity: 0;
+  transition: transform 320ms var(--ease-out), opacity 240ms;
+  pointer-events: none;
+}
+.product-card:hover .product-card__spec-reveal {
+  transform: translateY(0); opacity: 1;
+}
+
+/* Stats big-number — rolodex-style number flicker on count */
+.stats-strip__big {
+  position: relative;
+}
+.stats-strip__big::after {
+  content: ""; position: absolute; left: 0; right: 0; bottom: -12px;
+  height: 2px; background: var(--terracotta);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 800ms var(--ease-out);
+}
+.stats-strip__item.is-counted .stats-strip__big::after {
+  transform: scaleX(0.6);
+}
+
+/* Eyebrow with animated bracket marks */
+.eyebrow {
+  position: relative;
+  padding-left: 18px;
+}
+.eyebrow::before {
+  content: "["; position: absolute; left: 0; top: -1px;
+  color: var(--terracotta); font-weight: 700;
+  animation: bracket-tick 2s var(--ease-inout) infinite;
+}
+@keyframes bracket-tick {
+  0%, 100% { opacity: 0.4; }
+  50%      { opacity: 1; }
+}
+
+/* Link hover in nav — slide-up dual layer */
+.site-header__nav a {
+  overflow: hidden; position: relative;
+}
+
+/* Page enter transition — quick fade + slide */
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(14px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.kit-scroll > main, .kit-scroll > section:not(.hero) {
+  animation: page-in 520ms var(--ease-out) both;
+}
+
+/* Band title with gigantic italic accent */
+.band__title em {
+  font-family: var(--font-serif);
+  font-style: italic; font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 60, "WONK" 1;
+  color: var(--terracotta);
+  letter-spacing: -0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__ring, .deco-reg, .deco-arrow, .marquee__track,
+  .scroll-progress, .eyebrow::before { animation: none !important; }
+}
+
+/* ============================================================
+   Akel Melamin — Marketing site UI kit
+   ============================================================ */
+
+.kit-scroll {
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  background: var(--paper);
+  position: relative;
+}
+
+/* ---------- BUTTONS ---------- */
+.btn {
+  display: inline-flex; align-items: center; gap: 8px;
+  padding: 12px 20px; border-radius: 4px;
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 14px; letter-spacing: 0.01em; line-height: 1;
+  cursor: pointer; border: 1px solid transparent;
+  transition: background var(--dur-med) var(--ease-out), color var(--dur-med) var(--ease-out), border-color var(--dur-med) var(--ease-out);
+  text-decoration: none;
+}
+.btn svg { width: 16px; height: 16px; stroke-width: 1.75; }
+.btn--sm { padding: 8px 14px; font-size: 13px; }
+.btn--lg { padding: 15px 26px; font-size: 15px; }
+.btn--primary { background: var(--terracotta); color: #fff; }
+.btn--primary:hover { background: var(--terracotta-dark); }
+.btn--ghost { background: transparent; color: var(--graphite); border-color: var(--border-strong); }
+.btn--ghost:hover { background: var(--bone); }
+.btn--link { background: transparent; color: var(--graphite); padding: 6px 0; border: 0; border-radius: 0; font-weight: 600; }
+.btn--link:hover { color: var(--terracotta); }
+
+/* ---------- HEADER ---------- */
+.site-header {
+  position: sticky; top: 0; z-index: 60;
+  background: rgba(247, 246, 243, 0.92);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid transparent;
+  transition: border-color var(--dur-med) var(--ease-out), background var(--dur-med) var(--ease-out);
+}
+.site-header.is-scrolled { border-bottom-color: var(--border); background: rgba(247,246,243,0.98); }
+.site-header__inner {
+  max-width: var(--page-max); margin: 0 auto;
+  display: grid; grid-template-columns: auto 1fr auto;
+  align-items: center; gap: 40px;
+  padding: 16px var(--page-gutter); height: 72px;
+}
+.site-header__brand { display: inline-flex; align-items: center; gap: 14px; height: 100%; text-decoration: none; }
+.site-header__brand img { height: 40px; width: auto; }
+.site-header__slogan {
+  font-family: var(--font-serif); font-style: italic; font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 60, "WONK" 1;
+  font-size: 15px; color: var(--slate);
+  letter-spacing: -0.005em; padding-left: 14px;
+  border-left: 1px solid var(--border);
+  line-height: 1.1; max-width: 22ch;
+}
+@media (max-width: 1100px) { .site-header__slogan { display: none; } }
+.site-header__nav { display: flex; gap: 28px; justify-content: center; }
+.site-header__nav a {
+  font-family: var(--font-display); font-weight: 500; font-size: 14px;
+  color: var(--graphite); text-decoration: none;
+  letter-spacing: 0.005em;
+  padding: 4px 0; border-bottom: 1.5px solid transparent;
+  transition: border-color var(--dur-fast);
+}
+.site-header__nav a:hover,
+.site-header__nav a.is-active { border-bottom-color: var(--terracotta); }
+.site-header__actions { display: flex; align-items: center; gap: 16px; }
+
+.lang-switch {
+  font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.08em;
+  display: inline-flex; align-items: center; gap: 6px;
+  color: var(--slate);
+}
+
+/* Hamburger button — hidden on desktop, shown under 960px via media query */
+.mobile-menu-btn {
+  display: none;
+  width: 44px; height: 44px; padding: 0;
+  background: var(--paper-soft); border: 1px solid var(--border-strong);
+  border-radius: 4px; cursor: pointer;
+  align-items: center; justify-content: center;
+  flex-direction: column; gap: 4px;
+  position: relative; z-index: 2;
+  -webkit-tap-highlight-color: rgba(184,71,42,0.15);
+  touch-action: manipulation;
+}
+.mobile-menu-btn:active { background: var(--bone); }
+.mobile-menu-btn__bar {
+  display: block; width: 18px; height: 1.5px; background: var(--graphite);
+  transition: transform 220ms var(--ease-out), opacity 180ms;
+  transform-origin: center;
+}
+.site-header.is-menu-open .mobile-menu-btn__bar:nth-child(1) { transform: translateY(5.5px) rotate(45deg); }
+.site-header.is-menu-open .mobile-menu-btn__bar:nth-child(2) { opacity: 0; }
+.site-header.is-menu-open .mobile-menu-btn__bar:nth-child(3) { transform: translateY(-5.5px) rotate(-45deg); }
+
+/* Mobile drawer */
+.mobile-drawer {
+  position: fixed; inset: 0; z-index: 9998;
+  pointer-events: none;
+  visibility: hidden;
+  transition: visibility 0s linear 320ms;
+}
+.mobile-drawer.is-open { visibility: visible; transition-delay: 0s; }
+.mobile-drawer.is-open { pointer-events: auto; }
+.mobile-drawer__backdrop {
+  position: absolute; inset: 0;
+  background: rgba(17,17,16,0.35); opacity: 0;
+  transition: opacity 260ms var(--ease-out);
+  backdrop-filter: blur(4px);
+}
+.mobile-drawer.is-open .mobile-drawer__backdrop { opacity: 1; }
+.mobile-drawer__panel {
+  position: absolute; top: 0; right: 0; bottom: 0;
+  width: min(88vw, 380px);
+  background: var(--paper);
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 320ms var(--ease-out);
+  box-shadow: var(--shadow-4);
+  padding: 20px 24px 24px;
+  overflow-y: auto;
+}
+.mobile-drawer.is-open .mobile-drawer__panel { transform: translateX(0); }
+.mobile-drawer__head {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-bottom: 20px; border-bottom: 1px solid var(--border);
+  margin-bottom: 20px;
+}
+.mobile-drawer__close {
+  width: 40px; height: 40px; padding: 0;
+  background: transparent; border: 1px solid var(--border);
+  border-radius: 4px; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center;
+  color: var(--graphite);
+}
+.mobile-drawer__close svg { width: 18px; height: 18px; stroke-width: 1.75; }
+.mobile-drawer__nav {
+  display: flex; flex-direction: column; gap: 2px;
+  flex: 1;
+}
+.mobile-drawer__nav a {
+  font-family: var(--font-display); font-weight: 600;
+  font-variation-settings: "wdth" 92, "opsz" 48;
+  font-size: 22px; letter-spacing: -0.015em;
+  color: var(--ink); text-decoration: none;
+  padding: 14px 0; border-bottom: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.mobile-drawer__nav a::after {
+  content: "→"; color: var(--stone); font-weight: 400;
+  transition: transform 200ms, color 200ms;
+}
+.mobile-drawer__nav a.is-active { color: var(--terracotta); }
+.mobile-drawer__nav a.is-active::after { color: var(--terracotta); transform: translateX(4px); }
+.mobile-drawer__nav a:active { background: var(--bone); }
+.mobile-drawer__foot {
+  display: flex; flex-direction: column; gap: 16px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+}
+.mobile-drawer__foot .btn { width: 100%; justify-content: center; }
+.mobile-drawer__slogan {
+  font-size: 18px; color: var(--slate); line-height: 1.3;
+}
+.mobile-drawer__meta {
+  font-size: 10.5px; letter-spacing: 0.08em; color: var(--slate);
+  line-height: 1.6;
+}
+.mobile-drawer__links {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.mobile-drawer__links a {
+  display: inline-flex; align-items: center; gap: 10px;
+  color: var(--graphite); text-decoration: none;
+  font-size: 14px; font-family: var(--font-display); font-weight: 500;
+  padding: 10px 0; border-bottom: 1px dashed var(--border);
+}
+.mobile-drawer__links a:last-child { border-bottom: 0; }
+.mobile-drawer__links svg { width: 16px; height: 16px; color: var(--terracotta); stroke-width: 1.75; }
+
+/* Hide desktop CTA on mobile (drawer has its own) */
+@media (max-width: 960px) { .site-header__cta { display: none !important; } }
+.lang-switch button { background: none; border: 0; padding: 4px 2px; color: inherit; font: inherit; cursor: pointer; letter-spacing: inherit; }
+.lang-switch button.is-on { color: var(--ink); font-weight: 700; }
+.lang-switch__sep { color: var(--stone); }
+
+/* ---------- SECTION ---------- */
+.section {
+  max-width: var(--page-max); margin: 0 auto;
+  padding: var(--space-9) var(--page-gutter);
+}
+.section--band { padding: var(--space-9) 0; }
+.section__head {
+  display: flex; justify-content: space-between; align-items: flex-end;
+  gap: 24px; margin-bottom: var(--space-7); flex-wrap: wrap;
+}
+.section__title {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.02;
+  letter-spacing: -0.025em; color: var(--ink); margin: 8px 0 0;
+  max-width: 20ch; text-wrap: balance;
+}
+
+/* ============================================================
+   MOTION PRIMITIVES — reveals, stagger, magnetic
+   ============================================================ */
+/* Initial hidden state applied by JS (`.anim-init`). Kept off by default
+   so the page still works with JS disabled. */
+.anim-init {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 700ms var(--ease-out),
+    transform 800ms var(--ease-out);
+  will-change: opacity, transform;
+}
+.anim-init[data-anim="hero-photo"] {
+  transform: translateY(28px) scale(1.04);
+  transition:
+    opacity 900ms var(--ease-out),
+    transform 1100ms var(--ease-out);
+}
+.anim-in {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1) !important;
+}
+.anim-in[data-anim="hero-photo"] {
+  /* After reveal, parallax hook takes over via CSS var */
+  transform: translateY(var(--parallax-y, 0px)) !important;
+  transition: transform 120ms linear;
+}
+
+/* Magnetic buttons get smooth spring back */
+.magnetic {
+  transition:
+    transform 220ms var(--ease-out),
+    background var(--dur-med) var(--ease-out),
+    color var(--dur-med) var(--ease-out),
+    border-color var(--dur-med) var(--ease-out);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .anim-init, .anim-in { transition: none !important; transform: none !important; opacity: 1 !important; }
+}
+
+/* ---------- HERO — stacked editorial: wide title, full-width banner photo ---------- */
+.hero {
+  max-width: 100%; margin: 0;
+  padding: var(--space-7) 0 0;
+  position: relative; z-index: 1;
+  display: block;
+}
+.hero__text {
+  max-width: var(--page-max);
+  margin: 0 auto;
+  padding: 0 var(--page-gutter) var(--space-8);
+  position: relative;
+  text-align: left;
+}
+.hero__title {
+  font-family: var(--font-display); font-weight: 700;
+  font-variation-settings: "wdth" 82, "opsz" 96;
+  font-size: clamp(3.25rem, 11vw, 10rem);
+  line-height: 0.9;
+  letter-spacing: -0.045em; color: var(--ink);
+  margin: 18px 0 28px; text-wrap: balance;
+  max-width: 18ch;
+}
+.hero__title-accent {
+  font-family: var(--font-serif);
+  font-weight: 400; font-style: italic;
+  font-variation-settings: "opsz" 144, "SOFT" 50, "WONK" 1;
+  color: var(--terracotta);
+  letter-spacing: -0.025em;
+}
+.hero__body {
+  font-size: 19px; line-height: 1.55; color: var(--slate);
+  max-width: 56ch; margin: 0 0 32px; text-wrap: pretty;
+}
+.hero__cta { display: flex; gap: 20px; align-items: center; margin-bottom: 0; flex-wrap: wrap; }
+
+/* Contained banner photo — matches categories / section max-width */
+.hero__visual {
+  max-width: var(--page-max);
+  margin: 0 auto var(--space-7);
+  padding: 0 var(--page-gutter);
+  aspect-ratio: auto;
+  height: clamp(340px, 55vh, 620px);
+  background: transparent;
+  position: relative;
+  display: block;
+  box-shadow: none;
+  border-radius: 0;
+  border: 0;
+}
+.hero__visual::before {
+  content: "";
+  position: absolute;
+  inset: 0 var(--page-gutter);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--paper);
+  box-shadow: var(--shadow-2);
+  pointer-events: none;
+  z-index: 0;
+}
+.hero__visual > * { position: relative; z-index: 1; }
+.hero__photo-stack {
+  left: var(--page-gutter);
+  right: var(--page-gutter);
+  inset: 0 var(--page-gutter);
+  border-radius: 4px;
+}
+@media (max-width: 720px) { .hero__visual { height: clamp(260px, 40vh, 420px); } }
+.hero__photo {
+  width: 100%; height: 100%; object-fit: cover; object-position: center 52%;
+  mix-blend-mode: multiply;
+  user-select: none; -webkit-user-drag: none;
+}
+.hero__photo-stack img {
+  object-position: center 52%;
+}
+.hero__visual-caption {
+  position: absolute; bottom: 20px; left: calc(var(--page-gutter) + 20px); color: var(--slate);
+  background: rgba(247,246,243,0.88); padding: 6px 12px; border-radius: 2px;
+  backdrop-filter: blur(6px);
+}
+.hero__visual-crop {
+  position: absolute; top: 20px; left: calc(var(--page-gutter) + 20px);
+  font-family: var(--font-mono); font-size: 10.5px;
+  letter-spacing: 0.18em; color: var(--slate);
+  padding: 6px 10px; background: rgba(247,246,243,0.88);
+  border-radius: 2px; backdrop-filter: blur(6px);
+}
+.hero__photo-nav {
+  bottom: 20px; right: calc(var(--page-gutter) + 20px);
+}
+
+/* ORCHESTRATED HERO REVEAL — one choreographed page load
+   Each element uses animation-delay to stagger (skill: "one well-
+   orchestrated page load with staggered reveals beats scattered
+   micro-interactions"). CSS-only, respects reduce-motion. */
+@keyframes hero-rise {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-mask-up {
+  from { opacity: 0; transform: translateY(100%); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-photo-in {
+  from { opacity: 0; transform: scale(1.06); filter: blur(6px); }
+  to   { opacity: 1; transform: scale(1);    filter: blur(0); }
+}
+@keyframes hero-line-draw {
+  from { transform: scaleY(0); }
+  to   { transform: scaleY(1); }
+}
+
+.hero[data-anim="hero"] > .hero__text,
+.hero[data-anim="hero"] > .hero__visual,
+.hero[data-anim="hero"] > .section-num { opacity: 0; }
+
+.hero[data-anim="hero"].is-ready .hero__text .eyebrow {
+  animation: hero-rise 700ms var(--ease-out) 80ms both;
+  opacity: 1;
+}
+.hero[data-anim="hero"].is-ready .hero__text { opacity: 1; }
+.hero[data-anim="hero"].is-ready .hero__title {
+  overflow: hidden;
+}
+.hero[data-anim="hero"].is-ready .hero__title .hero__title-line {
+  display: inline-block;
+  animation: hero-mask-up 900ms var(--ease-out) both;
+}
+.hero[data-anim="hero"].is-ready .hero__title .hero__title-line:nth-child(1) { animation-delay: 220ms; }
+.hero[data-anim="hero"].is-ready .hero__title .hero__title-line:nth-child(2) { animation-delay: 420ms; }
+.hero[data-anim="hero"].is-ready .hero__body {
+  animation: hero-rise 800ms var(--ease-out) 620ms both;
+}
+.hero[data-anim="hero"].is-ready .hero__cta {
+  animation: hero-rise 800ms var(--ease-out) 780ms both;
+}
+.hero[data-anim="hero"].is-ready .hero__visual {
+  opacity: 1;
+  animation: hero-photo-in 1100ms var(--ease-out) 320ms both;
+}
+.hero[data-anim="hero"].is-ready .section-num {
+  opacity: 1;
+  animation: hero-line-draw 700ms var(--ease-out) 960ms both;
+  transform-origin: top center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero[data-anim="hero"] > *,
+  .hero[data-anim="hero"] .hero__title-line { opacity: 1 !important; animation: none !important; transform: none !important; filter: none !important; }
+}
+
+/* Safety net: if .is-ready never lands (e.g., React mount delay) we still want
+   the hero visible after a second. Visibility only, not animation. */
+.hero[data-anim="hero"]:not(.is-ready) > * {
+  animation: hero-safety 400ms var(--ease-out) 1200ms forwards;
+}
+@keyframes hero-safety { to { opacity: 1; } }
+
+/* ---------- STATS STRIP (own section, under hero) ---------- */
+.stats-strip {
+  max-width: var(--page-max); margin: 0 auto;
+  padding: 0 var(--page-gutter) var(--space-8);
+}
+.stats-strip__inner {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.stats-strip__item {
+  padding: 32px 28px 32px 0;
+  display: flex; flex-direction: column; gap: 6px;
+  border-right: 1px solid var(--border);
+}
+.stats-strip__item:last-child { border-right: 0; }
+.stats-strip__item:not(:first-child) { padding-left: 28px; }
+.stats-strip__big {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(2.25rem, 3.5vw, 3rem); letter-spacing: -0.03em; color: var(--ink);
+  line-height: 1; font-variant-numeric: tabular-nums;
+  display: flex; align-items: baseline; gap: 2px;
+}
+.stats-strip__suffix { color: var(--terracotta); }
+.stats-strip__small {
+  font-family: var(--font-mono); font-size: 11px; color: var(--slate);
+  letter-spacing: 0.06em; text-transform: uppercase;
+}
+
+/* ---------- CATEGORIES ---------- */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr); gap: 16px;
+}
+.cat-card {
+  grid-column: span 4;
+  display: flex; flex-direction: column;
+  background: none; border: 0; padding: 0; text-align: left; cursor: pointer;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+.cat-card:nth-child(1)  { grid-column: span 5; }
+.cat-card:nth-child(2)  { grid-column: span 4; }
+.cat-card:nth-child(3)  { grid-column: span 3; }
+.cat-card:nth-child(4)  { grid-column: span 3; }
+.cat-card:nth-child(5)  { grid-column: span 5; }
+.cat-card:nth-child(6)  { grid-column: span 4; }
+.cat-card:nth-child(7)  { grid-column: span 4; }
+.cat-card:nth-child(8)  { grid-column: span 4; }
+.cat-card:nth-child(9)  { grid-column: span 4; }
+.cat-card:nth-child(10) { grid-column: span 3; }
+.cat-card:nth-child(11) { grid-column: span 3; }
+.cat-card:nth-child(12) { grid-column: span 3; }
+.cat-card:nth-child(13) { grid-column: span 3; }
+.cat-card:hover { transform: translateY(-2px); }
+.cat-card:hover .cat-card__ph { box-shadow: var(--shadow-3); }
+.cat-card__ph {
+  aspect-ratio: 4/3; background: var(--bone);
+  border-radius: 4px; overflow: hidden;
+  display: grid; place-items: center;
+  box-shadow: var(--shadow-1);
+  transition: box-shadow var(--dur-med) var(--ease-out);
+  position: relative;
+}
+.cat-card:nth-child(3n+2) .cat-card__ph { background: #E8E4DC; }
+.cat-card:nth-child(3n+3) .cat-card__ph { background: #DDD9D0; }
+.cat-card:nth-child(2) .cat-card__ph { background: var(--ink); }
+.cat-card:nth-child(2) .cat-card__label { color: var(--ink); }
+.cat-card__foot {
+  padding: 14px 2px 0; display: flex; justify-content: space-between; align-items: baseline;
+}
+.cat-card__label {
+  font-family: var(--font-display); font-weight: 700; font-size: 18px;
+  letter-spacing: -0.012em; color: var(--ink);
+}
+.cat-card__count {
+  font-family: var(--font-mono); font-size: 11px; color: var(--slate);
+  letter-spacing: 0.04em; text-transform: uppercase;
+}
+.cat-shape { width: 60%; aspect-ratio: 1; border-radius: 50%; background: var(--paper-soft); border: 1px solid var(--border); }
+.cat-shape--trays { border-radius: 8px; width: 72%; aspect-ratio: 3/2; }
+.cat-shape--plates { width: 68%; }
+.cat-shape--bowls { width: 52%; }
+.cat-shape--serve { width: 44%; border-radius: 50% 50% 50% 50% / 70% 70% 30% 30%; }
+.cat-shape--kids { background: var(--terracotta); }
+.cat-shape--deco { background: var(--graphite); }
+.cat-card:nth-child(7) .cat-shape { background: var(--terracotta); }
+
+.cat-card__photo {
+  width: 88%; height: 88%; object-fit: contain;
+  mix-blend-mode: multiply;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.cat-card:hover .cat-card__photo { transform: scale(1.03); }
+
+/* ---------- BANDS ---------- */
+.band {
+  background: var(--ink); color: var(--paper);
+  padding: var(--space-8) var(--page-gutter);
+  display: grid; grid-template-columns: 1.1fr 1fr; gap: 64px; align-items: center;
+  max-width: 1680px; margin: 0 auto;
+}
+.band__title {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.025em;
+  line-height: 1.03; color: var(--paper); margin: 10px 0 20px;
+  text-wrap: balance;
+}
+.band__body { font-size: 17px; line-height: 1.55; color: rgba(247,246,243,0.72); max-width: 50ch; margin: 0 0 28px; }
+.band .btn--ghost { color: var(--paper); border-color: rgba(247,246,243,0.3); }
+.band .btn--ghost:hover { background: rgba(247,246,243,0.08); }
+.band .eyebrow { color: var(--terracotta); }
+.band__facts {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 1px;
+  background: rgba(247,246,243,0.12);
+  border: 1px solid rgba(247,246,243,0.12);
+}
+.fact {
+  background: var(--ink); padding: 24px 20px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.fact__k { font-family: var(--font-mono); font-size: 10.5px; color: rgba(247,246,243,0.6); letter-spacing: 0.08em; text-transform: uppercase; }
+.fact__v { font-family: var(--font-display); font-weight: 700; font-size: 28px; color: var(--paper); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+
+.catalog-band {
+  background: var(--bone); border: 1px solid var(--border);
+  border-radius: 4px; padding: 48px;
+  display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center;
+}
+.catalog-band__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.025em; color: var(--ink); line-height: 1.05; margin: 10px 0 14px; }
+.catalog-band__body { color: var(--slate); max-width: 46ch; margin: 0; font-size: 16px; line-height: 1.55; }
+.catalog-band__right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.catalog-band__note { color: var(--slate); }
+
+/* ---------- PRODUCT GRID ---------- */
+.filter-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--space-6); }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  padding: 8px 16px; border-radius: 999px;
+  font-family: var(--font-display); font-weight: 600; font-size: 13px;
+  border: 1px solid var(--border-strong); background: var(--paper-soft);
+  color: var(--graphite); cursor: pointer;
+  transition: all var(--dur-fast);
+}
+.chip:hover { border-color: var(--graphite); }
+.chip.is-on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+.product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px 24px; }
+.product-card {
+  background: none; border: 0; padding: 0; text-align: left; cursor: pointer;
+  display: flex; flex-direction: column;
+  transition: transform var(--dur-med) var(--ease-out);
+}
+.product-card:hover { transform: translateY(-2px); }
+.product-card:hover .product-card__ph { box-shadow: var(--shadow-3); }
+.product-card__ph {
+  aspect-ratio: 4/3; background: var(--bone);
+  border-radius: 4px; display: grid; place-items: center;
+  box-shadow: var(--shadow-1); transition: box-shadow var(--dur-med);
+  position: relative; overflow: hidden;
+}
+.product-card__ph--0 { background: #EEECE6; }
+.product-card__ph--1 { background: #E4E2DB; }
+.product-card__ph--2 { background: #F0EDE6; }
+.product-card__ph--3 { background: #EAE7DF; }
+.product-card__body { padding: 14px 4px 0; display: flex; flex-direction: column; gap: 4px; }
+.product-card__meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.product-card__eyebrow { font-family: var(--font-display); font-weight: 600; font-size: 10px; letter-spacing: 0.14em; color: var(--terracotta); }
+.product-card__name { font-family: var(--font-display); font-weight: 700; font-size: 16px; letter-spacing: -0.01em; color: var(--ink); line-height: 1.25; }
+.product-card__spec { font-family: var(--font-mono); font-size: 11px; color: var(--slate); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; margin-top: 4px; }
+
+.product-card__photo {
+  width: 92%; height: 92%; object-fit: contain;
+  mix-blend-mode: multiply;
+  transition: transform var(--dur-slow) var(--ease-out);
+}
+.product-card:hover .product-card__photo { transform: scale(1.04); }
+
+.product-card__variants { display: inline-flex; gap: 6px; }
+.variant-dot {
+  width: 14px; height: 14px; border-radius: 50%; padding: 0;
+  border: 1.5px solid var(--border-strong); background: #fff;
+  cursor: pointer; transition: border-color var(--dur-fast), transform var(--dur-fast);
+}
+.variant-dot--black { background: #111110; border-color: #111110; }
+.variant-dot--white { background: #F7F6F3; }
+.variant-dot--custom { background: var(--terracotta); border-color: var(--terracotta); }
+
+/* Product badge (etiket) */
+.product-card__badge {
+  position: absolute; top: 12px; left: 12px;
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
+  padding: 5px 10px; background: var(--ink); color: var(--paper);
+  border-radius: 2px;
+}
+.variant-dot:hover { transform: scale(1.15); }
+.variant-dot.is-on { outline: 1.5px solid var(--ink); outline-offset: 2px; }
+
+.plate {
+  width: 58%; aspect-ratio: 1; border-radius: 50%;
+  background: var(--paper-soft); border: 1px solid var(--border);
+  box-shadow: inset 0 0 0 10px rgba(0,0,0,0.02);
+}
+.plate--xl { width: 74%; }
+.plate--trays { border-radius: 6px; width: 70%; aspect-ratio: 3/2; }
+.plate--dinner { background: var(--paper-soft); }
+.plate--bowls  { width: 46%; box-shadow: inset 0 -12px 20px -8px rgba(0,0,0,0.1); }
+.plate--plates { width: 62%; }
+.plate--kids   { background: var(--terracotta); border-color: var(--terracotta-dark); }
+
+/* ---------- PRODUCT DETAIL ---------- */
+.pd { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; margin-top: 24px; }
+.pd__hero {
+  aspect-ratio: 1; background: var(--bone);
+  border-radius: 4px; display: grid; place-items: center;
+  position: relative;
+}
+.pd__caption { position: absolute; bottom: 16px; left: 20px; color: var(--slate); }
+.pd__thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
+.pd__thumb {
+  aspect-ratio: 1; background: var(--bone); border-radius: 2px;
+  border: 1px solid var(--border); cursor: pointer;
+}
+.pd__thumb--0 { background: var(--paper-soft); }
+.pd__thumb--1 { background: var(--graphite); }
+.pd__thumb--2 { background: var(--terracotta); }
+.pd__thumb--3 { background: var(--bone); }
+.pd__thumb--photo { overflow: hidden; padding: 0; background: var(--paper); display: grid; place-items: center; }
+.pd__thumb--photo img { width: 92%; height: 92%; object-fit: contain; mix-blend-mode: multiply; }
+.pd__thumb--photo.is-on { outline: 2px solid var(--ink); outline-offset: 2px; border-color: var(--ink); }
+.pd__photo {
+  width: 82%; height: 82%; object-fit: contain;
+  mix-blend-mode: multiply;
+}
+.swatch--btn { padding: 0; cursor: pointer; }
+.swatch--btn.is-on { outline: 1.5px solid var(--ink); outline-offset: 3px; }
+.pd__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.025em; color: var(--ink); line-height: 1.05; margin: 10px 0 14px; text-wrap: balance; }
+.pd__spec { color: var(--slate); margin: 0 0 28px; font-size: 16px; }
+.pd__colors { display: flex; gap: 16px; align-items: center; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 28px; }
+.pd__swatches { display: flex; gap: 8px; }
+.swatch { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border); display: inline-block; cursor: pointer; }
+.pd__cta { margin-bottom: 40px; }
+.spec-block { margin-bottom: 28px; }
+.spec-block > .meta { display: block; margin-bottom: 10px; }
+.spec-table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+.spec-table td { padding: 10px 0; border-bottom: 1px solid var(--border); }
+.spec-table td.k { color: var(--slate); width: 52%; }
+.spec-table td.v { color: var(--graphite); font-family: var(--font-mono); text-align: right; }
+.pd__mat > .meta { display: block; margin-bottom: 10px; }
+.pd__matlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.pd__matlist li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--graphite); }
+.pd__matlist svg { width: 16px; height: 16px; color: var(--terracotta); stroke-width: 2; }
+
+/* ---------- ABOUT ---------- */
+.about__head { max-width: 800px; margin-bottom: var(--space-8); }
+.about__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: -0.035em; color: var(--ink); line-height: 1.02; margin: 16px 0 24px; text-wrap: balance; }
+.about__lead { max-width: 58ch; }
+
+.about__facts {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 1px;
+  background: var(--border); border: 1px solid var(--border);
+  margin-bottom: var(--space-9);
+}
+.about__fact {
+  background: var(--paper); padding: 28px 20px;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.about__fact-v { font-family: var(--font-display); font-weight: 700; font-size: 28px; color: var(--ink); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+.about__fact-k { font-family: var(--font-mono); font-size: 10.5px; color: var(--slate); letter-spacing: 0.08em; text-transform: uppercase; }
+
+.about__markets { margin-bottom: var(--space-9); }
+.about__markets h2 { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.025em; color: var(--ink); line-height: 1.05; margin: 0 0 28px; }
+.about__market-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; }
+.market ul { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; gap: 6px; }
+.market li { font-size: 15px; color: var(--graphite); padding: 6px 0; border-bottom: 1px solid var(--border); }
+
+.about__cert {
+  display: grid; grid-template-columns: 1.2fr 1fr; gap: 48px; align-items: center;
+  background: var(--bone); border-radius: 4px; padding: 40px;
+}
+.about__cert-body { color: var(--slate); max-width: 50ch; margin: 10px 0 0; }
+.about__cert-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+.about__cert-grid--6 { grid-template-columns: repeat(3, 1fr); gap: 10px; }
+@media (max-width: 960px) { .about__cert-grid--6 { grid-template-columns: repeat(2, 1fr); } }
+.cert-chip {
+  font-family: var(--font-display); font-weight: 700; font-size: 16px;
+  letter-spacing: 0.04em; color: var(--ink);
+  padding: 20px 16px; background: var(--paper-soft);
+  border: 1px solid var(--border); border-radius: 2px;
+  text-align: center;
+}
+.cert-chip--sm { padding: 4px 10px; font-size: 11px; letter-spacing: 0.08em; font-weight: 600; }
+
+/* ---------- CONTACT ---------- */
+.contact { display: grid; grid-template-columns: 1fr 1.2fr; gap: 72px; }
+.contact__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.03em; color: var(--ink); line-height: 1.05; margin: 14px 0 20px; text-wrap: balance; }
+.contact__direct { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }
+.contact__direct ul { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.contact__direct li { display: flex; align-items: center; gap: 10px; font-size: 14.5px; color: var(--graphite); }
+.contact__direct svg { width: 18px; height: 18px; color: var(--slate); stroke-width: 1.75; }
+
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field__lbl { font-family: var(--font-display); font-weight: 600; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--graphite); }
+.field__hint { font-size: 12px; color: var(--slate); }
+.input, .select, textarea.input {
+  font-family: var(--font-body); font-size: 15px;
+  padding: 12px 14px; border: 1px solid var(--border);
+  border-radius: 2px; background: var(--paper-soft); color: var(--graphite);
+  outline: none; transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  width: 100%; resize: vertical;
+}
+.input:focus, .select:focus, textarea.input:focus {
+  border-color: var(--terracotta);
+  box-shadow: 0 0 0 2px rgba(184,71,42,.18);
+}
+.select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--slate) 50%),
+    linear-gradient(-45deg, transparent 50%, var(--slate) 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+  background-size: 5px 5px; background-repeat: no-repeat;
+  padding-right: 36px;
+}
+.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
+.grid-2 .field:last-child { grid-column: span 2; }
+.checks { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; padding-top: 4px; }
+.check { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--graphite); cursor: pointer; }
+.check input { accent-color: var(--terracotta); }
+
+.contact__form > .field { margin-bottom: 16px; }
+.contact__form .btn--primary { margin-top: 8px; }
+
+.sent { text-align: center; padding: 80px 20px; max-width: 480px; margin: 0 auto; }
+.sent svg { width: 56px; height: 56px; color: var(--terracotta); stroke-width: 1.5; margin: 0 auto 24px; }
+.sent .h2 { margin-bottom: 12px; }
+.sent .btn { margin-top: 28px; }
+
+/* ---------- CATALOG PAGE ---------- */
+.catalog-page { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: var(--space-9); }
+.catalog-page__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: -0.035em; color: var(--ink); line-height: 1; margin: 16px 0 20px; text-wrap: balance; }
+.catalog-gate { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; max-width: 420px; }
+.catalog-gate__row { display: flex; gap: 16px; align-items: center; }
+.catalog-downloaded { display: flex; align-items: center; gap: 10px; color: var(--success); font-weight: 600; margin-top: 24px; }
+.catalog-downloaded svg { width: 20px; height: 20px; }
+
+.catalog-cover {
+  aspect-ratio: 3/4; background: var(--paper-soft);
+  border: 1px solid var(--border); box-shadow: var(--shadow-3);
+  display: flex; flex-direction: column; justify-content: space-between;
+  padding: 32px; border-radius: 2px;
+}
+.catalog-cover__band { display: flex; justify-content: space-between; align-items: baseline; }
+.catalog-cover__year { font-family: var(--font-display); font-weight: 700; font-size: 80px; letter-spacing: -0.04em; line-height: 1; color: var(--terracotta); }
+.catalog-cover__label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; color: var(--slate); }
+.catalog-cover__logo { width: 50%; align-self: flex-start; margin-top: 20px; }
+.catalog-cover__foot { border-top: 1px solid var(--border); padding-top: 16px; }
+
+/* Embedded PDF viewer */
+.catalog-viewer {
+  margin: var(--space-8) 0 var(--space-9);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--paper-soft);
+  overflow: hidden;
+  box-shadow: var(--shadow-2);
+}
+.catalog-viewer__head {
+  display: grid; grid-template-columns: 1fr auto;
+  gap: 20px; align-items: center;
+  padding: 20px 28px;
+  border-bottom: 1px solid transparent;
+  background: var(--paper);
+  transition: border-color 220ms;
+}
+.catalog-viewer.is-open .catalog-viewer__head { border-bottom-color: var(--border); }
+.catalog-viewer__heading { display: flex; flex-direction: column; gap: 6px; }
+.catalog-viewer__head .eyebrow { padding-left: 18px; }
+.catalog-viewer__head .h3 {
+  font-family: var(--font-display); font-weight: 700;
+  font-variation-settings: "wdth" 88, "opsz" 48;
+  letter-spacing: -0.015em; font-size: 18px; color: var(--ink);
+  margin: 0;
+}
+.catalog-viewer__hint { font-size: 12.5px; color: var(--slate); }
+.catalog-viewer__actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.catalog-viewer__frame,
+.catalog-viewer object,
+.catalog-viewer iframe {
+  width: 100%; min-height: 85vh; height: 85vh;
+  display: block; border: 0; background: var(--bone);
+}
+.catalog-viewer__fallback {
+  padding: 24px; text-align: center; color: var(--slate);
+}
+@media (max-width: 720px) {
+  .catalog-viewer__head { grid-template-columns: 1fr; }
+  .catalog-viewer__frame, .catalog-viewer iframe { min-height: 70vh; height: 70vh; }
+}
+
+.catalog-contents { background: var(--bone); border-radius: 4px; padding: 40px 48px; }
+.catalog-contents ul { list-style: none; margin: 20px 0 0; padding: 0; display: flex; flex-direction: column; }
+.catalog-contents li {
+  display: grid; grid-template-columns: 48px 1fr;
+  gap: 16px; align-items: center;
+  padding: 14px 0; border-bottom: 1px solid var(--border);
+  font-size: 15.5px; color: var(--graphite);
+}
+.catalog-contents li:last-child { border-bottom: 0; }
+.catalog-contents__n { font-family: var(--font-mono); font-size: 11px; color: var(--terracotta); font-weight: 600; letter-spacing: 0.06em; }
+
+/* ---------- FOOTER ---------- */
+.site-footer { background: var(--ink); color: rgba(247,246,243,0.8); margin-top: var(--space-9); }
+.site-footer__top {
+  max-width: var(--page-max); margin: 0 auto;
+  padding: var(--space-8) var(--page-gutter);
+  display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
+}
+.site-footer__brand img { width: 160px; filter: brightness(0) invert(1); margin-bottom: 20px; }
+.site-footer__tag { color: rgba(247,246,243,0.55); max-width: 32ch; font-size: 14px; line-height: 1.5; margin: 0; }
+.site-footer__social {
+  margin-top: 18px;
+  display: flex; flex-direction: column; gap: 10px;
+}
+.site-footer__social a {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--paper); text-decoration: none; font-size: 14px;
+  font-family: var(--font-display); font-weight: 500;
+  letter-spacing: -0.005em;
+  padding: 6px 0;
+  transition: color 200ms;
+}
+.site-footer__social a:hover { color: var(--terracotta); }
+.site-footer__social svg { width: 18px; height: 18px; stroke-width: 1.75; }
+.site-footer__col .meta { color: rgba(247,246,243,0.55); }
+.site-footer__col ul { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+.site-footer__col a { color: var(--paper); text-decoration: none; font-size: 14px; }
+.site-footer__col a:hover { color: var(--terracotta); }
+.site-footer__bottom {
+  max-width: var(--page-max); margin: 0 auto;
+  padding: 24px var(--page-gutter);
+  border-top: 1px solid rgba(247,246,243,0.1);
+  display: flex; justify-content: space-between; align-items: center; gap: 16px;
+}
+.site-footer__certs { display: flex; gap: 8px; }
+.site-footer__bottom .cert-chip--sm { background: transparent; border-color: rgba(247,246,243,0.2); color: rgba(247,246,243,0.7); }
+
+/* ============================================================
+   RESPONSIVE — mobile-first refinements
+   Breakpoints:
+     1100px  → header slogan hidden (already)
+      960px  → tablet: 1-column hero, 2-col cats, hamburger menu
+      720px  → phone: compact spacing, stacked forms
+      480px  → narrow phone: single column everywhere
+   ============================================================ */
+@media (max-width: 960px) {
+  :root { --page-gutter: clamp(16px, 4vw, 24px); }
+  body { overflow-x: hidden; }
+
+  /* Header — hide desktop nav and show mobile hamburger */
+  .site-header__nav { display: none; }
+  .site-header__slogan { display: none; }
+  .site-header__inner { grid-template-columns: auto 1fr auto; gap: 16px; padding: 12px var(--page-gutter); height: 64px; }
+  .site-header__brand img { height: 36px; }
+  .mobile-menu-btn { display: inline-flex !important; }
+  .mobile-menu-btn + .lang-switch { margin-right: 4px; }
+
+  /* Hero — stacked, tight spacing */
+  .hero { padding-top: var(--space-6); }
+  .hero__title { font-size: clamp(3rem, 13vw, 5.5rem); line-height: 0.92; letter-spacing: -0.035em; max-width: none; }
+  .hero__body { font-size: 16.5px; max-width: none; }
+  .hero__cta { gap: 12px; }
+  .hero__cta .btn { width: auto; }
+  .hero__visual { height: clamp(260px, 44vh, 440px); padding: 0 var(--page-gutter); margin-bottom: var(--space-6); }
+  .hero__visual::before { inset: 0 var(--page-gutter); }
+  .hero__photo-stack { inset: 0 var(--page-gutter); }
+  .hero__ring { display: none; }
+  .hero__visual-crop { top: 12px; left: calc(var(--page-gutter) + 12px); font-size: 9.5px; padding: 4px 8px; }
+  .hero__visual-caption { bottom: 12px; left: calc(var(--page-gutter) + 12px); padding: 4px 10px; }
+  .hero__photo-nav { bottom: 12px; right: calc(var(--page-gutter) + 12px); }
+  .deco-reg { display: none; }
+
+  /* Stats — 2 column with horizontal dividers */
+  .stats-strip__inner { grid-template-columns: 1fr 1fr; }
+  .stats-strip__item:nth-child(2) { border-right: 0; }
+  .stats-strip__item { border-bottom: 1px solid var(--border); padding: 24px 20px; }
+  .stats-strip__item:nth-child(3), .stats-strip__item:nth-child(4) { border-bottom: 0; }
+  .stats-strip__item:not(:first-child) { padding-left: 20px; }
+  .stats-strip__item:nth-child(3) { padding-left: 0; }
+
+  /* Section heads + bands */
+  .section { padding: var(--space-7) var(--page-gutter); }
+  .section__head { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: var(--space-6); }
+  .section__title { font-size: clamp(1.75rem, 7vw, 2.5rem); max-width: none; }
+
+  /* Categories — 2 column, even spans */
+  .cat-grid { gap: 12px; }
+  .cat-grid .cat-card { grid-column: span 6 !important; }
+
+  /* Bands (production + catalog) */
+  .band { grid-template-columns: 1fr; gap: 28px; padding: var(--space-7) var(--page-gutter); }
+  .band__title { font-size: clamp(1.75rem, 7vw, 2.5rem); }
+  .band__facts { grid-template-columns: 1fr 1fr; }
+  .fact { padding: 18px 16px; }
+  .fact__v { font-size: 22px; }
+  .catalog-band { grid-template-columns: 1fr; gap: 24px; padding: 28px; }
+  .catalog-band__right { align-items: flex-start; width: 100%; }
+  .catalog-band__right .btn { width: 100%; justify-content: center; }
+
+  /* Product grid — 2 col */
+  .product-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 16px; }
+  .product-card__name { font-size: 15px; }
+  .filter-row { gap: 6px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 6px; margin: 0 calc(-1 * var(--page-gutter)) 24px; padding-left: var(--page-gutter); padding-right: var(--page-gutter); scrollbar-width: none; }
+  .filter-row::-webkit-scrollbar { display: none; }
+  .chip { flex-shrink: 0; }
+
+  /* Product detail */
+  .pd { grid-template-columns: 1fr; gap: 32px; }
+  .pd__title { font-size: clamp(1.5rem, 6vw, 2rem); }
+
+  /* About */
+  .about__facts { grid-template-columns: repeat(2, 1fr); }
+  .about__fact { padding: 20px 14px; }
+  .about__fact-v { font-size: 22px; }
+  .about__market-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  .about__cert { grid-template-columns: 1fr; gap: 20px; padding: 28px 20px; }
+  .about__title { font-size: clamp(2rem, 8vw, 3rem); }
+
+  /* Contact */
+  .contact { grid-template-columns: 1fr; gap: 36px; }
+  .grid-2 { grid-template-columns: 1fr; gap: 14px; }
+  .grid-2 .field:nth-child(8) { grid-column: span 1; }
+  .checks { grid-template-columns: 1fr; }
+  .contact__title { font-size: clamp(1.75rem, 7vw, 2.5rem); }
+
+  /* Catalog */
+  .catalog-page { grid-template-columns: 1fr; gap: 32px; }
+  .catalog-page__title { font-size: clamp(2rem, 8vw, 3rem); }
+  .catalog-cover { padding: 24px; }
+  .catalog-cover__year { font-size: 56px; }
+  .catalog-gate__row { flex-direction: column; align-items: stretch; gap: 10px; }
+  .catalog-gate__row .btn { width: 100%; justify-content: center; }
+  .catalog-contents { padding: 28px 20px; }
+  .catalog-contents li { grid-template-columns: 32px 1fr; padding: 12px 0; font-size: 14.5px; }
+
+  .catalog-viewer__head { grid-template-columns: 1fr; padding: 16px; gap: 14px; }
+  .catalog-viewer__actions { gap: 6px; }
+  .catalog-viewer__actions .btn { flex: 1 1 auto; min-width: 120px; justify-content: center; }
+
+  /* Footer */
+  .site-footer__top { grid-template-columns: 1fr 1fr; gap: 32px; padding: var(--space-7) var(--page-gutter); }
+  .site-footer__brand { grid-column: span 2; }
+  .site-footer__bottom { flex-direction: column; align-items: flex-start; gap: 12px; padding: 20px var(--page-gutter); }
+
+  /* Touch targets — min 44×44 for buttons/links */
+  .btn { min-height: 42px; }
+  .btn--sm { min-height: 38px; }
+  .lang-switch button { min-height: 36px; padding: 6px 8px; }
+  .site-header__nav a { padding: 10px 0; }
+}
+
+@media (max-width: 720px) {
+  .hero__title { font-size: clamp(2.5rem, 12vw, 4.5rem); }
+  .hero__body { font-size: 15.5px; }
+  .hero__visual { height: clamp(220px, 38vh, 360px); }
+  .stats-strip__big { font-size: 1.75rem; }
+  .stats-strip__small { font-size: 10px; }
+  .cat-card__label { font-size: 15px; }
+  .product-card__ph { aspect-ratio: 1/1; }
+  .about__facts { grid-template-columns: 1fr 1fr; }
+  .band__facts { grid-template-columns: 1fr; }
+  .catalog-viewer__frame, .catalog-viewer iframe { min-height: 60vh; height: 60vh; }
+  .site-footer__brand img { width: 120px; }
+}
+
+@media (max-width: 480px) {
+  :root { --page-gutter: 16px; }
+  .hero { padding-top: var(--space-5); }
+  .hero__title { font-size: clamp(2.25rem, 11vw, 3.75rem); margin: 12px 0 20px; }
+  .hero__body { margin-bottom: 24px; }
+  .hero__cta { flex-direction: column; align-items: stretch; width: 100%; }
+  .hero__cta .btn { width: 100%; justify-content: center; }
+  .hero__visual { height: 240px; }
+  .hero__visual-crop { display: none; }
+
+  .stats-strip__inner { grid-template-columns: 1fr; }
+  .stats-strip__item { border-right: 0 !important; padding: 18px 16px !important; border-bottom: 1px solid var(--border) !important; }
+  .stats-strip__item:last-child { border-bottom: 0 !important; }
+
+  .cat-grid .cat-card { grid-column: span 12 !important; }
+  .product-grid { grid-template-columns: 1fr; gap: 24px; }
+  .about__market-grid { grid-template-columns: 1fr; }
+  .about__facts { grid-template-columns: 1fr 1fr; }
+
+  .site-footer__top { grid-template-columns: 1fr; gap: 28px; }
+  .site-footer__brand { grid-column: span 1; }
+
+  .catalog-viewer__actions .btn { flex-basis: 100%; }
+
+  /* Buttons full-width on narrow */
+  .section__head .btn--link { font-size: 14px; }
+
+  /* Disable decorative floaters on tiny screens */
+  .deco-reg, .deco-arrow { display: none; }
+  /* Hide grain overlay entirely on small — improves performance */
+  .kit-scroll::after { display: none; }
+}
+
+/* Disable hover-only animations on touch devices regardless of width */
+@media (hover: none) {
+  .cat-card:hover { transform: none; }
+  .product-card:hover { transform: none; }
+  .product-card:hover .product-card__ph { transform: none; box-shadow: var(--shadow-1); }
+  .tilt { transform: none !important; }
+  .btn--primary::before { display: none; }
+  .product-card__spec-reveal { display: none; }
+}
+
+html,body{margin:0;background:var(--paper,#F7F6F3);}#root{min-height:100vh;}
+</style>
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>// animations.js — scroll-triggered reveals, count-up, magnetic hover.
+// Vanilla, no deps. Respects prefers-reduced-motion and disables on narrow screens.
+(function () {
+  const PREFERS_REDUCED = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const IS_NARROW = window.matchMedia('(max-width: 720px)').matches;
+
+  // Mark reveal targets so CSS gives them their initial hidden state.
+  function markReveals(root) {
+    // NOTE: Hero is orchestrated via CSS keyframes + .is-ready class (see hero[data-anim="hero"]).
+    // We intentionally skip hero selectors here so scroll-reveal does not fight the load choreography.
+    const sel = '[data-anim="fade-up"], [data-anim-stagger] [data-anim="stagger-item"], [data-anim="stats-strip"], [data-anim="section"]';
+    root.querySelectorAll(sel).forEach(el => el.classList.add('anim-init'));
+  }
+
+  // Reveal-on-enter observer
+  function setupReveals(root) {
+    if (PREFERS_REDUCED) {
+      root.querySelectorAll('.anim-init').forEach(el => el.classList.add('anim-in'));
+      return;
+    }
+    // Use the inner scroll container as the observer root if present.
+    const scrollRoot = root.querySelector && root.querySelector('.kit-scroll');
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        if (el.matches('[data-anim="stagger-item"]')) {
+          const parent = el.closest('[data-anim-stagger]');
+          if (parent) {
+            const siblings = [...parent.querySelectorAll('[data-anim="stagger-item"]')];
+            const idx = siblings.indexOf(el);
+            el.style.transitionDelay = (idx * 60) + 'ms';
+          }
+        } else {
+          const d = parseInt(el.getAttribute('data-anim-delay') || '0', 10);
+          if (d) el.style.transitionDelay = d + 'ms';
+        }
+        el.classList.add('anim-in');
+        io.unobserve(el);
+      });
+    }, { root: scrollRoot || null, rootMargin: '0px 0px -8% 0px', threshold: 0.01 });
+
+    // Immediately reveal anything already visible in the scroll viewport.
+    const inViewRect = (el) => {
+      const r = el.getBoundingClientRect();
+      const vh = window.innerHeight;
+      return r.top < vh * 0.98 && r.bottom > 0;
+    };
+    root.querySelectorAll('.anim-init').forEach(el => {
+      if (inViewRect(el)) {
+        // Reveal on next frame so transition is visible
+        requestAnimationFrame(() => {
+          if (el.matches('[data-anim="stagger-item"]')) {
+            const parent = el.closest('[data-anim-stagger]');
+            if (parent) {
+              const siblings = [...parent.querySelectorAll('[data-anim="stagger-item"]')];
+              const idx = siblings.indexOf(el);
+              el.style.transitionDelay = (idx * 60) + 'ms';
+            }
+          } else {
+            const d = parseInt(el.getAttribute('data-anim-delay') || '0', 10);
+            if (d) el.style.transitionDelay = d + 'ms';
+          }
+          el.classList.add('anim-in');
+        });
+      } else {
+        io.observe(el);
+      }
+    });
+  }
+
+  // Count-up for [data-count-to] inside revealed stats
+  function setupCountUps(root) {
+    if (PREFERS_REDUCED) {
+      root.querySelectorAll('[data-count-to]').forEach(el => {
+        el.textContent = el.getAttribute('data-count-to');
+      });
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const to = parseFloat(el.getAttribute('data-count-to'));
+        const dur = 1400;
+        const t0 = performance.now();
+        function tick(now) {
+          const p = Math.min(1, (now - t0) / dur);
+          const eased = 1 - Math.pow(1 - p, 3);
+          const v = to * eased;
+          el.textContent = Math.round(v).toString();
+          if (p < 1) requestAnimationFrame(tick);
+          else el.textContent = Number.isInteger(to) ? to.toString() : to.toFixed(1);
+        }
+        requestAnimationFrame(tick);
+        io.unobserve(el);
+      });
+    }, { threshold: 0.3 });
+    root.querySelectorAll('[data-count-to]').forEach(el => io.observe(el));
+  }
+
+  // Magnetic hover for buttons flagged .magnetic — pulls toward cursor
+  function setupMagnetic(root) {
+    if (PREFERS_REDUCED || IS_NARROW) return;
+    root.querySelectorAll('.magnetic').forEach(el => {
+      if (el.__magInit) return;
+      el.__magInit = true;
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        const dx = (e.clientX - (r.left + r.width/2)) / r.width;
+        const dy = (e.clientY - (r.top + r.height/2)) / r.height;
+        el.style.transform = `translate(${dx * 8}px, ${dy * 8}px)`;
+      });
+      el.addEventListener('pointerleave', () => {
+        el.style.transform = '';
+      });
+    });
+  }
+
+  // Gentle parallax for the hero photo — translate on scroll
+  function setupHeroParallax(root) {
+    if (PREFERS_REDUCED || IS_NARROW) return;
+    const el = root.querySelector('[data-anim="hero-photo"]');
+    if (!el) return;
+    const scrollRoot = root.closest('.kit-scroll') || document.querySelector('.kit-scroll') || window;
+    const getY = () => scrollRoot === window ? window.scrollY : scrollRoot.scrollTop;
+    let rafId = null;
+    function loop() {
+      const y = getY();
+      const r = el.getBoundingClientRect();
+      if (r.bottom > 0 && r.top < window.innerHeight) {
+        const progress = (r.top - window.innerHeight) / -1200;
+        const shift = Math.max(-40, Math.min(40, progress * 30));
+        el.style.setProperty('--parallax-y', shift + 'px');
+      }
+      rafId = null;
+    }
+    const onScroll = () => { if (rafId == null) rafId = requestAnimationFrame(loop); };
+    scrollRoot.addEventListener('scroll', onScroll, { passive: true });
+    loop();
+  }
+
+  // Custom cursor — terracotta disk + trailing ring. Skips touch + reduce-motion.
+  function setupCursor() {
+    if (PREFERS_REDUCED) return;
+    if (window.matchMedia('(pointer: coarse)').matches) return;
+    if (document.__akelCursor) return;
+    document.__akelCursor = true;
+    const dot  = document.createElement('div'); dot.className  = 'cursor-dot';
+    const ring = document.createElement('div'); ring.className = 'cursor-ring';
+    document.body.appendChild(dot); document.body.appendChild(ring);
+    let x = 0, y = 0, rx = 0, ry = 0;
+    window.addEventListener('pointermove', (e) => {
+      x = e.clientX; y = e.clientY;
+      dot.style.transform  = `translate(${x}px, ${y}px) translate(-50%, -50%)`;
+    }, { passive: true });
+    // Ring lags for a subtle trail
+    function tick() {
+      rx += (x - rx) * 0.22; ry += (y - ry) * 0.22;
+      ring.style.transform = `translate(${rx}px, ${ry}px) translate(-50%, -50%)`;
+      requestAnimationFrame(tick);
+    }
+    tick();
+    // Grow near interactive elements
+    const grow = (on) => {
+      ring.classList.toggle('is-on-magnet', on);
+    };
+    document.addEventListener('mouseover', (e) => {
+      if (e.target.closest('.btn, .magnetic, a, button, .cat-card, .product-card, .chip, .lang-switch button')) grow(true);
+    });
+    document.addEventListener('mouseout', (e) => {
+      if (e.target.closest('.btn, .magnetic, a, button, .cat-card, .product-card, .chip, .lang-switch button')) grow(false);
+    });
+    // Hide when leaving viewport
+    document.addEventListener('mouseleave', () => {
+      dot.classList.add('is-hidden'); ring.classList.add('is-hidden');
+    });
+    document.addEventListener('mouseenter', () => {
+      dot.classList.remove('is-hidden'); ring.classList.remove('is-hidden');
+    });
+  }
+
+  // Scroll progress bar — one terracotta line, glows, tracks scroll depth
+  function setupScrollProgress() {
+    if (document.__akelScrollBar) return;
+    document.__akelScrollBar = true;
+    const bar = document.createElement('div');
+    bar.className = 'scroll-progress';
+    document.body.appendChild(bar);
+    const scrollRoot = document.querySelector('.kit-scroll');
+    let rafId = null;
+    const update = () => {
+      if (!scrollRoot) return;
+      const max = scrollRoot.scrollHeight - scrollRoot.clientHeight;
+      const pct = max > 0 ? (scrollRoot.scrollTop / max) * 100 : 0;
+      bar.style.width = pct + '%';
+      rafId = null;
+    };
+    (scrollRoot || window).addEventListener('scroll', () => {
+      if (rafId == null) rafId = requestAnimationFrame(update);
+    }, { passive: true });
+    update();
+  }
+
+  // Split-text: wrap each letter of [data-split-text] into .letter spans
+  function setupSplitText(root) {
+    root.querySelectorAll('[data-split-text]').forEach(el => {
+      if (el.__splitDone) return;
+      el.__splitDone = true;
+      const text = el.textContent;
+      el.textContent = '';
+      el.classList.add('split-text');
+      [...text].forEach((ch, i) => {
+        const s = document.createElement('span');
+        s.className = 'letter';
+        s.setAttribute('data-char', ch);
+        s.style.transitionDelay = (i * 22) + 'ms';
+        s.textContent = ch === ' ' ? '\u00A0' : ch;
+        el.appendChild(s);
+      });
+    });
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-in');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.2 });
+    root.querySelectorAll('.split-text').forEach(el => io.observe(el));
+  }
+
+  // Tilt — mouse-parallax 3D for .tilt elements
+  function setupTilt(root) {
+    if (PREFERS_REDUCED || IS_NARROW) return;
+    root.querySelectorAll('.tilt').forEach(el => {
+      if (el.__tiltInit) return;
+      el.__tiltInit = true;
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        const cx = r.left + r.width / 2;
+        const cy = r.top + r.height / 2;
+        const dx = (e.clientX - cx) / r.width;
+        const dy = (e.clientY - cy) / r.height;
+        el.style.transform = `perspective(800px) rotateX(${-dy * 6}deg) rotateY(${dx * 8}deg)`;
+      });
+      el.addEventListener('pointerleave', () => {
+        el.style.transform = 'perspective(800px) rotateX(0) rotateY(0)';
+      });
+    });
+  }
+
+  // Run — call after DOM is ready and React has painted
+  window.__akelAnimations = {
+    init(root) {
+      root = root || document;
+      setupCursor();
+      setupScrollProgress();
+      markReveals(root);
+      // Next frame, so initial state paints before transitions fire
+      requestAnimationFrame(() => {
+        setupReveals(root);
+        setupCountUps(root);
+        setupMagnetic(root);
+        setupHeroParallax(root);
+        setupSplitText(root);
+        setupTilt(root);
+      });
+    },
+    refresh(root) {
+      root = root || document;
+      markReveals(root);
+      requestAnimationFrame(() => {
+        setupReveals(root);
+        setupCountUps(root);
+        setupMagnetic(root);
+        setupSplitText(root);
+        setupTilt(root);
+      });
+    },
+  };
+})();
+</script>
+</head><body><div id="root"></div>
+<script type="text/babel" data-presets="react">
+
+/* ====== Header.jsx ====== */
+// Header.jsx — sticky site header with bilingual switcher
+function Header({ lang, setLang, currentPath, navigate }) {
+  const nav = {
+    tr: [
+      { label: 'Ürünler', path: 'products' },
+      { label: 'Katalog', path: 'catalog' },
+      { label: 'Hakkımızda', path: 'about' },
+      { label: 'İletişim', path: 'contact' },
+    ],
+    en: [
+      { label: 'Products', path: 'products' },
+      { label: 'Catalog', path: 'catalog' },
+      { label: 'About', path: 'about' },
+      { label: 'Contact', path: 'contact' },
+    ],
+  }[lang];
+
+  const [scrolled, setScrolled] = React.useState(false);
+  const [menuOpen, setMenuOpen] = React.useState(false);
+  React.useEffect(() => {
+    const el = document.querySelector('.kit-scroll') || window;
+    const onScroll = () => {
+      const y = el === window ? window.scrollY : el.scrollTop;
+      setScrolled(y > 8);
+    };
+    el.addEventListener('scroll', onScroll);
+    return () => el.removeEventListener('scroll', onScroll);
+  }, []);
+  // Close menu on route change or Esc
+  React.useEffect(() => { setMenuOpen(false); }, [currentPath]);
+  React.useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e) => { if (e.key === 'Escape') setMenuOpen(false); };
+    document.addEventListener('keydown', onKey);
+    const scrollEl = document.querySelector('.kit-scroll');
+    const prevBody = document.body.style.overflow;
+    const prevScroll = scrollEl ? scrollEl.style.overflow : '';
+    document.body.style.overflow = 'hidden';
+    if (scrollEl) scrollEl.style.overflow = 'hidden';
+    if (window.lucide) window.lucide.createIcons();
+    return () => {
+      document.removeEventListener('keydown', onKey);
+      document.body.style.overflow = prevBody;
+      if (scrollEl) scrollEl.style.overflow = prevScroll;
+    };
+  }, [menuOpen]);
+
+  const goto = (p) => { setMenuOpen(false); navigate(p); };
+
+  return (
+    <header className={`site-header ${scrolled ? 'is-scrolled' : ''} ${menuOpen ? 'is-menu-open' : ''}`}>
+      <div className="site-header__inner">
+        <a
+          className="site-header__brand"
+          href="#"
+          onClick={(e) => { e.preventDefault(); goto('home'); }}
+          title="Akel Melamin Plastik San.Tic.Ltd.Şti."
+        >
+          <img src="./img/akel-logo-cropped.png" alt="Akel Melamin" />
+          <span className="site-header__slogan pull-serif" aria-hidden="true">
+            {lang === 'tr' ? 'Her sofrada kaliteye yer açın.' : 'Make room for quality at every table.'}
+          </span>
+        </a>
+        <nav className="site-header__nav">
+          {nav.map((item) => (
+            <a
+              key={item.path}
+              href="#"
+              className={currentPath === item.path ? 'is-active' : ''}
+              onClick={(e) => { e.preventDefault(); goto(item.path); }}
+            >
+              {item.label}
+            </a>
+          ))}
+        </nav>
+        <div className="site-header__actions">
+          <LangSwitch lang={lang} setLang={setLang} />
+          <button
+            className="btn btn--primary btn--sm site-header__cta"
+            onClick={() => goto('catalog')}
+          >
+            {lang === 'tr' ? 'Katalog' : 'Catalog'}
+            <i data-lucide="download"></i>
+          </button>
+          <button
+            className="mobile-menu-btn"
+            aria-label={lang === 'tr' ? 'Menüyü aç' : 'Open menu'}
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen(o => !o)}
+          >
+            <span className="mobile-menu-btn__bar"></span>
+            <span className="mobile-menu-btn__bar"></span>
+            <span className="mobile-menu-btn__bar"></span>
+          </button>
+        </div>
+      </div>
+
+      {/* Mobile drawer mounted via Portal to document.body —
+          escapes the header's backdrop-filter stacking context */}
+      {ReactDOM.createPortal(
+        <div
+          className={`mobile-drawer ${menuOpen ? 'is-open' : ''}`}
+          role="dialog"
+          aria-modal="true"
+          aria-hidden={!menuOpen}
+        >
+          <div className="mobile-drawer__backdrop" onClick={() => setMenuOpen(false)}></div>
+          <aside className="mobile-drawer__panel">
+            <div className="mobile-drawer__head">
+              <span className="eyebrow">{lang === 'tr' ? 'Menü' : 'Menu'}</span>
+              <button
+                className="mobile-drawer__close"
+                aria-label={lang === 'tr' ? 'Kapat' : 'Close'}
+                onClick={() => setMenuOpen(false)}
+              >
+                <i data-lucide="x"></i>
+              </button>
+            </div>
+            <nav className="mobile-drawer__nav">
+              <a href="#" className={currentPath === 'home' ? 'is-active' : ''} onClick={(e) => { e.preventDefault(); goto('home'); }}>
+                {lang === 'tr' ? 'Anasayfa' : 'Home'}
+              </a>
+              {nav.map((item) => (
+                <a
+                  key={item.path}
+                  href="#"
+                  className={currentPath === item.path ? 'is-active' : ''}
+                  onClick={(e) => { e.preventDefault(); goto(item.path); }}
+                >
+                  {item.label}
+                </a>
+              ))}
+            </nav>
+            <div className="mobile-drawer__foot">
+              <button className="btn btn--primary btn--lg" onClick={() => goto('catalog')}>
+                <i data-lucide="download"></i> {lang === 'tr' ? 'Kataloğu indir' : 'Download catalog'}
+              </button>
+              <span className="mobile-drawer__slogan pull-serif">
+                {lang === 'tr' ? 'Her sofrada kaliteye yer açın.' : 'Make room for quality at every table.'}
+              </span>
+              <div className="mobile-drawer__links">
+                <a href="https://instagram.com/akelmelamin" target="_blank" rel="noopener">
+                  <i data-lucide="instagram"></i> @akelmelamin
+                </a>
+                <a href="mailto:info@akelmelamin.com">
+                  <i data-lucide="mail"></i> info@akelmelamin.com
+                </a>
+                <a href="tel:+905074253446">
+                  <i data-lucide="phone"></i> +90 507 425 34 46
+                </a>
+              </div>
+            </div>
+          </aside>
+        </div>,
+        document.body
+      )}
+    </header>
+  );
+}
+
+function LangSwitch({ lang, setLang }) {
+  return (
+    <div className="lang-switch" role="group" aria-label="Language">
+      <button
+        className={lang === 'tr' ? 'is-on' : ''}
+        onClick={() => setLang('tr')}
+      >TR</button>
+      <span className="lang-switch__sep">·</span>
+      <button
+        className={lang === 'en' ? 'is-on' : ''}
+        onClick={() => setLang('en')}
+      >EN</button>
+    </div>
+  );
+}
+
+window.Header = Header;
+window.LangSwitch = LangSwitch;
+
+
+/* ====== Hero.jsx ====== */
+// Hero.jsx — manufacturing-first hero with real product photo
+function Hero({ lang, navigate }) {
+  const copy = {
+    tr: {
+      eyebrow: 'İstanbul · Türkiye · 2014',
+      title: 'Her sofrada kaliteye',
+      titleAccent: 'yer açın.',
+      body: 'Akel Melamin, 35 yıllık melamin üretim tecrübesi üstüne 2014\'te kurulan bir Türk üreticidir. Gıda ile temasa uygun, dayanıklı ve estetik melamin sofra ürünlerini ev, otel, restoran ve kafeler için üretir.',
+      primary: 'Kataloğu indir',
+      secondary: 'Hakkımızda',
+      caption: 'Gözde · Beyaz set · profesyonel servis',
+    },
+    en: {
+      eyebrow: 'Istanbul · Türkiye · Since 2014',
+      title: 'Make room for quality',
+      titleAccent: 'at every table.',
+      body: 'Akel Melamin is a Turkish manufacturer founded in 2014 on 35 years of melamine-production heritage. Food-safe, durable and refined melamine tableware for homes, hotels, restaurants and cafés.',
+      primary: 'Download catalog',
+      secondary: 'About us',
+      caption: 'Gözde · White set · professional service',
+    },
+  }[lang];
+
+  React.useEffect(() => {
+    const el = document.querySelector('.hero[data-anim="hero"]');
+    if (!el) return;
+    const t = requestAnimationFrame(() => el.classList.add('is-ready'));
+    return () => cancelAnimationFrame(t);
+  }, []);
+
+  const photos = [
+    { src: './img/gozde-white.jpg', label: lang === 'tr' ? 'Gözde · Beyaz set' : 'Gözde · White set' },
+    { src: './img/gozde-black.jpg', label: lang === 'tr' ? 'Gözde · Siyah set' : 'Gözde · Black set' },
+    { src: './img/kavi-white.jpg',  label: lang === 'tr' ? 'Kavi · Beyaz set'  : 'Kavi · White set'  },
+    { src: './img/kavi-black.jpg',  label: lang === 'tr' ? 'Kavi · Siyah set'  : 'Kavi · Black set'  },
+  ];
+  const [active, setActive] = React.useState(0);
+  React.useEffect(() => {
+    const el = document.querySelector('.hero[data-anim="hero"]');
+    if (el) requestAnimationFrame(() => el.classList.add('is-ready'));
+    const t = setInterval(() => setActive(a => (a + 1) % photos.length), 4200);
+    return () => clearInterval(t);
+  }, []);
+
+  return (
+    <section className="hero" data-anim="hero">
+      <span className="deco-reg deco-reg--1" aria-hidden="true">®</span>
+      <span className="section-num" aria-hidden="true">01 — {lang === 'tr' ? 'Üretim' : 'Production'}</span>
+      <div className="hero__text">
+        <span className="eyebrow">{copy.eyebrow}</span>
+        <h1 className="hero__title">
+          <span className="hero__title-line">{copy.title}</span>
+          <br />
+          <span className="hero__title-line">
+            <span className="hero__title-accent pull-serif">{copy.titleAccent}</span>
+          </span>
+        </h1>
+        <p className="hero__body">{copy.body}</p>
+        <div className="hero__cta">
+          <button className="btn btn--primary magnetic" onClick={() => navigate('catalog')}>
+            {copy.primary} <i data-lucide="arrow-right"></i>
+          </button>
+          <button className="btn btn--link" onClick={() => navigate('about')}>
+            {copy.secondary} →
+          </button>
+        </div>
+      </div>
+      <div className="hero__visual" aria-hidden="true">
+        <div className="hero__ring">
+          <svg viewBox="0 0 128 128">
+            <defs>
+              <path id="ring-path" d="M 64 64 m -52 0 a 52 52 0 1 1 104 0 a 52 52 0 1 1 -104 0" />
+            </defs>
+            <text>
+              <textPath href="#ring-path" startOffset="0">
+                SINCE 2014 · MADE IN TÜRKİYE · MELAMIN · İSTANBUL · SINCE 2014 · MADE IN TÜRKİYE · MELAMIN · İSTANBUL ·
+              </textPath>
+            </text>
+          </svg>
+        </div>
+        <div className="hero__photo-stack">
+          {photos.map((p, i) => (
+            <img
+              key={p.src}
+              className={i === active ? 'is-active' : ''}
+              src={p.src}
+              alt=""
+              loading={i === 0 ? 'eager' : 'lazy'}
+            />
+          ))}
+        </div>
+        <span className="hero__visual-crop">4:5 · FRAME 0{active + 1}</span>
+        <div className="hero__visual-caption">
+          <span className="meta">{photos[active].label}</span>
+        </div>
+        <div className="hero__photo-nav">
+          {photos.map((_, i) => (
+            <button
+              key={i}
+              aria-label={`Photo ${i + 1}`}
+              className={i === active ? 'is-on' : ''}
+              onClick={() => setActive(i)}
+            />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+// StatsRow — own strip below hero, count-up on enter viewport
+function StatsRow({ lang }) {
+  // Numeric targets used by the count-up animation (data-count-to).
+  // Text suffixes are rendered separately so the counter only animates the digits.
+  const stats = {
+    tr: [
+      { to: 35,  suffix: '',   small: 'yıl melamin tecrübesi' },
+      { to: 13,  suffix: '',   small: 'ürün serisi' },
+      { to: 2014, suffix: '',  small: 'kuruluş yılı' },
+      { to: 100, suffix: '°C', small: 'ısıya dayanıklı' },
+    ],
+    en: [
+      { to: 35,  suffix: '',   small: 'years of melamine heritage' },
+      { to: 13,  suffix: '',   small: 'product series' },
+      { to: 2014, suffix: '',  small: 'year founded' },
+      { to: 100, suffix: '°C', small: 'heat-resistant' },
+    ],
+  }[lang];
+
+  return (
+    <section className="stats-strip" data-anim="stats-strip">
+      <div className="stats-strip__inner">
+        {stats.map((s, i) => (
+          <div className="stats-strip__item" key={i}>
+            <div className="stats-strip__big">
+              <span className="stats-strip__num" data-count-to={s.to}>0</span>
+              <span className="stats-strip__suffix">{s.suffix}</span>
+            </div>
+            <div className="stats-strip__small">{s.small}</div>
+          </div>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+// MarqueeBand — two-row ticker between sections
+function MarqueeBand({ lang }) {
+  const rows = {
+    tr: [
+      ['Her sofrada kaliteye yer açın', '2014\'ten beri', 'İstanbul · Bağcılar', 'Gıda ile temasa uygun', 'Ev · otel · restoran · kafe', '13 ürün serisi', 'ISO 9001:2015', 'ISO 22000:2018'],
+      ['MADE IN TÜRKİYE', 'Kare Seri · Elegant · Eco', 'Dayanıklı · estetik · hijyenik', 'Bulaşık makinesi güvenli', '-20°C ile +100°C', 'Özel logolu üretim', 'Intertek · FQC', 'Yerli Üretim'],
+    ],
+    en: [
+      ['Make room for quality at every table', 'Since 2014', 'Istanbul · Bağcılar', 'Food-contact safe', 'Home · hotel · restaurant · café', '13 product lines', 'ISO 9001:2015', 'ISO 22000:2018'],
+      ['MADE IN TÜRKİYE', 'Kare · Elegant · Eco series', 'Durable · refined · hygienic', 'Dishwasher safe', '-20°C to +100°C', 'Custom-logo printing', 'Intertek · FQC', 'Domestic production'],
+    ],
+  }[lang];
+  const render = (items) => (
+    <div className="marquee__track">
+      {[...items, ...items].map((t, i) => (
+        <span className={'marquee__item' + (i % 3 === 2 ? ' marquee__item--italic' : '')} key={i}>
+          {t}
+          <span className="marquee__bullet"></span>
+        </span>
+      ))}
+    </div>
+  );
+  return (
+    <>
+      <div className="marquee" aria-hidden="true">{render(rows[0])}</div>
+      <div className="marquee marquee--reverse" aria-hidden="true" style={{marginTop: 0, background: 'var(--bone)', color: 'var(--ink)', borderColor: 'var(--border)'}}>{render(rows[1])}</div>
+    </>
+  );
+}
+
+window.Hero = Hero;
+window.StatsRow = StatsRow;
+window.MarqueeBand = MarqueeBand;
+
+
+/* ====== Categories.jsx ====== */
+// Categories.jsx — product families grid
+function Categories({ lang, navigate }) {
+  // Product families are the actual Akel lines. Round vs square is the
+  // primary plate-shape split; the rest are category aggregations.
+  const cats = {
+    tr: [
+      { key: 'kare',         label: 'Kare Seri',           count: 'Beyaz',                  shape: 'square', photo: 'kavi-white' },
+      { key: 'kare-siyah',   label: 'Kare Seri Siyah',     count: 'Siyah',                  shape: 'square', photo: 'kavi-black' },
+      { key: 'international',label: 'International Seri',  count: 'Yuvarlak klasik',        shape: 'round',  photo: 'gozde-white' },
+      { key: 'elegant',      label: 'Elegant Seri',        count: 'Taş dokulu',             shape: 'trays' },
+      { key: 'acikbufe',     label: 'Açık Büfe · Servis',  count: 'Sunum & catering',       shape: 'serve' },
+      { key: 'tepsiler',     label: 'Tepsiler',            count: 'Mermer · baskılı',       shape: 'trays' },
+      { key: 'eco',          label: 'Eco Seri',            count: 'Ekonomik günlük',        shape: 'plates' },
+      { key: 'diplomat',     label: 'Diplomat Kayık Seri', count: 'Uzun servis',            shape: 'serve' },
+      { key: 'gunluk',       label: 'Günlük Desenli Seri', count: 'Desen baskı',            shape: 'bowls' },
+      { key: 'masaustu',     label: 'Masaüstü Aksesuarları', count: 'Tuzluk · şekerlik',    shape: 'serve' },
+      { key: 'kids',         label: 'Çocuk Tabakları',     count: 'Bölmeli & eğlenceli',    shape: 'kids' },
+      { key: 'bolmeli',      label: 'Bölmeli Tabaklar',    count: 'Porsiyon kontrolü',      shape: 'plates' },
+      { key: 'logolu',       label: 'Özel Logolu Ürünler', count: 'Baskılı · kurumsal',     shape: 'deco' },
+    ],
+    en: [
+      { key: 'kare',         label: 'Square Series',            count: 'White',                 shape: 'square', photo: 'kavi-white' },
+      { key: 'kare-siyah',   label: 'Square Series · Black',    count: 'Black',                 shape: 'square', photo: 'kavi-black' },
+      { key: 'international',label: 'International Series',     count: 'Classic round',         shape: 'round',  photo: 'gozde-white' },
+      { key: 'elegant',      label: 'Elegant Series',           count: 'Stone-textured',        shape: 'trays' },
+      { key: 'acikbufe',     label: 'Buffet · Serving',         count: 'Presentation & catering', shape: 'serve' },
+      { key: 'tepsiler',     label: 'Trays',                    count: 'Marble · printed',      shape: 'trays' },
+      { key: 'eco',          label: 'Eco Series',               count: 'Everyday economy',      shape: 'plates' },
+      { key: 'diplomat',     label: 'Diplomat Boat Series',     count: 'Oblong serving',        shape: 'serve' },
+      { key: 'gunluk',       label: 'Everyday Pattern Line',    count: 'Printed patterns',      shape: 'bowls' },
+      { key: 'masaustu',     label: 'Tabletop Accessories',     count: 'Salt · sugar · cruet',  shape: 'serve' },
+      { key: 'kids',         label: 'Kids\' Plates',            count: 'Compartment & playful', shape: 'kids' },
+      { key: 'bolmeli',      label: 'Compartment Plates',       count: 'Portion control',       shape: 'plates' },
+      { key: 'logolu',       label: 'Custom-logo Products',     count: 'Printed · corporate',   shape: 'deco' },
+    ],
+  }[lang];
+  const t = lang === 'tr'
+    ? { eyebrow: 'Kategoriler', heading: 'On üç ürün serisi. Tek fabrika.', cta: 'Tümünü gör' }
+    : { eyebrow: 'Categories',  heading: 'Thirteen product series. One plant.', cta: 'View all' };
+
+  return (
+    <section className="section" data-anim="section">
+      <div className="section__head">
+        <div>
+          <span className="eyebrow" data-anim="fade-up">{t.eyebrow}</span>
+          <h2 className="section__title"><span data-split-text>{t.heading}</span></h2>
+        </div>
+        <button className="btn btn--link" onClick={() => navigate('products')} data-anim="fade-up" data-anim-delay="120">
+          {t.cta} →
+        </button>
+      </div>
+      <div className="cat-grid" data-anim-stagger>
+        {cats.map((c, i) => (
+          <button
+            key={c.key}
+            className={`cat-card cat-card--${c.key}`}
+            onClick={() => navigate('products')}
+            data-anim="stagger-item"
+          >
+            <div className="cat-card__ph" aria-hidden="true">
+              {c.photo
+                ? <img className="cat-card__photo" src={`./img/${c.photo}.jpg`} alt="" loading="lazy" />
+                : <div className={`cat-shape cat-shape--${c.shape}`}></div>}
+            </div>
+            <div className="cat-card__foot">
+              <span className="cat-card__label">{c.label}</span>
+              <span className="cat-card__count">{c.count}</span>
+            </div>
+          </button>
+        ))}
+      </div>
+    </section>
+  );
+}
+
+window.Categories = Categories;
+
+
+/* ====== Bands.jsx ====== */
+// Bands.jsx — editorial dark band + catalog CTA band
+function ProductionBand({ lang, navigate }) {
+  const t = lang === 'tr'
+    ? {
+        eyebrow: 'Üretim',
+        title: 'İstanbul Bağcılar\'da üretim. 2014\'ten beri.',
+        body: 'İSTOÇ 10. Ada\'daki tesisimizde presleme, kalıplama, dekor ve kalite kontrol tek bir akışta ilerliyor. Gıda ile temasa uygun melamin ürünlerini hijyen ve kalite standartlarına uygun şekilde üretiyoruz.',
+        items: [
+          { k: 'Kuruluş',         v: '2014' },
+          { k: 'Üretim mirası',   v: '35 yıl' },
+          { k: 'Lokasyon',        v: 'İSTOÇ · Bağcılar' },
+          { k: 'Sertifikasyon',   v: 'ISO 9001 · ISO 22000 · Intertek · FQC' },
+        ],
+        cta: 'Hakkımızda',
+      }
+    : {
+        eyebrow: 'Production',
+        title: 'Manufactured in Istanbul. Since 2014.',
+        body: 'Moulding, pressing, decoration, and QC all flow through a single line in our İSTOÇ 10 plant. Food-contact melamine products made to hygiene and quality standards.',
+        items: [
+          { k: 'Founded',          v: '2014' },
+          { k: 'Heritage',         v: '35 years' },
+          { k: 'Location',         v: 'İSTOÇ · Bağcılar' },
+          { k: 'Certifications',   v: 'ISO 9001 · ISO 22000 · Intertek · FQC' },
+        ],
+        cta: 'About us',
+      };
+
+  return (
+    <section className="section section--band" data-anim="section">
+      <div className="band">
+        <div className="band__copy">
+          <span className="eyebrow" data-anim="fade-up">{t.eyebrow}</span>
+          <h2 className="band__title"><span data-split-text>{t.title}</span></h2>
+          <p className="band__body" data-anim="fade-up" data-anim-delay="120">{t.body}</p>
+          <button className="btn btn--ghost" onClick={() => navigate('about')} data-anim="fade-up" data-anim-delay="180">
+            {t.cta} →
+          </button>
+        </div>
+        <div className="band__facts" data-anim-stagger>
+          {t.items.map((i, k) => (
+            <div className="fact" key={k} data-anim="stagger-item">
+              <span className="fact__k">{i.k}</span>
+              <span className="fact__v">{i.v}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function CatalogBand({ lang, navigate }) {
+  const t = lang === 'tr'
+    ? {
+        eyebrow: 'Katalog · 2026 · v23',
+        title: '13 ürün serisi. Tek PDF.',
+        body: 'Kare Seri, Elegant, Eco, Tepsiler, Çocuk Tabakları, Özel Logolu — tüm serilerimiz 56 sayfa çift dilli (TR/EN) kataloğumuzda. Melamin Servis Ekipmanları 2026.',
+        primary: 'Kataloğu indir',
+        note: 'PDF · 56 sayfa · 6,3 MB · TR & EN',
+      }
+    : {
+        eyebrow: 'Catalog · 2026 · v23',
+        title: '13 product series. One PDF.',
+        body: 'Square, Elegant, Eco, Trays, Kids\' Plates, Custom-logo — every line of ours in a 56-page bilingual (TR/EN) catalog. Melamine Service Equipment 2026.',
+        primary: 'Download catalog',
+        note: 'PDF · 56 pages · 6.3 MB · TR & EN',
+      };
+
+  return (
+    <section className="section" data-anim="section">
+      <div className="catalog-band" data-anim="fade-up">
+        <div>
+          <span className="eyebrow">{t.eyebrow}</span>
+          <h2 className="catalog-band__title">{t.title}</h2>
+          <p className="catalog-band__body">{t.body}</p>
+        </div>
+        <div className="catalog-band__right">
+          <button className="btn btn--primary btn--lg magnetic" onClick={() => navigate('catalog')}>
+            <i data-lucide="download"></i> {t.primary}
+          </button>
+          <span className="catalog-band__note meta">{t.note}</span>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+window.ProductionBand = ProductionBand;
+window.CatalogBand = CatalogBand;
+
+
+/* ====== ProductGrid.jsx ====== */
+// ProductGrid.jsx — category listing with real Gözde/Kavi lines + variant swatch
+function ProductGrid({ lang, navigate, openProduct }) {
+  const [active, setActive] = React.useState('all');
+  const [data, setData] = React.useState(null);
+  const [err, setErr] = React.useState(null);
+
+  React.useEffect(() => {
+    fetch('./data/products.json', { cache: 'no-cache' })
+      .then(r => {
+        if (!r.ok) throw new Error('HTTP ' + r.status);
+        return r.json();
+      })
+      .then(setData)
+      .catch(e => setErr(e.message));
+  }, []);
+
+  const t = lang === 'tr'
+    ? { title: 'Tüm ürünler', count: (n) => `${n} ürün`, empty: 'Henüz ürün eklenmedi.', loading: 'Yükleniyor…', all: 'Tümü', errorLabel: 'Ürünler yüklenemedi:' }
+    : { title: 'All products', count: (n) => `${n} products`, empty: 'No products yet.', loading: 'Loading…', all: 'All', errorLabel: 'Could not load products:' };
+
+  if (err) {
+    return (
+      <section className="section">
+        <div className="section__head">
+          <h2 className="section__title">{t.title}</h2>
+        </div>
+        <p className="lead">{t.errorLabel} <code>{err}</code></p>
+      </section>
+    );
+  }
+  if (!data) {
+    return (
+      <section className="section">
+        <div className="section__head">
+          <h2 className="section__title">{t.title}</h2>
+        </div>
+        <p className="lead">{t.loading}</p>
+      </section>
+    );
+  }
+
+  // Only active products
+  const visible = data.products.filter(p => (p.aktif || 'evet') !== 'hayir');
+
+  // Filter chips: derive from categories actually present in data
+  const usedCats = new Set(visible.map(p => p.kategori));
+  const filters = [
+    { k: 'all', l: t.all },
+    ...data.categories.filter(c => usedCats.has(c.key)).map(c => ({ k: c.key, l: c[lang] }))
+  ];
+
+  const shown = active === 'all' ? visible : visible.filter(p => p.kategori === active);
+
+  // Build a per-product spec line out of sized fields
+  function buildSpec(p) {
+    const parts = [];
+    if (p.boyut) parts.push(p.boyut);
+    else if (p.cap_mm) parts.push('Ø ' + (p.cap_mm / 10) + ' cm');
+    else if (p.en_mm && p.boy_mm) parts.push((p.en_mm/10) + '×' + (p.boy_mm/10) + ' cm');
+    if (p.agirlik_g) parts.push(p.agirlik_g + ' g');
+    if (p.koli_adet) parts.push((lang === 'tr' ? 'Koli ' : 'Carton ') + p.koli_adet);
+    return parts.join(' · ');
+  }
+
+  function catLabel(k) {
+    const c = data.categories.find(x => x.key === k);
+    return c ? c[lang] : k;
+  }
+
+  return (
+    <section className="section" data-anim="section">
+      <div className="section__head">
+        <div>
+          <span className="eyebrow" data-anim="fade-up">{lang === 'tr' ? 'Katalog' : 'Catalog'}</span>
+          <h2 className="section__title"><span data-split-text>{t.title}</span></h2>
+        </div>
+        <span className="meta">{t.count(shown.length)}</span>
+      </div>
+
+      <div className="filter-row" data-anim="fade-up">
+        {filters.map(f => (
+          <button
+            key={f.k}
+            className={`chip ${active === f.k ? 'is-on' : ''}`}
+            onClick={() => setActive(f.k)}
+          >{f.l}</button>
+        ))}
+      </div>
+
+      {shown.length === 0 ? (
+        <p className="lead" style={{padding: '48px 0'}}>{t.empty}</p>
+      ) : (
+        <div className="product-grid" data-anim-stagger>
+          {shown.map((p, i) => {
+            const spec = buildSpec(p);
+            const name = lang === 'tr' ? p.ad_tr : (p.ad_en || p.ad_tr);
+            return (
+              <div
+                key={p.sku}
+                className="product-card tilt"
+                data-anim="stagger-item"
+                onClick={() => openProduct(p)}
+                role="button"
+                tabIndex="0"
+              >
+                <div className={`product-card__ph product-card__ph--${i % 4}`} aria-hidden="true">
+                  {p.foto_dosya_adi
+                    ? <img
+                        className="product-card__photo"
+                        src={`./img/${p.foto_dosya_adi}.jpg`}
+                        alt=""
+                        loading="lazy"
+                        onError={(e) => {
+                          // try .png fallback, else hide
+                          if (!e.target.__triedPng) {
+                            e.target.__triedPng = true;
+                            e.target.src = `./img/${p.foto_dosya_adi}.png`;
+                          } else { e.target.style.display = 'none'; }
+                        }}
+                      />
+                    : <div className={`plate plate--${p.kategori || ''}`}></div>}
+                  {spec && <span className="product-card__spec-reveal">{spec} · {lang === 'tr' ? 'İncele' : 'View'} →</span>}
+                  {p.etiket && <span className="product-card__badge">{p.etiket}</span>}
+                </div>
+                <div className="product-card__body">
+                  <div className="product-card__meta">
+                    <span className="product-card__eyebrow">{catLabel(p.kategori)}</span>
+                    {p.renk && (
+                      <div className="product-card__variants" aria-hidden="true">
+                        <span className={`variant-dot variant-dot--${p.renk === 'siyah' ? 'black' : p.renk === 'beyaz' ? 'white' : 'custom'}`}
+                              style={p.renk !== 'beyaz' && p.renk !== 'siyah' ? {background: 'var(--terracotta)'} : undefined}></span>
+                      </div>
+                    )}
+                  </div>
+                  <span className="product-card__name">{name}</span>
+                  {spec && <span className="product-card__spec">{spec}</span>}
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </section>
+  );
+}
+
+window.ProductGrid = ProductGrid;
+
+
+/* ====== ProductDetail.jsx ====== */
+// ProductDetail.jsx — B2B-oriented single product view, real photos when available
+function ProductDetail({ lang, product, onBack }) {
+  const t = lang === 'tr'
+    ? {
+        back: '← Ürünlere dön',
+        request: 'Teklif iste',
+        specs: 'Teknik özellikler',
+        pack: 'Ambalaj ve lojistik',
+        materials: 'Malzeme ve sertifikalar',
+        matList: ['%100 melamin reçine', 'ISO 22000:2018 gıda güvenliği', 'Intertek test raporlu', 'Bulaşık makinesi uyumlu', '−20°C / +100°C kullanım'],
+        images: 'Stüdyo referans görseli',
+        color: 'Renk', useArea: 'Kullanım alanı', logo: 'Özel logolu',
+        yes: 'Evet', no: 'Hayır',
+      }
+    : {
+        back: '← Back to products',
+        request: 'Request quote',
+        specs: 'Technical specs',
+        pack: 'Packaging & logistics',
+        materials: 'Material & certifications',
+        matList: ['100% melamine resin', 'ISO 22000:2018 food safety', 'Intertek-tested', 'Dishwasher safe', '−20°C to +100°C use'],
+        images: 'Studio reference image',
+        color: 'Color', useArea: 'Use area', logo: 'Custom logo',
+        yes: 'Yes', no: 'No',
+      };
+
+  // Build spec rows from structured fields
+  function dim() {
+    if (product.cap_mm) return 'Ø ' + (product.cap_mm / 10) + ' cm';
+    const parts = [];
+    if (product.en_mm) parts.push(product.en_mm / 10);
+    if (product.boy_mm) parts.push(product.boy_mm / 10);
+    if (product.yukseklik_mm) parts.push(product.yukseklik_mm / 10);
+    return parts.length ? parts.join(' × ') + ' cm' : (product.boyut || '—');
+  }
+
+  const colorLabel = product.renk
+    ? (lang === 'tr'
+        ? { beyaz: 'Beyaz', siyah: 'Siyah', desenli: 'Desenli', kirmizi: 'Kırmızı', mavi: 'Mavi', yesil: 'Yeşil' }[product.renk] || product.renk
+        : { beyaz: 'White', siyah: 'Black', desenli: 'Patterned', kirmizi: 'Red', mavi: 'Blue', yesil: 'Green' }[product.renk] || product.renk)
+    : '—';
+
+  const rows = [
+    [lang === 'tr' ? 'Boyutlar' : 'Dimensions', dim()],
+    [lang === 'tr' ? 'Ağırlık' : 'Weight',      product.agirlik_g ? product.agirlik_g + ' g' : '—'],
+    ['SKU',                                      product.sku],
+    [t.color,                                    colorLabel],
+  ];
+  if (product.barkod) rows.push([lang === 'tr' ? 'Barkod' : 'Barcode', product.barkod]);
+
+  const pack = [
+    [lang === 'tr' ? 'Kolide adet' : 'Pieces per carton', product.koli_adet || '—'],
+    [lang === 'tr' ? 'Koli boyutu' : 'Carton dimensions', product.koli_cm || '—'],
+    [lang === 'tr' ? 'Koli brüt'   : 'Carton gross',      product.koli_agirlik_kg ? product.koli_agirlik_kg + ' kg' : '—'],
+  ];
+  if (product.ozel_logolu_uygun) pack.push([t.logo, product.ozel_logolu_uygun === 'evet' ? t.yes : t.no]);
+  if (product.kullanim_alani) pack.push([t.useArea, product.kullanim_alani]);
+
+  const photoSrc = product.foto_dosya_adi ? `./img/${product.foto_dosya_adi}.jpg` : null;
+
+  return (
+    <section className="section" data-anim="section">
+      <button className="btn btn--link" onClick={onBack}>{t.back}</button>
+
+      <div className="pd">
+        <div className="pd__gallery" data-anim="fade-up">
+          <div className="pd__hero" aria-hidden="true">
+            {photoSrc
+              ? <img className="pd__photo" src={photoSrc} alt=""
+                     onError={(e) => {
+                       if (!e.target.__triedPng) {
+                         e.target.__triedPng = true;
+                         e.target.src = `./img/${product.foto_dosya_adi}.png`;
+                       } else { e.target.style.display = 'none'; }
+                     }} />
+              : <div className={`plate plate--${product.kategori} plate--xl`}></div>}
+            <span className="pd__caption meta">{t.images}</span>
+          </div>
+        </div>
+
+        <div className="pd__info" data-anim="fade-up" data-anim-delay="80">
+          <span className="eyebrow">{(product.kategori || '').toUpperCase()}</span>
+          <h1 className="pd__title">{lang === 'tr' ? product.ad_tr : (product.ad_en || product.ad_tr)}</h1>
+          {(lang === 'tr' ? product.aciklama_tr : product.aciklama_en) && (
+            <p className="pd__spec lead">{lang === 'tr' ? product.aciklama_tr : product.aciklama_en}</p>
+          )}
+
+          <div className="pd__cta">
+            <button className="btn btn--primary btn--lg magnetic" onClick={onBack}>{t.request} →</button>
+          </div>
+
+          <SpecBlock title={t.specs} rows={rows} />
+          <SpecBlock title={t.pack} rows={pack} />
+          <div className="pd__mat">
+            <span className="meta">{t.materials}</span>
+            <ul className="pd__matlist">
+              {t.matList.map((m, i) => (
+                <li key={i}><i data-lucide="check"></i> {m}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function SpecBlock({ title, rows }) {
+  return (
+    <div className="spec-block">
+      <span className="meta">{title}</span>
+      <table className="spec-table">
+        <tbody>
+          {rows.map(([k, v], i) => (
+            <tr key={i}><td className="k">{k}</td><td className="v">{v}</td></tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+window.ProductDetail = ProductDetail;
+window.SpecBlock = SpecBlock;
+
+
+/* ====== About.jsx ====== */
+// About.jsx — factory / capacity / markets page
+function About({ lang }) {
+  const t = lang === 'tr'
+    ? {
+        eyebrow: 'Hakkımızda',
+        title: 'Her sofrada kaliteye yer açın.',
+        lead: 'Akel Melamin, 2014 yılında, temelleri 35 yıla dayanan melamin üretim tecrübesi üzerine kurulmuştur. Gıda ile temasa uygun, dayanıklı ve estetik melamin ürünler üretme amacıyla yola çıkan markamız; bugün hem ev kullanımı hem de otel, restoran ve kafe gibi profesyonel alanlara yönelik geniş bir ürün yelpazesi sunmaktadır. Akel Melamin, kaliteyi, güveni ve tasarımı bir arada sunmayı temel ilke olarak benimser.',
+        facts: [
+          { k: 'Kuruluş',          v: '2014' },
+          { k: 'Üretim tecrübesi', v: '35 yıl' },
+          { k: 'Ürün serisi',      v: '13' },
+          { k: 'Isı dayanımı',     v: '-20°C → +100°C' },
+          { k: 'Merkez',           v: 'İSTOÇ · İstanbul' },
+          { k: 'Kullanım',         v: 'Ev · otel · restoran · kafe' },
+        ],
+        marketsTitle: 'Kullanım alanları',
+        markets: [
+          { r: 'Profesyonel', c: ['Otel', 'Restoran', 'Kafe', 'Catering'] },
+          { r: 'Perakende',   c: ['Zincir mağaza', 'Online', 'Distribütör', 'İhracat'] },
+          { r: 'Kurumsal',    c: ['Özel logolu', 'Belediye', 'Promosyon', 'Event'] },
+          { r: 'Ev kullanımı', c: ['Günlük', 'Bayram', 'Çocuk', 'Hediye'] },
+        ],
+        certTitle: 'Sertifikalarımız',
+        certBody: 'Tüm hammaddeler ve mamul ürünler gıda teması sertifikalarına sahiptir. Üretim, uluslararası kalite ve hijyen standartlarına uygun olarak gerçekleştirilir.',
+        certs: ['ISO 9001:2015', 'ISO 22000:2018', 'Intertek', 'FQC', 'Yerli Üretim', 'T.C. Gıda Tarım Bakanlığı'],
+      }
+    : {
+        eyebrow: 'About',
+        title: 'Make room for quality at every table.',
+        lead: 'Founded in 2014, Akel Melamine is built on 35 years of experience in melamine production. With a mission to produce durable, food-safe and aesthetically pleasing melamine products, our brand today offers a wide range of collections for both household use and professional environments such as hotels, restaurants, and cafés — bringing together quality, trust, and design.',
+        facts: [
+          { k: 'Founded',           v: '2014' },
+          { k: 'Heritage',          v: '35 years' },
+          { k: 'Product series',    v: '13' },
+          { k: 'Heat range',        v: '-20°C → +100°C' },
+          { k: 'Headquarters',      v: 'İSTOÇ · Istanbul' },
+          { k: 'Use',               v: 'Home · hotel · restaurant · café' },
+        ],
+        marketsTitle: 'Where our products are used',
+        markets: [
+          { r: 'Professional', c: ['Hotels', 'Restaurants', 'Cafés', 'Catering'] },
+          { r: 'Retail',       c: ['Chain stores', 'Online', 'Distributors', 'Export'] },
+          { r: 'Corporate',    c: ['Custom-logo', 'Municipal', 'Promotional', 'Events'] },
+          { r: 'Household',    c: ['Everyday', 'Festive', 'Kids', 'Gifts'] },
+        ],
+        certTitle: 'Our certifications',
+        certBody: 'All raw materials and finished products carry food-contact certifications. Production follows international quality and hygiene standards.',
+        certs: ['ISO 9001:2015', 'ISO 22000:2018', 'Intertek', 'FQC', 'Domestic Production', 'Ministry of Food & Agriculture'],
+      };
+
+  return (
+    <section className="section" data-anim="section">
+      <div className="about__head">
+        <span className="eyebrow" data-anim="fade-up">{t.eyebrow}</span>
+        <h1 className="about__title"><span data-split-text>{t.title}</span></h1>
+        <p className="about__lead lead" data-anim="fade-up" data-anim-delay="120">{t.lead}</p>
+      </div>
+
+      <div className="about__facts" data-anim-stagger>
+        {t.facts.map((f, i) => (
+          <div className="about__fact" key={i} data-anim="stagger-item">
+            <span className="about__fact-v">{f.v}</span>
+            <span className="about__fact-k">{f.k}</span>
+          </div>
+        ))}
+      </div>
+
+      <div className="about__markets">
+        <h2 className="h2" data-anim="fade-up">{t.marketsTitle}</h2>
+        <div className="about__market-grid" data-anim-stagger>
+          {t.markets.map((m, i) => (
+            <div key={i} className="market" data-anim="stagger-item">
+              <span className="meta">{m.r}</span>
+              <ul>{m.c.map((x, j) => <li key={j}>{x}</li>)}</ul>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="about__cert" data-anim="fade-up">
+        <div>
+          <span className="eyebrow">{t.certTitle}</span>
+          <p className="about__cert-body">{t.certBody}</p>
+        </div>
+        <div className="about__cert-grid about__cert-grid--6" data-anim-stagger>
+          {t.certs.map((c, i) => (
+            <div key={i} className="cert-chip" data-anim="stagger-item">{c}</div>
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+window.About = About;
+
+
+/* ====== Contact.jsx ====== */
+// Contact.jsx — export inquiry form
+function Contact({ lang }) {
+  const [submitted, setSubmitted] = React.useState(false);
+
+  const t = lang === 'tr'
+    ? {
+        eyebrow: 'İletişim',
+        title: 'Bizimle iletişime geçin.',
+        lead: 'Bayi, ihracat, özel logolu üretim veya numune talepleriniz için formu doldurun; ekibimiz iki iş günü içinde size döner.',
+        f: {
+          name: 'Ad soyad', company: 'Şirket', email: 'E-posta', phone: 'Telefon',
+          country: 'Ülke', interest: 'İlgilenilen ürün serileri',
+          msg: 'Mesaj', submit: 'Talep gönder',
+        },
+        cats: ['Kare Seri', 'International', 'Elegant', 'Eco', 'Tepsiler', 'Çocuk', 'Bölmeli', 'Özel Logolu'],
+        direct: 'Doğrudan iletişim', dir: [
+          { i: 'mail',      l: 'info@akelmelamin.com',                          href: 'mailto:info@akelmelamin.com' },
+          { i: 'phone',     l: '+90 507 425 34 46',                              href: 'tel:+905074253446' },
+          { i: 'phone',     l: '+90 532 161 88 46',                              href: 'tel:+905321618846' },
+          { i: 'map-pin',   l: 'İSTOÇ 10.Ada No:9/11, Bağcılar/İstanbul',        href: 'https://maps.google.com/?q=İSTOÇ+10.Ada+No:9/11+Bağcılar+İstanbul' },
+          { i: 'globe',     l: 'akelmelamin.com',                                href: 'https://akelmelamin.com' },
+          { i: 'instagram', l: '@akelmelamin',                                   href: 'https://instagram.com/akelmelamin' },
+        ],
+        sent: 'Talebiniz alındı.',
+        sentBody: 'Ekibimiz iki iş günü içinde size geri dönecek.',
+      }
+    : {
+        eyebrow: 'Contact',
+        title: 'Get in touch.',
+        lead: 'For wholesale, export, custom-logo production or sample requests, fill in the form and our team will reply within two business days.',
+        f: {
+          name: 'Full name', company: 'Company', email: 'Email', phone: 'Phone',
+          country: 'Country', interest: 'Product series of interest',
+          msg: 'Message', submit: 'Send inquiry',
+        },
+        cats: ['Square Series', 'International', 'Elegant', 'Eco', 'Trays', 'Kids', 'Compartment', 'Custom-logo'],
+        direct: 'Direct contact', dir: [
+          { i: 'mail',      l: 'info@akelmelamin.com',                         href: 'mailto:info@akelmelamin.com' },
+          { i: 'phone',     l: '+90 507 425 34 46',                             href: 'tel:+905074253446' },
+          { i: 'phone',     l: '+90 532 161 88 46',                             href: 'tel:+905321618846' },
+          { i: 'map-pin',   l: 'İSTOÇ 10.Ada No:9/11, Bağcılar/Istanbul',       href: 'https://maps.google.com/?q=İSTOÇ+10.Ada+No:9/11+Bağcılar+İstanbul' },
+          { i: 'globe',     l: 'akelmelamin.com',                               href: 'https://akelmelamin.com' },
+          { i: 'instagram', l: '@akelmelamin',                                  href: 'https://instagram.com/akelmelamin' },
+        ],
+        sent: 'Your inquiry is received.',
+        sentBody: 'Our team will reply within two business days.',
+      };
+
+  const countries = ['Türkiye','Fas / Morocco','Tayland / Thailand','Çin / China','Cezayir / Algeria','Mısır / Egypt','BAE / UAE','Suudi Arabistan / Saudi Arabia','Tunus / Tunisia','Libya','Ürdün / Jordan','Lübnan / Lebanon','Irak / Iraq','Other'];
+
+  if (submitted) {
+    return (
+      <section className="section">
+        <div className="sent">
+          <i data-lucide="check-circle"></i>
+          <h2 className="h2">{t.sent}</h2>
+          <p className="lead">{t.sentBody}</p>
+          <button className="btn btn--ghost" onClick={() => setSubmitted(false)}>
+            {lang === 'tr' ? 'Yeni bir talep' : 'New inquiry'} →
+          </button>
+        </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="section" data-anim="section">
+      <div className="contact">
+        <div className="contact__intro" data-anim="fade-up">
+          <span className="eyebrow">{t.eyebrow}</span>
+          <h1 className="contact__title">{t.title}</h1>
+          <p className="lead">{t.lead}</p>
+
+          <div className="contact__direct">
+            <span className="meta">{t.direct}</span>
+            <ul>
+              {t.dir.map((d, i) => (
+                <li key={i}>
+                  <i data-lucide={d.i}></i>
+                  {d.href
+                    ? <a href={d.href} target={d.href.startsWith('http') ? '_blank' : undefined} rel={d.href.startsWith('http') ? 'noopener' : undefined}>{d.l}</a>
+                    : d.l}
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+
+        <form className="contact__form" data-anim="fade-up" data-anim-delay="100" onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
+          <div className="grid-2">
+            <Field label={t.f.name}><input className="input" required /></Field>
+            <Field label={t.f.company}><input className="input" required /></Field>
+            <Field label={t.f.email}><input className="input" type="email" required /></Field>
+            <Field label={t.f.phone}><input className="input" /></Field>
+            <Field label={t.f.country}>
+              <select className="select" required>
+                <option value="">—</option>
+                {countries.map(c => <option key={c}>{c}</option>)}
+              </select>
+            </Field>
+            <Field label={t.f.interest}>
+              <div className="checks">
+                {t.cats.map(c => (
+                  <label key={c} className="check">
+                    <input type="checkbox" /> <span>{c}</span>
+                  </label>
+                ))}
+              </div>
+            </Field>
+          </div>
+          <Field label={t.f.msg}>
+            <textarea className="input" rows="4"></textarea>
+          </Field>
+          <button type="submit" className="btn btn--primary btn--lg magnetic">
+            {t.f.submit} →
+          </button>
+        </form>
+      </div>
+    </section>
+  );
+}
+
+function Field({ label, children }) {
+  return (
+    <label className="field">
+      <span className="field__lbl">{label}</span>
+      {children}
+    </label>
+  );
+}
+
+window.Contact = Contact;
+window.Field = Field;
+
+
+/* ====== CatalogPage.jsx ====== */
+// CatalogPage.jsx — PDF download with soft email-gate
+function CatalogPage({ lang }) {
+  const [gated, setGated] = React.useState(true);
+  const [email, setEmail] = React.useState('');
+  const [downloaded, setDownloaded] = React.useState(false);
+
+  const t = lang === 'tr'
+    ? { eyebrow: 'Katalog · 2026 · v23',
+        title: 'Melamin Servis Ekipmanları 2026.',
+        lead: 'Kare Seri · Elegant · International · Açık Büfe · Eco · Tepsiler · Çocuk Tabakları · Özel Logolu — 13 ürün serisi, 56 sayfa, çift dilli (TR/EN).',
+        gate: 'E-posta ile bildirim al (opsiyonel)',
+        gateNote: 'E-postanı paylaşırsan yeni baskılarda seni haberdar ederiz. Zorunlu değil.',
+        skip: 'Atla, sadece indir',
+        submit: 'Kataloğu indir',
+        downloaded: 'İndiriliyor...',
+        what: 'Katalogda neler var',
+        rows: [
+          '13 ürün serisi ve ürün kodları',
+          'Kare Seri (Beyaz/Siyah), Elegant, International, Eco',
+          'Masaüstü Aksesuarları · Açık Büfe · Çocuk Tabakları',
+          'Tepsiler · Bölmeli · Diplomat Kayık · Günlük Desenli',
+          'Özel Logolu üretim örnekleri (Tutti Pizza, belediye, vb.)',
+          'Ürün özellikleri, bakım ve kullanım talimatları',
+          'Üretim ve kalite standartları · Sertifikalar',
+        ],
+      }
+    : { eyebrow: 'Catalog · 2026 · v23',
+        title: 'Melamine Service Equipment 2026.',
+        lead: 'Square · Elegant · International · Buffet · Eco · Trays · Kids\' Plates · Custom-logo — 13 product series, 56 pages, bilingual (TR/EN).',
+        gate: 'Email for new edition notifications (optional)',
+        gateNote: 'If you share your email, we\'ll notify you when new editions drop. Not required.',
+        skip: 'Skip, just download',
+        submit: 'Download catalog',
+        downloaded: 'Downloading...',
+        what: 'What\'s in the catalog',
+        rows: [
+          '13 product series with SKU codes',
+          'Square (White/Black), Elegant, International, Eco lines',
+          'Tabletop Accessories · Buffet · Kids\' Plates',
+          'Trays · Compartment · Diplomat Boat · Everyday Pattern',
+          'Custom-logo production examples (Tutti Pizza, municipal, etc.)',
+          'Product features, care & usage instructions',
+          'Manufacturing & quality standards · Certifications',
+        ],
+      };
+
+  const pdfUrl = './catalog/akel-2026.pdf';
+
+  function trigger() {
+    setGated(false);
+    setDownloaded(true);
+    const a = document.createElement('a');
+    a.href = pdfUrl;
+    a.download = 'Akel-Melamin-Katalog-2026.pdf';
+    document.body.appendChild(a); a.click(); a.remove();
+    setTimeout(() => setDownloaded(false), 2500);
+  }
+
+  return (
+    <section className="section" data-anim="section">
+      <div className="catalog-page">
+        <div className="catalog-page__hero" data-anim="fade-up">
+          <span className="eyebrow">{t.eyebrow}</span>
+          <h1 className="catalog-page__title">{t.title}</h1>
+          <p className="lead">{t.lead}</p>
+
+          <div className="catalog-page__action">
+            {gated ? (
+              <form onSubmit={(e) => { e.preventDefault(); trigger(); }} className="catalog-gate">
+                <label className="field">
+                  <span className="field__lbl">{t.gate}</span>
+                  <input
+                    className="input"
+                    type="email"
+                    placeholder="you@company.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                  <span className="field__hint">{t.gateNote}</span>
+                </label>
+                <div className="catalog-gate__row">
+                  <button type="submit" className="btn btn--primary btn--lg magnetic">
+                    <i data-lucide="download"></i> {t.submit}
+                  </button>
+                  <button type="button" className="btn btn--link" onClick={trigger}>
+                    {t.skip} →
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <div className="catalog-downloaded">
+                <i data-lucide="check-circle"></i>
+                <span>{downloaded ? t.downloaded : (lang === 'tr' ? 'İndirildi.' : 'Downloaded.')}</span>
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="catalog-page__cover" data-anim="fade-up" data-anim-delay="120">
+          <div className="catalog-cover">
+            <div className="catalog-cover__band">
+              <span className="catalog-cover__year">2026</span>
+              <span className="catalog-cover__label">v23 · KATALOG</span>
+            </div>
+            <img className="catalog-cover__logo" src="./img/akel-logo-cropped.png" alt="" />
+            <div className="catalog-cover__foot">
+              <span className="meta">56 pp · EN · TR · 6,3 MB</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* ---- PDF preview — opt-in via button, not open by default ---- */}
+      <CatalogPreview lang={lang} pdfUrl={pdfUrl} />
+
+      <div className="catalog-contents" data-anim="fade-up">
+        <span className="eyebrow">{t.what}</span>
+        <ul data-anim-stagger>
+          {t.rows.map((r, i) => (
+            <li key={i} data-anim="stagger-item"><span className="catalog-contents__n">{String(i+1).padStart(2,'0')}</span> {r}</li>
+          ))}
+        </ul>
+      </div>
+    </section>
+  );
+}
+
+// Opt-in PDF viewer — user clicks "Önizle" to load the iframe. Keeps initial
+// page light (no 6MB fetch on catalog route entry).
+function CatalogPreview({ lang, pdfUrl }) {
+  const [open, setOpen] = React.useState(false);
+  React.useEffect(() => {
+    if (open && window.lucide) window.lucide.createIcons();
+  }, [open]);
+  const t = lang === 'tr'
+    ? { open: 'Önizlemeyi aç', close: 'Önizlemeyi kapat', hint: '56 sayfa · 6,3 MB PDF — açmak isteğe bağlıdır.',
+        openTab: 'Yeni sekmede aç', download: 'İndir',
+        title: 'Melamin Servis Ekipmanları 2026 · v23' }
+    : { open: 'Open preview', close: 'Close preview', hint: '56 pages · 6.3 MB PDF — opening is optional.',
+        openTab: 'Open in new tab', download: 'Download',
+        title: 'Melamine Service Equipment 2026 · v23' };
+  return (
+    <div className={`catalog-viewer ${open ? 'is-open' : ''}`} data-anim="fade-up">
+      <div className="catalog-viewer__head">
+        <div className="catalog-viewer__heading">
+          <span className="eyebrow">{lang === 'tr' ? 'Önizleme' : 'Preview'}</span>
+          <h3 className="h3">{t.title}</h3>
+          <span className="catalog-viewer__hint">{t.hint}</span>
+        </div>
+        <div className="catalog-viewer__actions">
+          <button
+            className="btn btn--primary btn--sm magnetic"
+            onClick={() => setOpen(o => !o)}
+            aria-expanded={open}
+          >
+            <i data-lucide={open ? 'x' : 'eye'}></i> {open ? t.close : t.open}
+          </button>
+          <a className="btn btn--ghost btn--sm" href={pdfUrl} target="_blank" rel="noopener">
+            <i data-lucide="external-link"></i> {t.openTab}
+          </a>
+          <a className="btn btn--ghost btn--sm" href={pdfUrl} download="Akel-Melamin-Katalog-2026.pdf">
+            <i data-lucide="download"></i> {t.download}
+          </a>
+        </div>
+      </div>
+      {open && (
+        <object
+          className="catalog-viewer__frame"
+          data={pdfUrl + '#view=FitH&toolbar=1&navpanes=0'}
+          type="application/pdf"
+        >
+          <iframe
+            src={pdfUrl + '#view=FitH'}
+            title="Akel Katalog 2026"
+            loading="lazy"
+          ></iframe>
+          <p className="catalog-viewer__fallback">
+            {lang === 'tr'
+              ? 'Tarayıcın PDF gömmeyi desteklemiyor. '
+              : 'Your browser does not support embedded PDFs. '}
+            <a href={pdfUrl} download>{lang === 'tr' ? 'Kataloğu indir' : 'Download the catalog'}</a>.
+          </p>
+        </object>
+      )}
+    </div>
+  );
+}
+
+window.CatalogPreview = CatalogPreview;
+window.CatalogPage = CatalogPage;
+
+
+/* ====== Footer.jsx ====== */
+// Footer.jsx
+function Footer({ lang, navigate }) {
+  const t = lang === 'tr'
+    ? {
+        tag: 'Akel Melamin Plastik San.Tic.Ltd.Şti. Her sofrada kaliteye yer açın. 2014\'ten beri İstanbul.',
+        cols: [
+          { h: 'Ürün serileri', links: [['Kare Seri','products'],['Elegant','products'],['International','products'],['Eco','products'],['Tepsiler','products'],['Çocuk Tabakları','products'],['Özel Logolu','products']] },
+          { h: 'Şirket',       links: [['Hakkımızda','about'],['Üretim & Kalite','about'],['Sertifikalarımız','about'],['İletişim','contact']] },
+          { h: 'Kaynaklar',    links: [['Katalog PDF · 2026','catalog'],['info@akelmelamin.com','contact'],['+90 507 425 34 46','contact']] },
+        ],
+        legal: '© 2026 Akel Melamin Plastik San.Tic.Ltd.Şti. Tüm hakları saklıdır.',
+      }
+    : {
+        tag: 'Akel Melamin Plastik San.Tic.Ltd.Şti. Make room for quality at every table. Istanbul since 2014.',
+        cols: [
+          { h: 'Product series', links: [['Square Series','products'],['Elegant','products'],['International','products'],['Eco','products'],['Trays','products'],['Kids\' Plates','products'],['Custom-logo','products']] },
+          { h: 'Company',        links: [['About','about'],['Manufacturing','about'],['Certifications','about'],['Contact','contact']] },
+          { h: 'Resources',      links: [['Catalog PDF · 2026','catalog'],['info@akelmelamin.com','contact'],['+90 507 425 34 46','contact']] },
+        ],
+        legal: '© 2026 Akel Melamin Plastik San.Tic.Ltd.Şti. All rights reserved.',
+      };
+
+  return (
+    <footer className="site-footer">
+      <div className="site-footer__top">
+        <div className="site-footer__brand">
+          <img src="./img/akel-logo-cropped.png" alt="Akel Melamin" />
+          <p className="site-footer__tag">{t.tag}</p>
+          <div className="site-footer__social">
+            <a href="https://instagram.com/akelmelamin" target="_blank" rel="noopener" aria-label="Instagram @akelmelamin">
+              <i data-lucide="instagram"></i> @akelmelamin
+            </a>
+            <a href="https://akelmelamin.com" target="_blank" rel="noopener" aria-label="akelmelamin.com">
+              <i data-lucide="globe"></i> akelmelamin.com
+            </a>
+          </div>
+        </div>
+        {t.cols.map((c, i) => (
+          <div className="site-footer__col" key={i}>
+            <span className="meta">{c.h}</span>
+            <ul>
+              {c.links.map(([label, path]) => (
+                <li key={label}>
+                  <a href="#" onClick={(e) => { e.preventDefault(); navigate(path); }}>
+                    {label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+      <div className="site-footer__bottom">
+        <span className="meta">{t.legal}</span>
+        <div className="site-footer__certs">
+          <span className="cert-chip cert-chip--sm">ISO 9001:2015</span>
+          <span className="cert-chip cert-chip--sm">ISO 22000:2018</span>
+          <span className="cert-chip cert-chip--sm">Intertek</span>
+          <span className="cert-chip cert-chip--sm">FQC</span>
+          <span className="cert-chip cert-chip--sm">Yerli Üretim</span>
+        </div>
+      </div>
+    </footer>
+  );
+}
+
+window.Footer = Footer;
+
+
+/* ====== App.jsx ====== */
+function App() {
+  const [lang, setLang] = React.useState(() => localStorage.getItem('akel-lang') || 'tr');
+  const [path, setPath] = React.useState(() => localStorage.getItem('akel-path') || 'home');
+  const [product, setProduct] = React.useState(null);
+  React.useEffect(() => { localStorage.setItem('akel-lang', lang); document.documentElement.lang = lang; }, [lang]);
+  React.useEffect(() => { localStorage.setItem('akel-path', path); }, [path]);
+  const navigate = (p) => { setPath(p); setProduct(null); requestAnimationFrame(() => { const s = document.querySelector('.kit-scroll'); if (s) s.scrollTop = 0; }); };
+  const openProduct = (p) => { setProduct(p); setPath('product'); requestAnimationFrame(() => { const s = document.querySelector('.kit-scroll'); if (s) s.scrollTop = 0; }); };
+  React.useEffect(() => {
+    if (window.lucide) window.lucide.createIcons();
+    if (window.__akelAnimations) window.__akelAnimations.init(document);
+  }, [path, lang, product]);
+  return (
+    <div className="kit-scroll" data-screen-label={`Akel · ${path}`}>
+      <Header lang={lang} setLang={setLang} currentPath={path} navigate={navigate} />
+      {path === 'home' && <>
+        <Hero lang={lang} navigate={navigate} />
+        <StatsRow lang={lang} />
+        <Categories lang={lang} navigate={navigate} />
+        <ProductionBand lang={lang} navigate={navigate} />
+        <CatalogBand lang={lang} navigate={navigate} />
+      </>}
+      {path === 'products' && <ProductGrid lang={lang} navigate={navigate} openProduct={openProduct} />}
+      {path === 'product' && product && <ProductDetail lang={lang} product={product} onBack={() => setPath('products')} />}
+      {path === 'about' && <About lang={lang} navigate={navigate} />}
+      {path === 'contact' && <Contact lang={lang} />}
+      {path === 'catalog' && <CatalogPage lang={lang} navigate={navigate} />}
+      <Footer lang={lang} navigate={navigate} />
+    </div>
+  );
+}
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(<App />);
+
+</script>
+</body></html>

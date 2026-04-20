@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8"><title>Brand accent</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  body { padding: 24px; margin: 0; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .group { border: 1px solid var(--border); border-radius: 4px; padding: 16px; background: var(--paper-soft); }
+  .group-label { display: block; margin-bottom: 12px; }
+  .row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+  .sw { border-radius: 4px; padding: 14px; min-height: 82px; display: flex; flex-direction: column; justify-content: space-between; border: 1px solid transparent; }
+  .sw .name { font-family: var(--font-display); font-weight: 700; font-size: 12px; letter-spacing: -0.01em; }
+  .sw .hex  { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.02em; text-transform: uppercase; opacity: 0.9; }
+  .ter   { background: var(--terracotta); color: #fff; }
+  .ter-d { background: var(--terracotta-dark); color: #fff; }
+  .ter-i { background: var(--terracotta-ink); color: #fff; }
+  .red   { background: var(--logo-red); color: #fff; }
+  .note { font-size: 11px; color: var(--slate); margin-top: 10px; }
+</style></head>
+<body>
+  <div class="grid">
+    <div class="group">
+      <span class="eyebrow group-label">UI accent — use freely</span>
+      <div class="row">
+        <div class="sw ter"><span class="name">terracotta</span><span class="hex">#B8472A</span></div>
+        <div class="sw ter-d"><span class="name">-dark</span><span class="hex">#96391F</span></div>
+        <div class="sw ter-i"><span class="name">-ink</span><span class="hex">#6F2A17</span></div>
+      </div>
+      <div class="note">CTAs, eyebrow labels, highlights, focus rings.</div>
+    </div>
+    <div class="group">
+      <span class="eyebrow group-label">Logo only — reserved</span>
+      <div class="row" style="grid-template-columns: 1fr;">
+        <div class="sw red"><span class="name">logo-red</span><span class="hex">#CE171B</span></div>
+      </div>
+      <div class="note">Reserved for the mark itself. Do not use in UI — keeps the logo the only red object on the page.</div>
+    </div>
+  </div>
+</body></html>

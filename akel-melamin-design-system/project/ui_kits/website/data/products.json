@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-04-20T00:00:00",
+  "source": "seed",
+  "categories": [
+    { "key": "kare",          "tr": "Kare Seri",              "en": "Square Series" },
+    { "key": "kare-siyah",    "tr": "Kare Seri Siyah",        "en": "Square Series · Black" },
+    { "key": "international", "tr": "International Seri",     "en": "International Series" },
+    { "key": "masaustu",      "tr": "Masaüstü Aksesuarları",  "en": "Tabletop Accessories" },
+    { "key": "acikbufe",      "tr": "Açık Büfe · Servis",     "en": "Buffet · Serving" },
+    { "key": "elegant",       "tr": "Elegant Seri",           "en": "Elegant Series" },
+    { "key": "kids",          "tr": "Çocuk Tabakları",        "en": "Kids' Plates" },
+    { "key": "bolmeli",       "tr": "Bölmeli Tabaklar",       "en": "Compartment Plates" },
+    { "key": "tepsiler",      "tr": "Tepsiler",               "en": "Trays" },
+    { "key": "eco",           "tr": "Eco Seri",               "en": "Eco Series" },
+    { "key": "diplomat",      "tr": "Diplomat Kayık Seri",    "en": "Diplomat Boat Series" },
+    { "key": "gunluk",        "tr": "Günlük Desenli Seri",    "en": "Everyday Pattern Line" },
+    { "key": "logolu",        "tr": "Özel Logolu Ürünler",    "en": "Custom-logo Products" }
+  ],
+  "products": [
+    { "sku": "AKL-GOZDE-B", "kategori": "international", "ad_tr": "Gözde Beyaz Set", "ad_en": "Gözde White Set", "renk": "beyaz", "foto_dosya_adi": "gozde-white", "boyut": "Yuvarlak set", "aciklama_tr": "Klasik yuvarlak form. Profesyonel servis için nested set.", "aciklama_en": "Classic round form. Nested set for professional service.", "kullanim_alani": "otel, restoran, kafe, ev", "aktif": "evet", "oncelik": 1, "ozel_logolu_uygun": "evet", "etiket": "" },
+    { "sku": "AKL-GOZDE-S", "kategori": "international", "ad_tr": "Gözde Siyah Set", "ad_en": "Gözde Black Set", "renk": "siyah", "foto_dosya_adi": "gozde-black", "boyut": "Yuvarlak set", "aciklama_tr": "Klasik yuvarlak form. Siyah finiş, şık sunum.", "aciklama_en": "Classic round form. Black finish for refined presentation.", "kullanim_alani": "otel, restoran, kafe", "aktif": "evet", "oncelik": 2, "ozel_logolu_uygun": "evet", "etiket": "" },
+    { "sku": "AKL-KAVI-B", "kategori": "kare", "ad_tr": "Kavi Beyaz Set", "ad_en": "Kavi White Set", "renk": "beyaz", "foto_dosya_adi": "kavi-white", "boyut": "Kare set", "aciklama_tr": "Zarif kare form. Dayanıklı gündelik ve profesyonel kullanım.", "aciklama_en": "Elegant square form. Durable for everyday and professional use.", "kullanim_alani": "otel, restoran, kafe, ev", "aktif": "evet", "oncelik": 1, "ozel_logolu_uygun": "evet", "etiket": "" },
+    { "sku": "AKL-KAVI-S", "kategori": "kare-siyah", "ad_tr": "Kavi Siyah Set", "ad_en": "Kavi Black Set", "renk": "siyah", "foto_dosya_adi": "kavi-black", "boyut": "Kare set", "aciklama_tr": "Kare formun siyah varyantı. Kontrastlı sunumlar için.", "aciklama_en": "Black variant of the square form. For high-contrast presentation.", "kullanim_alani": "otel, restoran, kafe", "aktif": "evet", "oncelik": 1, "ozel_logolu_uygun": "evet", "etiket": "" }
+  ]
+}
