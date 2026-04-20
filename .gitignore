@@ -45,3 +45,11 @@ akel-melamin-design-system/project/debug-site.jpg
 webgörseli*.jpg
 webgorseli*.jpg
 screenshot*.png
+
+# macOS resource-fork sidecars
+._*
+.DS_Store
+
+# Large originals that have been optimized into img/
+AKEL*.jpg
+AKEL*.JPG

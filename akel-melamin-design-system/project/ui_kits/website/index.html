@@ -463,7 +463,6 @@ body::before {
 .hero__photo-stack img {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: center 55%;
-  mix-blend-mode: multiply;
   opacity: 0; transform: scale(1.04);
   transition: opacity 800ms var(--ease-out), transform 1400ms var(--ease-out);
 }
@@ -1001,7 +1000,6 @@ body::before {
 @media (max-width: 720px) { .hero__visual { height: clamp(260px, 40vh, 420px); } }
 .hero__photo {
   width: 100%; height: 100%; object-fit: cover; object-position: center 52%;
-  mix-blend-mode: multiply;
   user-select: none; -webkit-user-drag: none;
 }
 .hero__photo-stack img {
@@ -2227,10 +2225,9 @@ function Hero({ lang, navigate }) {
   }, []);
 
   const photos = [
-    { src: './img/gozde-white.jpg', label: lang === 'tr' ? 'Gözde · Beyaz set' : 'Gözde · White set' },
-    { src: './img/gozde-black.jpg', label: lang === 'tr' ? 'Gözde · Siyah set' : 'Gözde · Black set' },
-    { src: './img/kavi-white.jpg',  label: lang === 'tr' ? 'Kavi · Beyaz set'  : 'Kavi · White set'  },
-    { src: './img/kavi-black.jpg',  label: lang === 'tr' ? 'Kavi · Siyah set'  : 'Kavi · Black set'  },
+    { src: './img/akel-hero-1.jpg', label: lang === 'tr' ? 'Akel Melamin · Koleksiyon 01' : 'Akel Melamin · Collection 01' },
+    { src: './img/akel-hero-2.jpg', label: lang === 'tr' ? 'Akel Melamin · Koleksiyon 02' : 'Akel Melamin · Collection 02' },
+    { src: './img/akel-hero-3.jpg', label: lang === 'tr' ? 'Akel Melamin · Koleksiyon 03' : 'Akel Melamin · Collection 03' },
   ];
   const [active, setActive] = React.useState(0);
   React.useEffect(() => {
