@@ -870,9 +870,16 @@ body::before {
 }
 .section__title {
   font-family: var(--font-display); font-weight: 700;
-  font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.02;
+  font-size: clamp(2rem, 4vw, 3.25rem); line-height: 1.06;
   letter-spacing: -0.025em; color: var(--ink); margin: 8px 0 0;
-  max-width: 20ch; text-wrap: balance;
+  max-width: 28ch;
+}
+/* Split-text iç span'ları balance'ı kıramadığı için başlıkta kesilmeye
+   yol açıyordu. Wrapper'ın boyutunu serbest bırakıyoruz.              */
+.section__title .split-text {
+  display: block;
+  white-space: normal;
+  overflow-wrap: break-word;
 }
 
 /* ============================================================
@@ -1934,6 +1941,15 @@ html,body{margin:0;background:var(--paper,#F7F6F3);}#root{min-height:100vh;}
       });
     }, { threshold: 0.2 });
     root.querySelectorAll('.split-text').forEach(el => io.observe(el));
+
+    // Safety: if IntersectionObserver somehow misses an element
+    // (e.g., element rendered inside a clipped container), reveal after 2s
+    // so text never stays hidden.
+    setTimeout(() => {
+      root.querySelectorAll('.split-text').forEach(el => {
+        el.classList.add('is-in');
+      });
+    }, 2000);
   }
 
   // Tilt — mouse-parallax 3D for .tilt elements
