@@ -40,3 +40,8 @@ akel-melamin-design-system/project/debug-site.jpg
 .env
 .env.local
 *.key
+
+# Screenshots / chat captures not needed in repo
+webgörseli*.jpg
+webgorseli*.jpg
+screenshot*.png
