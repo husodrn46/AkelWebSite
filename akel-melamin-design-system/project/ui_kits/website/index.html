@@ -992,6 +992,7 @@ body::before {
 }
 .hero__visual > * { position: relative; z-index: 1; }
 .hero__photo-stack {
+  position: absolute;
   left: var(--page-gutter);
   right: var(--page-gutter);
   inset: 0 var(--page-gutter);
@@ -1155,8 +1156,6 @@ body::before {
 }
 .cat-card:nth-child(3n+2) .cat-card__ph { background: #E8E4DC; }
 .cat-card:nth-child(3n+3) .cat-card__ph { background: #DDD9D0; }
-.cat-card:nth-child(2) .cat-card__ph { background: var(--ink); }
-.cat-card:nth-child(2) .cat-card__label { color: var(--ink); }
 .cat-card__foot {
   padding: 14px 2px 0; display: flex; justify-content: space-between; align-items: baseline;
 }
