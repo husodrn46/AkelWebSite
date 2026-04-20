@@ -1,6 +1,27 @@
 <!DOCTYPE html>
 <html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Akel Melamin — Her Sofrada Kaliteye Yer Açın</title>
+<meta name="description" content="Akel Melamin — 2014'te 35 yıllık üretim mirası üzerine kurulan Türk melamin sofra eşyası üreticisi. Otel, restoran, kafe ve ev için 13 ürün serisi. Gıda ile temasa uygun, ISO 9001 / ISO 22000 sertifikalı.">
+<meta name="theme-color" content="#CE171B">
+<link rel="canonical" href="https://akelmelamin.com/">
+<link rel="alternate" hreflang="tr" href="https://akelmelamin.com/">
+<link rel="alternate" hreflang="en" href="https://akelmelamin.com/?lang=en">
+<link rel="alternate" hreflang="x-default" href="https://akelmelamin.com/">
+<link rel="icon" type="image/png" sizes="32x32" href="./img/akel-logo-cropped.png">
+<link rel="icon" type="image/png" sizes="192x192" href="./img/akel-logo-cropped.png">
+<link rel="apple-touch-icon" href="./img/akel-logo-cropped.png">
+<meta property="og:site_name" content="Akel Melamin">
+<meta property="og:title" content="Akel Melamin — Her Sofrada Kaliteye Yer Açın">
+<meta property="og:description" content="Türk melamin sofra eşyası üreticisi. 13 ürün serisi, otel / restoran / kafe / ev için. ISO 9001 · ISO 22000 · Intertek sertifikalı.">
+<meta property="og:image" content="https://akelmelamin.com/img/gozde-white.jpg">
+<meta property="og:url" content="https://akelmelamin.com/">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="tr_TR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Akel Melamin — Her Sofrada Kaliteye Yer Açın">
+<meta name="twitter:description" content="Türk melamin sofra eşyası üreticisi. 13 ürün serisi · ISO 9001 · ISO 22000.">
+<meta name="twitter:image" content="https://akelmelamin.com/img/gozde-white.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <style>
 /* ============================================================
@@ -265,6 +286,37 @@ hr {
 }
 
 ::selection { background: var(--terracotta); color: #fff; }
+
+/* A11y: skip-to-content link — hidden until focused */
+.skip-link {
+  position: fixed; top: -80px; left: 16px; z-index: 10001;
+  padding: 10px 16px;
+  background: var(--ink); color: var(--paper);
+  text-decoration: none; border-radius: 4px;
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 14px;
+  transition: top 200ms var(--ease-out);
+}
+.skip-link:focus { top: 16px; outline: 2px solid var(--terracotta); outline-offset: 2px; }
+
+/* Scroll-to-top FAB */
+.scroll-top {
+  position: fixed; right: clamp(16px, 3vw, 32px); bottom: 24px;
+  width: 48px; height: 48px; padding: 0;
+  background: var(--ink); color: var(--paper);
+  border: 0; border-radius: 50%;
+  display: grid; place-items: center;
+  cursor: pointer;
+  opacity: 0; pointer-events: none;
+  transform: translateY(16px);
+  transition: opacity 220ms, transform 220ms;
+  z-index: 55;
+  box-shadow: 0 8px 24px rgba(17,17,16,0.18);
+}
+.scroll-top.is-on { opacity: 1; pointer-events: auto; transform: translateY(0); }
+.scroll-top:hover { background: var(--terracotta); }
+.scroll-top svg { width: 20px; height: 20px; stroke-width: 2; }
+@media (max-width: 480px) { .scroll-top { width: 44px; height: 44px; bottom: 16px; } }
 
 /* ============================================================
    ATMOSPHERE — grain overlay, drafting grid, custom cursor
@@ -883,10 +935,11 @@ body::before {
   font-family: var(--font-display); font-weight: 700;
   font-variation-settings: "wdth" 82, "opsz" 96;
   font-size: clamp(3.25rem, 11vw, 10rem);
-  line-height: 0.9;
+  line-height: 1.02;
   letter-spacing: -0.045em; color: var(--ink);
   margin: 18px 0 28px; text-wrap: balance;
   max-width: 18ch;
+  padding-bottom: 0.08em;
 }
 .hero__title-accent {
   font-family: var(--font-serif);
@@ -1065,6 +1118,7 @@ body::before {
   display: flex; flex-direction: column;
   background: none; border: 0; padding: 0; text-align: left; cursor: pointer;
   transition: transform var(--dur-med) var(--ease-out);
+  color: inherit; text-decoration: none;
 }
 .cat-card:nth-child(1)  { grid-column: span 5; }
 .cat-card:nth-child(2)  { grid-column: span 4; }
@@ -1991,22 +2045,24 @@ function Header({ lang, setLang, currentPath, navigate }) {
       <div className="site-header__inner">
         <a
           className="site-header__brand"
-          href="#"
+          href="#/"
           onClick={(e) => { e.preventDefault(); goto('home'); }}
           title="Akel Melamin Plastik San.Tic.Ltd.Şti."
+          aria-label="Akel Melamin — anasayfa"
         >
-          <img src="./img/akel-logo-cropped.png" alt="Akel Melamin" />
+          <img src="./img/akel-logo-cropped.png" alt="Akel Melamin" width="160" height="79" decoding="async" />
           <span className="site-header__slogan pull-serif" aria-hidden="true">
             {lang === 'tr' ? 'Her sofrada kaliteye yer açın.' : 'Make room for quality at every table.'}
           </span>
         </a>
-        <nav className="site-header__nav">
+        <nav className="site-header__nav" aria-label={lang === 'tr' ? 'Ana menü' : 'Main menu'}>
           {nav.map((item) => (
             <a
               key={item.path}
-              href="#"
+              href={`#/${item.path}`}
               className={currentPath === item.path ? 'is-active' : ''}
               onClick={(e) => { e.preventDefault(); goto(item.path); }}
+              aria-current={currentPath === item.path ? 'page' : undefined}
             >
               {item.label}
             </a>
@@ -2014,14 +2070,14 @@ function Header({ lang, setLang, currentPath, navigate }) {
         </nav>
         <div className="site-header__actions">
           <LangSwitch lang={lang} setLang={setLang} />
-          <button
+          <button type="button"
             className="btn btn--primary btn--sm site-header__cta"
             onClick={() => goto('catalog')}
           >
             {lang === 'tr' ? 'Katalog' : 'Catalog'}
             <i data-lucide="download"></i>
           </button>
-          <button
+          <button type="button"
             className="mobile-menu-btn"
             aria-label={lang === 'tr' ? 'Menüyü aç' : 'Open menu'}
             aria-expanded={menuOpen}
@@ -2047,7 +2103,7 @@ function Header({ lang, setLang, currentPath, navigate }) {
           <aside className="mobile-drawer__panel">
             <div className="mobile-drawer__head">
               <span className="eyebrow">{lang === 'tr' ? 'Menü' : 'Menu'}</span>
-              <button
+              <button type="button"
                 className="mobile-drawer__close"
                 aria-label={lang === 'tr' ? 'Kapat' : 'Close'}
                 onClick={() => setMenuOpen(false)}
@@ -2055,23 +2111,24 @@ function Header({ lang, setLang, currentPath, navigate }) {
                 <i data-lucide="x"></i>
               </button>
             </div>
-            <nav className="mobile-drawer__nav">
-              <a href="#" className={currentPath === 'home' ? 'is-active' : ''} onClick={(e) => { e.preventDefault(); goto('home'); }}>
+            <nav className="mobile-drawer__nav" aria-label={lang === 'tr' ? 'Mobil menü' : 'Mobile menu'}>
+              <a href="#/home" className={currentPath === 'home' ? 'is-active' : ''} onClick={(e) => { e.preventDefault(); goto('home'); }} aria-current={currentPath === 'home' ? 'page' : undefined}>
                 {lang === 'tr' ? 'Anasayfa' : 'Home'}
               </a>
               {nav.map((item) => (
                 <a
                   key={item.path}
-                  href="#"
+                  href={`#/${item.path}`}
                   className={currentPath === item.path ? 'is-active' : ''}
                   onClick={(e) => { e.preventDefault(); goto(item.path); }}
+                  aria-current={currentPath === item.path ? 'page' : undefined}
                 >
                   {item.label}
                 </a>
               ))}
             </nav>
             <div className="mobile-drawer__foot">
-              <button className="btn btn--primary btn--lg" onClick={() => goto('catalog')}>
+              <button type="button" className="btn btn--primary btn--lg" onClick={() => goto('catalog')}>
                 <i data-lucide="download"></i> {lang === 'tr' ? 'Kataloğu indir' : 'Download catalog'}
               </button>
               <span className="mobile-drawer__slogan pull-serif">
@@ -2100,12 +2157,12 @@ function Header({ lang, setLang, currentPath, navigate }) {
 function LangSwitch({ lang, setLang }) {
   return (
     <div className="lang-switch" role="group" aria-label="Language">
-      <button
+      <button type="button"
         className={lang === 'tr' ? 'is-on' : ''}
         onClick={() => setLang('tr')}
       >TR</button>
       <span className="lang-switch__sep">·</span>
-      <button
+      <button type="button"
         className={lang === 'en' ? 'is-on' : ''}
         onClick={() => setLang('en')}
       >EN</button>
@@ -2177,15 +2234,15 @@ function Hero({ lang, navigate }) {
         </h1>
         <p className="hero__body">{copy.body}</p>
         <div className="hero__cta">
-          <button className="btn btn--primary magnetic" onClick={() => navigate('catalog')}>
+          <button type="button" className="btn btn--primary magnetic" onClick={() => navigate('catalog')}>
             {copy.primary} <i data-lucide="arrow-right"></i>
           </button>
-          <button className="btn btn--link" onClick={() => navigate('about')}>
+          <button type="button" className="btn btn--link" onClick={() => navigate('about')}>
             {copy.secondary} →
           </button>
         </div>
       </div>
-      <div className="hero__visual" aria-hidden="true">
+      <div className="hero__visual" role="region" aria-label={lang === 'tr' ? 'Ürün galerisi' : 'Product gallery'}>
         <div className="hero__ring">
           <svg viewBox="0 0 128 128">
             <defs>
@@ -2204,8 +2261,11 @@ function Hero({ lang, navigate }) {
               key={p.src}
               className={i === active ? 'is-active' : ''}
               src={p.src}
-              alt=""
+              alt={p.label}
+              width="1200"
+              height="960"
               loading={i === 0 ? 'eager' : 'lazy'}
+              decoding="async"
             />
           ))}
         </div>
@@ -2213,11 +2273,14 @@ function Hero({ lang, navigate }) {
         <div className="hero__visual-caption">
           <span className="meta">{photos[active].label}</span>
         </div>
-        <div className="hero__photo-nav">
-          {photos.map((_, i) => (
+        <div className="hero__photo-nav" role="tablist" aria-label={lang === 'tr' ? 'Ürün galerisi' : 'Product gallery'}>
+          {photos.map((p, i) => (
             <button
               key={i}
-              aria-label={`Photo ${i + 1}`}
+              type="button"
+              role="tab"
+              aria-selected={i === active}
+              aria-label={`${lang === 'tr' ? 'Fotoğraf' : 'Photo'} ${i + 1}: ${p.label}`}
               className={i === active ? 'is-on' : ''}
               onClick={() => setActive(i)}
             />
@@ -2234,16 +2297,16 @@ function StatsRow({ lang }) {
   // Text suffixes are rendered separately so the counter only animates the digits.
   const stats = {
     tr: [
-      { to: 35,  suffix: '',   small: 'yıl melamin tecrübesi' },
-      { to: 13,  suffix: '',   small: 'ürün serisi' },
-      { to: 2014, suffix: '',  small: 'kuruluş yılı' },
-      { to: 100, suffix: '°C', small: 'ısıya dayanıklı' },
+      { to: 35,  suffix: ' yıl', small: 'aile / sektör tecrübesi' },
+      { to: 13,  suffix: '',     small: 'ürün serisi' },
+      { to: 2014, suffix: '',    small: 'şirket kuruluşu' },
+      { to: 100, suffix: '°C',   small: 'ısıya dayanıklı' },
     ],
     en: [
-      { to: 35,  suffix: '',   small: 'years of melamine heritage' },
-      { to: 13,  suffix: '',   small: 'product series' },
-      { to: 2014, suffix: '',  small: 'year founded' },
-      { to: 100, suffix: '°C', small: 'heat-resistant' },
+      { to: 35,  suffix: ' yrs', small: 'family / sector heritage' },
+      { to: 13,  suffix: '',     small: 'product series' },
+      { to: 2014, suffix: '',    small: 'company founded' },
+      { to: 100, suffix: '°C',   small: 'heat-resistant' },
     ],
   }[lang];
 
@@ -2347,28 +2410,38 @@ function Categories({ lang, navigate }) {
           <span className="eyebrow" data-anim="fade-up">{t.eyebrow}</span>
           <h2 className="section__title"><span data-split-text>{t.heading}</span></h2>
         </div>
-        <button className="btn btn--link" onClick={() => navigate('products')} data-anim="fade-up" data-anim-delay="120">
+        <a className="btn btn--link" href="#/products" onClick={(e) => { e.preventDefault(); navigate('products'); }} data-anim="fade-up" data-anim-delay="120">
           {t.cta} →
-        </button>
+        </a>
       </div>
       <div className="cat-grid" data-anim-stagger>
         {cats.map((c, i) => (
-          <button
+          <a
             key={c.key}
+            href={`#/products?cat=${c.key}`}
             className={`cat-card cat-card--${c.key}`}
-            onClick={() => navigate('products')}
+            onClick={(e) => { e.preventDefault(); navigate('products'); }}
             data-anim="stagger-item"
+            aria-label={`${c.label} — ${c.count}`}
           >
             <div className="cat-card__ph" aria-hidden="true">
               {c.photo
-                ? <img className="cat-card__photo" src={`./img/${c.photo}.jpg`} alt="" loading="lazy" />
+                ? <img
+                    className="cat-card__photo"
+                    src={`./img/${c.photo}.jpg`}
+                    alt={`${c.label} — Akel Melamin`}
+                    loading="lazy"
+                    decoding="async"
+                    width="600"
+                    height="450"
+                  />
                 : <div className={`cat-shape cat-shape--${c.shape}`}></div>}
             </div>
             <div className="cat-card__foot">
               <span className="cat-card__label">{c.label}</span>
               <span className="cat-card__count">{c.count}</span>
             </div>
-          </button>
+          </a>
         ))}
       </div>
     </section>
@@ -2414,7 +2487,7 @@ function ProductionBand({ lang, navigate }) {
           <span className="eyebrow" data-anim="fade-up">{t.eyebrow}</span>
           <h2 className="band__title"><span data-split-text>{t.title}</span></h2>
           <p className="band__body" data-anim="fade-up" data-anim-delay="120">{t.body}</p>
-          <button className="btn btn--ghost" onClick={() => navigate('about')} data-anim="fade-up" data-anim-delay="180">
+          <button type="button" className="btn btn--ghost" onClick={() => navigate('about')} data-anim="fade-up" data-anim-delay="180">
             {t.cta} →
           </button>
         </div>
@@ -2457,7 +2530,7 @@ function CatalogBand({ lang, navigate }) {
           <p className="catalog-band__body">{t.body}</p>
         </div>
         <div className="catalog-band__right">
-          <button className="btn btn--primary btn--lg magnetic" onClick={() => navigate('catalog')}>
+          <button type="button" className="btn btn--primary btn--lg magnetic" onClick={() => navigate('catalog')}>
             <i data-lucide="download"></i> {t.primary}
           </button>
           <span className="catalog-band__note meta">{t.note}</span>
@@ -2553,7 +2626,7 @@ function ProductGrid({ lang, navigate, openProduct }) {
 
       <div className="filter-row" data-anim="fade-up">
         {filters.map(f => (
-          <button
+          <button type="button"
             key={f.k}
             className={`chip ${active === f.k ? 'is-on' : ''}`}
             onClick={() => setActive(f.k)}
@@ -2582,10 +2655,12 @@ function ProductGrid({ lang, navigate, openProduct }) {
                     ? <img
                         className="product-card__photo"
                         src={`./img/${p.foto_dosya_adi}.jpg`}
-                        alt=""
+                        alt={name}
                         loading="lazy"
+                        decoding="async"
+                        width="600"
+                        height="450"
                         onError={(e) => {
-                          // try .png fallback, else hide
                           if (!e.target.__triedPng) {
                             e.target.__triedPng = true;
                             e.target.src = `./img/${p.foto_dosya_adi}.png`;
@@ -2684,13 +2759,15 @@ function ProductDetail({ lang, product, onBack }) {
 
   return (
     <section className="section" data-anim="section">
-      <button className="btn btn--link" onClick={onBack}>{t.back}</button>
+      <button type="button" className="btn btn--link" onClick={onBack}>{t.back}</button>
 
       <div className="pd">
         <div className="pd__gallery" data-anim="fade-up">
           <div className="pd__hero" aria-hidden="true">
             {photoSrc
-              ? <img className="pd__photo" src={photoSrc} alt=""
+              ? <img className="pd__photo" src={photoSrc}
+                     alt={lang === 'tr' ? product.ad_tr : (product.ad_en || product.ad_tr)}
+                     width="800" height="800" decoding="async"
                      onError={(e) => {
                        if (!e.target.__triedPng) {
                          e.target.__triedPng = true;
@@ -2710,7 +2787,7 @@ function ProductDetail({ lang, product, onBack }) {
           )}
 
           <div className="pd__cta">
-            <button className="btn btn--primary btn--lg magnetic" onClick={onBack}>{t.request} →</button>
+            <button type="button" className="btn btn--primary btn--lg magnetic" onClick={onBack}>{t.request} →</button>
           </div>
 
           <SpecBlock title={t.specs} rows={rows} />
@@ -2904,7 +2981,7 @@ function Contact({ lang }) {
           <i data-lucide="check-circle"></i>
           <h2 className="h2">{t.sent}</h2>
           <p className="lead">{t.sentBody}</p>
-          <button className="btn btn--ghost" onClick={() => setSubmitted(false)}>
+          <button type="button" className="btn btn--ghost" onClick={() => setSubmitted(false)}>
             {lang === 'tr' ? 'Yeni bir talep' : 'New inquiry'} →
           </button>
         </div>
@@ -3087,7 +3164,7 @@ function CatalogPage({ lang }) {
               <span className="catalog-cover__year">2026</span>
               <span className="catalog-cover__label">v23 · KATALOG</span>
             </div>
-            <img className="catalog-cover__logo" src="./img/akel-logo-cropped.png" alt="" />
+            <img className="catalog-cover__logo" src="./img/akel-logo-cropped.png" alt="Akel Melamin logosu" width="200" height="99" decoding="async" />
             <div className="catalog-cover__foot">
               <span className="meta">56 pp · EN · TR · 6,3 MB</span>
             </div>
@@ -3133,7 +3210,7 @@ function CatalogPreview({ lang, pdfUrl }) {
           <span className="catalog-viewer__hint">{t.hint}</span>
         </div>
         <div className="catalog-viewer__actions">
-          <button
+          <button type="button"
             className="btn btn--primary btn--sm magnetic"
             onClick={() => setOpen(o => !o)}
             aria-expanded={open}
@@ -3182,18 +3259,48 @@ function Footer({ lang, navigate }) {
     ? {
         tag: 'Akel Melamin Plastik San.Tic.Ltd.Şti. Her sofrada kaliteye yer açın. 2014\'ten beri İstanbul.',
         cols: [
-          { h: 'Ürün serileri', links: [['Kare Seri','products'],['Elegant','products'],['International','products'],['Eco','products'],['Tepsiler','products'],['Çocuk Tabakları','products'],['Özel Logolu','products']] },
-          { h: 'Şirket',       links: [['Hakkımızda','about'],['Üretim & Kalite','about'],['Sertifikalarımız','about'],['İletişim','contact']] },
-          { h: 'Kaynaklar',    links: [['Katalog PDF · 2026','catalog'],['info@akelmelamin.com','contact'],['+90 507 425 34 46','contact']] },
+          { h: 'Ürün serileri', links: [
+              ['Kare Seri','products'],['Kare Seri Siyah','products'],['International Seri','products'],
+              ['Elegant Seri','products'],['Açık Büfe · Servis','products'],['Tepsiler','products'],
+              ['Eco Seri','products'],['Diplomat Kayık Seri','products'],['Günlük Desenli Seri','products'],
+              ['Masaüstü Aksesuarları','products'],['Çocuk Tabakları','products'],['Bölmeli Tabaklar','products'],
+              ['Özel Logolu Ürünler','products'],
+          ] },
+          { h: 'Şirket', links: [
+              ['Hakkımızda','about'],['Üretim & Kalite','about'],['Sertifikalarımız','about'],['İletişim','contact'],
+          ] },
+          { h: 'İletişim', links: [
+              ['Katalog PDF · 2026','catalog','internal'],
+              ['info@akelmelamin.com','mailto:info@akelmelamin.com','external'],
+              ['+90 507 425 34 46','tel:+905074253446','external'],
+              ['+90 532 161 88 46','tel:+905321618846','external'],
+              ['@akelmelamin','https://instagram.com/akelmelamin','external'],
+              ['akelmelamin.com','https://akelmelamin.com','external'],
+          ] },
         ],
         legal: '© 2026 Akel Melamin Plastik San.Tic.Ltd.Şti. Tüm hakları saklıdır.',
       }
     : {
         tag: 'Akel Melamin Plastik San.Tic.Ltd.Şti. Make room for quality at every table. Istanbul since 2014.',
         cols: [
-          { h: 'Product series', links: [['Square Series','products'],['Elegant','products'],['International','products'],['Eco','products'],['Trays','products'],['Kids\' Plates','products'],['Custom-logo','products']] },
-          { h: 'Company',        links: [['About','about'],['Manufacturing','about'],['Certifications','about'],['Contact','contact']] },
-          { h: 'Resources',      links: [['Catalog PDF · 2026','catalog'],['info@akelmelamin.com','contact'],['+90 507 425 34 46','contact']] },
+          { h: 'Product series', links: [
+              ['Square Series','products'],['Square Series · Black','products'],['International Series','products'],
+              ['Elegant Series','products'],['Buffet · Serving','products'],['Trays','products'],
+              ['Eco Series','products'],['Diplomat Boat Series','products'],['Everyday Pattern Line','products'],
+              ['Tabletop Accessories','products'],['Kids\' Plates','products'],['Compartment Plates','products'],
+              ['Custom-logo Products','products'],
+          ] },
+          { h: 'Company', links: [
+              ['About','about'],['Manufacturing','about'],['Certifications','about'],['Contact','contact'],
+          ] },
+          { h: 'Contact', links: [
+              ['Catalog PDF · 2026','catalog','internal'],
+              ['info@akelmelamin.com','mailto:info@akelmelamin.com','external'],
+              ['+90 507 425 34 46','tel:+905074253446','external'],
+              ['+90 532 161 88 46','tel:+905321618846','external'],
+              ['@akelmelamin','https://instagram.com/akelmelamin','external'],
+              ['akelmelamin.com','https://akelmelamin.com','external'],
+          ] },
         ],
         legal: '© 2026 Akel Melamin Plastik San.Tic.Ltd.Şti. All rights reserved.',
       };
@@ -3202,7 +3309,7 @@ function Footer({ lang, navigate }) {
     <footer className="site-footer">
       <div className="site-footer__top">
         <div className="site-footer__brand">
-          <img src="./img/akel-logo-cropped.png" alt="Akel Melamin" />
+          <img src="./img/akel-logo-cropped.png" alt="Akel Melamin" width="160" height="79" decoding="async" />
           <p className="site-footer__tag">{t.tag}</p>
           <div className="site-footer__social">
             <a href="https://instagram.com/akelmelamin" target="_blank" rel="noopener" aria-label="Instagram @akelmelamin">
@@ -3217,13 +3324,26 @@ function Footer({ lang, navigate }) {
           <div className="site-footer__col" key={i}>
             <span className="meta">{c.h}</span>
             <ul>
-              {c.links.map(([label, path]) => (
-                <li key={label}>
-                  <a href="#" onClick={(e) => { e.preventDefault(); navigate(path); }}>
-                    {label}
-                  </a>
-                </li>
-              ))}
+              {c.links.map((link) => {
+                const [label, pathOrHref, kind] = link;
+                const isExternal = kind === 'external';
+                return (
+                  <li key={label}>
+                    {isExternal ? (
+                      <a
+                        href={pathOrHref}
+                        target={pathOrHref.startsWith('http') ? '_blank' : undefined}
+                        rel={pathOrHref.startsWith('http') ? 'noopener' : undefined}
+                      >{label}</a>
+                    ) : (
+                      <a
+                        href={`#/${pathOrHref}`}
+                        onClick={(e) => { e.preventDefault(); navigate(pathOrHref); }}
+                      >{label}</a>
+                    )}
+                  </li>
+                );
+              })}
             </ul>
           </div>
         ))}
@@ -3260,7 +3380,11 @@ function App() {
   }, [path, lang, product]);
   return (
     <div className="kit-scroll" data-screen-label={`Akel · ${path}`}>
+      <a href="#main" className="skip-link" onClick={(e) => { e.preventDefault(); const m = document.getElementById('main'); if (m) m.focus(); }}>
+        {lang === 'tr' ? 'İçeriğe geç' : 'Skip to content'}
+      </a>
       <Header lang={lang} setLang={setLang} currentPath={path} navigate={navigate} />
+      <main id="main" tabIndex="-1">
       {path === 'home' && <>
         <Hero lang={lang} navigate={navigate} />
         <StatsRow lang={lang} />
@@ -3273,8 +3397,35 @@ function App() {
       {path === 'about' && <About lang={lang} navigate={navigate} />}
       {path === 'contact' && <Contact lang={lang} />}
       {path === 'catalog' && <CatalogPage lang={lang} navigate={navigate} />}
+      </main>
       <Footer lang={lang} navigate={navigate} />
+      <ScrollToTop lang={lang} />
     </div>
+  );
+}
+
+function ScrollToTop({ lang }) {
+  const [show, setShow] = React.useState(false);
+  React.useEffect(() => {
+    const el = document.querySelector('.kit-scroll');
+    const onScroll = () => { setShow((el ? el.scrollTop : window.scrollY) > 800); };
+    (el || window).addEventListener('scroll', onScroll, { passive: true });
+    return () => (el || window).removeEventListener('scroll', onScroll);
+  }, []);
+  const up = () => {
+    const el = document.querySelector('.kit-scroll');
+    if (el) el.scrollTo({ top: 0, behavior: 'smooth' });
+    else window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  return (
+    <button
+      type="button"
+      className={`scroll-top ${show ? 'is-on' : ''}`}
+      aria-label={lang === 'tr' ? 'Yukarı çık' : 'Back to top'}
+      onClick={up}
+    >
+      <i data-lucide="arrow-up"></i>
+    </button>
   );
 }
 const root = ReactDOM.createRoot(document.getElementById('root'));
