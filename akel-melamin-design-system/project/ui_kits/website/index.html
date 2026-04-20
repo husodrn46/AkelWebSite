@@ -931,14 +931,14 @@ body::before {
 /* ---------- HERO — stacked editorial: wide title, full-width banner photo ---------- */
 .hero {
   max-width: 100%; margin: 0;
-  padding: var(--space-4) 0 0;
+  padding: 0;
   position: relative; z-index: 1;
   display: block;
 }
 .hero__text {
   max-width: var(--page-max);
   margin: 0 auto;
-  padding: 0 var(--page-gutter) var(--space-8);
+  padding: 4px var(--page-gutter) var(--space-8);
   position: relative;
   text-align: left;
 }
@@ -948,7 +948,7 @@ body::before {
   font-size: clamp(3.25rem, 11vw, 10rem);
   line-height: 1.02;
   letter-spacing: -0.045em; color: var(--ink);
-  margin: 18px 0 28px; text-wrap: balance;
+  margin: 6px 0 28px; text-wrap: balance;
   max-width: 18ch;
   padding-bottom: 0.08em;
 }
@@ -1559,7 +1559,7 @@ body::before {
   .mobile-menu-btn + .lang-switch { margin-right: 4px; }
 
   /* Hero — stacked, tight spacing */
-  .hero { padding-top: var(--space-3); }
+  .hero { padding-top: 0; }
   .hero__title { font-size: clamp(3rem, 13vw, 5.5rem); line-height: 0.92; letter-spacing: -0.035em; max-width: none; }
   .hero__body { font-size: 16.5px; max-width: none; }
   .hero__cta { gap: 12px; }
@@ -1668,7 +1668,7 @@ body::before {
 
 @media (max-width: 480px) {
   :root { --page-gutter: 16px; }
-  .hero { padding-top: var(--space-2); }
+  .hero { padding-top: 0; }
   .hero__title { font-size: clamp(2.25rem, 11vw, 3.75rem); margin: 12px 0 20px; }
   .hero__body { margin-bottom: 24px; }
   .hero__cta { flex-direction: column; align-items: stretch; width: 100%; }
