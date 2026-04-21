@@ -44,7 +44,7 @@
    Color & Type tokens
    ============================================================ */
 
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400;12..96,75..100,500;12..96,75..100,600;12..96,75..100,700;12..96,75..100,800&family=Caveat:wght@500;600;700&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=JetBrains+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,75..100,400;12..96,75..100,500;12..96,75..100,600;12..96,75..100,700;12..96,75..100,800&family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,400..700,0..100,0..1;1,9..144,400..700,0..100,0..1&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
 :root {
   /* ---------- COLOR — NEUTRALS ---------- */
@@ -721,9 +721,9 @@ body { overflow-x: hidden; }
 .site-header__brand { display: inline-flex; align-items: center; gap: 14px; height: 100%; text-decoration: none; }
 .site-header__brand img { height: 40px; width: auto; }
 .site-header__slogan {
-  font-family: "Segoe Print", "Caveat", "Bradley Hand", cursive;
-  font-style: normal; font-weight: 400;
-  font-size: 17px; color: var(--slate);
+  font-family: var(--font-serif); font-style: italic; font-weight: 400;
+  font-variation-settings: "opsz" 144, "SOFT" 60, "WONK" 1;
+  font-size: 15px; color: var(--slate);
   letter-spacing: -0.005em; padding-left: 14px;
   border-left: 1px solid var(--border);
   line-height: 1.1; max-width: 22ch;
@@ -1475,7 +1475,24 @@ body { overflow-x: hidden; }
 .pd__photo {
   width: 100%; height: 100%; object-fit: contain;
   padding: 6%;
+  transition: opacity 240ms var(--ease-out);
 }
+.pd__photo--lifestyle {
+  object-fit: cover;
+  padding: 0;
+}
+.pd__nav {
+  position: absolute; bottom: 16px; right: 16px;
+  display: flex; gap: 6px; z-index: 4;
+}
+.pd__nav button {
+  width: 22px; height: 4px; padding: 0;
+  background: rgba(42,42,40,0.28);
+  border: 0; cursor: pointer;
+  transition: background 200ms, width 300ms;
+}
+.pd__nav button.is-on { background: var(--red); width: 36px; }
+.pd__thumbs--gallery { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); max-width: 220px; }
 .pd__summary {
   display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 1px; margin-top: 12px;
@@ -3232,14 +3249,46 @@ function ProductDetail({ lang, product, onBack, navigate }) {
   ];
   const mailHref = `mailto:info@akelmelamin.com?subject=${encodeURIComponent(`Akel Melamin · ${productName}${product.sku ? ` (${product.sku})` : ''}`)}`;
 
+  // Gallery: product studio shot + one lifestyle imaj keyed on category.
+  // The lifestyle file won't exist for every category — onError on the <img>
+  // hides its thumb, so the user never sees a broken frame.
+  const lifestyleSrc = product.kategori ? `./img/lifestyle-${product.kategori}.webp` : null;
+  const gallery = [
+    { src: photoSrc, kind: 'product', caption: t.images },
+    ...(lifestyleSrc ? [{ src: lifestyleSrc, kind: 'lifestyle', caption: lang === 'tr' ? 'Kullanımda' : 'In use' }] : []),
+  ].filter(g => g.src);
+  const [galleryIdx, setGalleryIdx] = React.useState(0);
+  React.useEffect(() => { setGalleryIdx(0); }, [product.sku]);
+  const [lifestyleOk, setLifestyleOk] = React.useState(true);
+  const activeImage = gallery[galleryIdx] || gallery[0];
+
   return (
     <section className="section" data-anim="section">
       <button type="button" className="btn btn--link" onClick={onBack}>{t.back}</button>
 
       <div className="pd">
         <div className="pd__gallery" data-anim="fade-up">
-          <div className="pd__hero" aria-hidden="true">
-            {photoSrc && (
+          <div
+            className={`pd__hero pd__hero--${activeImage?.kind || 'product'}`}
+            aria-hidden="true"
+            onTouchStart={(e) => { e.currentTarget.__tx = e.touches[0].clientX; }}
+            onTouchEnd={(e) => {
+              const x0 = e.currentTarget.__tx, x1 = e.changedTouches[0].clientX;
+              if (x0 == null || gallery.length < 2) return;
+              const dx = x1 - x0;
+              if (Math.abs(dx) < 40) return;
+              setGalleryIdx(i => (i + (dx < 0 ? 1 : gallery.length - 1)) % gallery.length);
+            }}
+          >
+            {activeImage?.kind === 'lifestyle' && lifestyleOk && (
+              <img className="pd__photo pd__photo--lifestyle"
+                   src={activeImage.src}
+                   alt=""
+                   width="1400" height="1000" decoding="async"
+                   onLoad={(e) => e.target.closest('.pd__hero').classList.add('is-photo-loaded')}
+                   onError={() => { setLifestyleOk(false); setGalleryIdx(0); }} />
+            )}
+            {activeImage?.kind === 'product' && photoSrc && (
               <img className="pd__photo" src={photoSrc}
                    alt={lang === 'tr' ? product.ad_tr : (product.ad_en || product.ad_tr)}
                    width="800" height="800" decoding="async"
@@ -3255,8 +3304,36 @@ function ProductDetail({ lang, product, onBack, navigate }) {
               <span className="pd__placeholder-sku">{product.sku}</span>
               <span className="pd__placeholder-note">{lang === 'tr' ? 'Görsel yakında' : 'Photo soon'}</span>
             </div>
-            <span className="pd__caption meta">{t.images}</span>
+            <span className="pd__caption meta">{activeImage?.caption || t.images}</span>
+            {gallery.length > 1 && (
+              <div className="pd__nav" role="tablist" aria-label={lang === 'tr' ? 'Görsel galerisi' : 'Image gallery'}>
+                {gallery.map((g, i) => (
+                  <button
+                    key={i} type="button" role="tab"
+                    aria-selected={i === galleryIdx}
+                    aria-label={g.kind === 'lifestyle' ? (lang === 'tr' ? 'Kullanımda' : 'In use') : (lang === 'tr' ? 'Ürün' : 'Product')}
+                    className={i === galleryIdx ? 'is-on' : ''}
+                    onClick={() => setGalleryIdx(i)}
+                  />
+                ))}
+              </div>
+            )}
           </div>
+          {gallery.length > 1 && lifestyleOk && (
+            <div className="pd__thumbs pd__thumbs--gallery">
+              {gallery.map((g, i) => (
+                <button
+                  key={i} type="button"
+                  className={`pd__thumb pd__thumb--photo ${i === galleryIdx ? 'is-on' : ''}`}
+                  onClick={() => setGalleryIdx(i)}
+                  aria-label={g.kind === 'lifestyle' ? (lang === 'tr' ? 'Kullanımda' : 'In use') : (lang === 'tr' ? 'Ürün' : 'Product')}
+                >
+                  <img src={g.src} alt="" loading="lazy" decoding="async"
+                       onError={(e) => { e.target.closest('button').style.display = 'none'; }} />
+                </button>
+              ))}
+            </div>
+          )}
           <div className="pd__summary">
             {summary.map((item) => (
               <div key={item.k} className="pd__summary-item">
