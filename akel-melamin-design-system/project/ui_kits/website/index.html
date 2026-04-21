@@ -1561,6 +1561,7 @@ body { overflow-x: hidden; }
 .checks { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; padding-top: 4px; }
 .check { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--graphite); cursor: pointer; }
 .check input { accent-color: var(--red); }
+.check--consent { margin: 20px 0 16px; font-size: 13px; color: var(--slate); }
 
 .contact__form > .field { margin-bottom: 16px; }
 .contact__form .btn--primary { margin-top: 8px; }
@@ -3378,17 +3379,21 @@ function Contact({ lang }) {
           country: 'Ülke', interest: 'İlgilenilen ürün serileri',
           msg: 'Mesaj', submit: 'Talep gönder',
         },
-        cats: ['Kare Seri', 'International', 'Elegant', 'Eco', 'Tepsiler', 'Çocuk', 'Bölmeli', 'Özel Logolu'],
+        cats: ['Kare Seri', 'Kare Seri Siyah', 'International', 'Elegant', 'Açık Büfe · Servis', 'Tepsiler', 'Eco', 'Diplomat Kayık', 'Günlük Desenli', 'Masaüstü Aksesuarları', 'Çocuk', 'Bölmeli', 'Özel Logolu'],
         direct: 'Doğrudan iletişim', dir: [
-          { i: 'mail',      l: 'info@akelmelamin.com',                          href: 'mailto:info@akelmelamin.com' },
-          { i: 'phone',     l: '+90 507 425 34 46',                              href: 'tel:+905074253446' },
-          { i: 'phone',     l: '+90 532 161 88 46',                              href: 'tel:+905321618846' },
-          { i: 'map-pin',   l: 'İSTOÇ 10. Ada No:9/11, Bağcılar / İstanbul',     href: 'https://maps.google.com/?q=İSTOÇ+10.Ada+No:9/11+Bağcılar+İstanbul' },
-          { i: 'globe',     l: 'akelmelamin.com',                                href: 'https://akelmelamin.com' },
-          { i: 'instagram', l: '@akelmelamin',                                   href: 'https://instagram.com/akelmelamin' },
+          { i: 'mail',            l: 'info@akelmelamin.com',                          href: 'mailto:info@akelmelamin.com' },
+          { i: 'phone',           l: '+90 507 425 34 46',                              href: 'tel:+905074253446' },
+          { i: 'phone',           l: '+90 532 161 88 46',                              href: 'tel:+905321618846' },
+          { i: 'message-circle',  l: 'WhatsApp',                                        href: 'https://wa.me/905074253446' },
+          { i: 'map-pin',         l: 'Showroom · İSTOÇ 10. Ada No:9/11, Bağcılar / İstanbul', href: 'https://maps.google.com/?q=İSTOÇ+10.Ada+No:9/11+Bağcılar+İstanbul' },
+          { i: 'factory',         l: 'Üretim · İkitelli OSB / İstanbul',                href: null },
+          { i: 'clock',           l: 'Pazartesi – Cuma · 09:00 – 18:00',                href: null },
+          { i: 'globe',           l: 'akelmelamin.com',                                 href: 'https://akelmelamin.com' },
+          { i: 'instagram',       l: '@akelmelamin',                                    href: 'https://instagram.com/akelmelamin' },
         ],
         sent: 'Talebiniz alındı.',
         sentBody: 'Ekibimiz iki iş günü içinde size geri dönecek.',
+        kvkk: 'Kişisel verilerimin iletişim amacıyla işlenmesini onaylıyorum.',
       }
     : {
         eyebrow: 'Contact',
@@ -3399,17 +3404,21 @@ function Contact({ lang }) {
           country: 'Country', interest: 'Product series of interest',
           msg: 'Message', submit: 'Send inquiry',
         },
-        cats: ['Square Series', 'International Series', 'Elegant Series', 'Eco Series', 'Trays', 'Kids\' Plates', 'Compartment Plates', 'Custom Logo Products'],
+        cats: ['Square Series', 'Square Series · Black', 'International Series', 'Elegant Series', 'Buffet · Serving', 'Trays', 'Eco Series', 'Diplomat Oval Serving', 'Everyday Pattern', 'Tabletop Accessories', 'Kids\' Plates', 'Compartment Plates', 'Custom Logo Products'],
         direct: 'Direct contact', dir: [
-          { i: 'mail',      l: 'info@akelmelamin.com',                         href: 'mailto:info@akelmelamin.com' },
-          { i: 'phone',     l: '+90 507 425 34 46',                             href: 'tel:+905074253446' },
-          { i: 'phone',     l: '+90 532 161 88 46',                             href: 'tel:+905321618846' },
-          { i: 'map-pin',   l: 'İSTOÇ 10. Ada No:9/11, Bağcılar / Istanbul',    href: 'https://maps.google.com/?q=İSTOÇ+10.Ada+No:9/11+Bağcılar+İstanbul' },
-          { i: 'globe',     l: 'akelmelamin.com',                               href: 'https://akelmelamin.com' },
-          { i: 'instagram', l: '@akelmelamin',                                  href: 'https://instagram.com/akelmelamin' },
+          { i: 'mail',            l: 'info@akelmelamin.com',                          href: 'mailto:info@akelmelamin.com' },
+          { i: 'phone',           l: '+90 507 425 34 46',                              href: 'tel:+905074253446' },
+          { i: 'phone',           l: '+90 532 161 88 46',                              href: 'tel:+905321618846' },
+          { i: 'message-circle',  l: 'WhatsApp',                                        href: 'https://wa.me/905074253446' },
+          { i: 'map-pin',         l: 'Showroom · İSTOÇ 10. Ada No:9/11, Bağcılar / Istanbul', href: 'https://maps.google.com/?q=İSTOÇ+10.Ada+No:9/11+Bağcılar+İstanbul' },
+          { i: 'factory',         l: 'Production · İkitelli OSB / Istanbul',           href: null },
+          { i: 'clock',           l: 'Mon – Fri · 09:00 – 18:00',                      href: null },
+          { i: 'globe',           l: 'akelmelamin.com',                                 href: 'https://akelmelamin.com' },
+          { i: 'instagram',       l: '@akelmelamin',                                    href: 'https://instagram.com/akelmelamin' },
         ],
         sent: 'Your inquiry has been received.',
         sentBody: 'Our team will reply within two business days.',
+        kvkk: 'I consent to the processing of my personal data for contact purposes.',
       };
 
   const countries = ['Türkiye','Fas / Morocco','Tayland / Thailand','Çin / China','Cezayir / Algeria','Mısır / Egypt','BAE / UAE','Suudi Arabistan / Saudi Arabia','Tunus / Tunisia','Libya','Ürdün / Jordan','Lübnan / Lebanon','Irak / Iraq','Other'];
@@ -3477,6 +3486,9 @@ function Contact({ lang }) {
           <Field label={t.f.msg}>
             <textarea className="input" rows="4"></textarea>
           </Field>
+          <label className="check check--consent">
+            <input type="checkbox" required /> <span>{t.kvkk}</span>
+          </label>
           <button type="submit" className="btn btn--primary btn--lg magnetic">
             {t.f.submit} →
           </button>
