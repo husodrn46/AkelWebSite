@@ -1006,11 +1006,6 @@ body::before {
 .hero__photo-stack img {
   object-position: center 52%;
 }
-.hero__visual-caption {
-  position: absolute; bottom: 20px; left: calc(var(--page-gutter) + 20px); color: var(--slate);
-  background: rgba(247,246,243,0.88); padding: 6px 12px; border-radius: 2px;
-  backdrop-filter: blur(6px);
-}
 .hero__visual-crop {
   position: absolute; top: 20px; left: calc(var(--page-gutter) + 20px);
   font-family: var(--font-mono); font-size: 10.5px;
@@ -1608,7 +1603,6 @@ body::before {
   .hero__photo-stack { inset: 0 var(--page-gutter); }
   .hero__ring { display: none; }
   .hero__visual-crop { top: 12px; left: calc(var(--page-gutter) + 12px); font-size: 9.5px; padding: 4px 8px; }
-  .hero__visual-caption { bottom: 12px; left: calc(var(--page-gutter) + 12px); padding: 4px 10px; }
   .hero__photo-nav { bottom: 12px; right: calc(var(--page-gutter) + 12px); }
   .deco-reg { display: none; }
 
@@ -2328,9 +2322,6 @@ function Hero({ lang, navigate }) {
           ))}
         </div>
         <span className="hero__visual-crop">4:5 · FRAME 0{active + 1}</span>
-        <div className="hero__visual-caption">
-          <span className="meta">{photos[active].label}</span>
-        </div>
         <div className="hero__photo-nav" role="tablist" aria-label={lang === 'tr' ? 'Ürün galerisi' : 'Product gallery'}>
           {photos.map((p, i) => (
             <button
