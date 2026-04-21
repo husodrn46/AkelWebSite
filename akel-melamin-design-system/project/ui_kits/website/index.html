@@ -1117,43 +1117,24 @@ body::before {
 /* ---------- CATEGORIES ---------- */
 .cat-grid {
   display: grid;
-  grid-template-columns: repeat(12, 1fr); gap: 16px;
+  grid-template-columns: repeat(4, 1fr); gap: 20px 16px;
 }
 .cat-card {
-  grid-column: span 4;
   display: flex; flex-direction: column;
   background: none; border: 0; padding: 0; text-align: left; cursor: pointer;
   transition: transform var(--dur-med) var(--ease-out);
   color: inherit; text-decoration: none;
 }
-.cat-card:nth-child(1)  { grid-column: span 5; }
-.cat-card:nth-child(2)  { grid-column: span 4; }
-.cat-card:nth-child(3)  { grid-column: span 3; }
-.cat-card:nth-child(4)  { grid-column: span 3; }
-.cat-card:nth-child(5)  { grid-column: span 5; }
-.cat-card:nth-child(6)  { grid-column: span 4; }
-.cat-card:nth-child(7)  { grid-column: span 4; }
-.cat-card:nth-child(8)  { grid-column: span 4; }
-.cat-card:nth-child(9)  { grid-column: span 4; }
-.cat-card:nth-child(10) { grid-column: span 3; }
-.cat-card:nth-child(11) { grid-column: span 3; }
-.cat-card:nth-child(12) { grid-column: span 3; }
-.cat-card:nth-child(13) { grid-column: span 3; }
 .cat-card:hover { transform: translateY(-2px); }
 .cat-card:hover .cat-card__ph { box-shadow: var(--shadow-3); }
 .cat-card__ph {
-  aspect-ratio: 4/3; background: var(--bone);
+  aspect-ratio: 4/3; background: var(--paper);
   border-radius: 4px; overflow: hidden;
   display: grid; place-items: center;
   box-shadow: var(--shadow-1);
   transition: box-shadow var(--dur-med) var(--ease-out);
   position: relative;
 }
-.cat-card:nth-child(3n+2) .cat-card__ph { background: #E8E4DC; }
-.cat-card:nth-child(3n+3) .cat-card__ph { background: #DDD9D0; }
-/* When a real product photo lives in the card, drop the tint so the studio
-   white of the shot isn't framed by a mismatched cream rectangle. */
-.cat-card__ph:has(.cat-card__photo) { background: var(--paper); }
 .cat-card__foot {
   padding: 14px 2px 0; display: flex; justify-content: space-between; align-items: baseline;
 }
@@ -1175,8 +1156,7 @@ body::before {
 .cat-card:nth-child(7) .cat-shape { background: var(--red); }
 
 .cat-card__photo {
-  width: 100%; height: 100%; object-fit: contain;
-  padding: 8%;
+  width: 100%; height: 100%; object-fit: cover;
   transition: transform var(--dur-slow) var(--ease-out);
 }
 .cat-card:hover .cat-card__photo { transform: scale(1.03); }
@@ -1622,9 +1602,9 @@ body::before {
   .section__head { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: var(--space-6); }
   .section__title { font-size: clamp(1.75rem, 7vw, 2.5rem); max-width: none; }
 
-  /* Categories — 2 column, even spans */
-  .cat-grid { gap: 12px; }
-  .cat-grid .cat-card { grid-column: span 6 !important; }
+  /* Categories — 2 columns on tablet */
+  .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  .cat-grid .cat-card { grid-column: auto !important; }
 
   /* Bands (production + catalog) */
   .band { grid-template-columns: 1fr; gap: 28px; padding: var(--space-7) var(--page-gutter); }
@@ -1716,7 +1696,8 @@ body::before {
   .stats-strip__item { border-right: 0 !important; padding: 18px 16px !important; border-bottom: 1px solid var(--border) !important; }
   .stats-strip__item:last-child { border-bottom: 0 !important; }
 
-  .cat-grid .cat-card { grid-column: span 12 !important; }
+  .cat-grid { grid-template-columns: 1fr; }
+  .cat-grid .cat-card { grid-column: auto !important; }
   .product-grid { grid-template-columns: 1fr; gap: 24px; }
   .about__market-grid { grid-template-columns: 1fr; }
   .about__facts { grid-template-columns: 1fr 1fr; }
@@ -2479,7 +2460,7 @@ function Categories({ lang, navigate }) {
         </a>
       </div>
       <div className="cat-grid" data-anim-stagger>
-        {cats.map((c, i) => (
+        {cats.filter(c => c.key !== 'logolu').map((c, i) => (
           <a
             key={c.key}
             href={pathToURL('products', { cat: c.key })}
