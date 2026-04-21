@@ -1255,10 +1255,11 @@ body::before {
 
 .product-card__photo {
   width: 100%; height: 100%; object-fit: cover;
+  transform: scale(var(--sz-scale, 1));
   transition: transform var(--dur-slow) var(--ease-out);
   position: relative; z-index: 2;
 }
-.product-card:hover .product-card__photo { transform: scale(1.04); }
+.product-card:hover .product-card__photo { transform: scale(calc(var(--sz-scale, 1) * 1.04)); }
 
 /* Photo-missing placeholder — SKU label on tinted ph bg. Visible by default;
    hidden once onLoad tags the container with .is-photo-loaded. */
@@ -2674,6 +2675,27 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
   // Only active products
   const visible = data.products.filter(p => (p.aktif || 'evet') !== 'hayir');
 
+  // For families that share a photo (Yuvarlak Tabak 17/19/21/.../28 cm all
+  // come off the same studio shot), scale each card's photo so a 28 cm plate
+  // fills the frame and a 17 cm plate renders noticeably smaller. Size is
+  // the largest dimension of the product — cap_mm for round, max(en,boy)
+  // otherwise. Scaled against the family max in the same (kategori, ad_tr).
+  const sizeOf = (p) => p.cap_mm || Math.max(p.en_mm || 0, p.boy_mm || 0);
+  const familyMax = {};
+  for (const p of visible) {
+    const key = (p.kategori || '') + '|' + (p.ad_tr || '');
+    const sz = sizeOf(p);
+    if (sz) familyMax[key] = Math.max(familyMax[key] || 0, sz);
+  }
+  const sizeScale = (p) => {
+    const key = (p.kategori || '') + '|' + (p.ad_tr || '');
+    const max = familyMax[key];
+    const sz = sizeOf(p);
+    if (!max || !sz || max === sz) return 1;
+    // Floor at 0.58 so the smallest plate still has presence.
+    return Math.max(0.58, sz / max);
+  };
+
   // Filter chips: derive from categories actually present in data
   const usedCats = new Set(visible.map(p => p.kategori));
   const filters = [
@@ -2771,7 +2793,7 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
                 role="button"
                 tabIndex="0"
               >
-                <div className={`product-card__ph product-card__ph--${i % 4}`} aria-hidden="true">
+                <div className={`product-card__ph product-card__ph--${i % 4}`} style={{'--sz-scale': sizeScale(p)}} aria-hidden="true">
                   {p.foto_dosya_adi && (
                     <img
                       className="product-card__photo"
