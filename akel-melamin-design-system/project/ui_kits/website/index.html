@@ -13,7 +13,7 @@
 <meta property="og:site_name" content="Akel Melamin">
 <meta property="og:title" content="Akel Melamin — Her Sofrada Kaliteye Yer Açın">
 <meta property="og:description" content="Türk melamin sofra eşyası üreticisi. 13 ürün serisi, otel / restoran / kafe / ev için. ISO 9001 · ISO 22000 · Intertek sertifikalı.">
-<meta property="og:image" content="https://akelmelamin.com/img/gozde-white.jpg">
+<meta property="og:image" content="https://akelmelamin.com/img/akel-hero-1.jpg">
 <meta property="og:url" content="https://akelmelamin.com/">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="tr_TR">
@@ -21,7 +21,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Akel Melamin — Her Sofrada Kaliteye Yer Açın">
 <meta name="twitter:description" content="Türk melamin sofra eşyası üreticisi. 13 ürün serisi · ISO 9001 · ISO 22000.">
-<meta name="twitter:image" content="https://akelmelamin.com/img/gozde-white.jpg">
+<meta name="twitter:image" content="https://akelmelamin.com/img/akel-hero-1.jpg">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <style>
 /* ============================================================
@@ -2430,9 +2430,9 @@ function Categories({ lang, navigate }) {
   // primary plate-shape split; the rest are category aggregations.
   const cats = {
     tr: [
-      { key: 'kare',         label: 'Kare Seri',           count: 'Beyaz',                  shape: 'square', photo: 'kavi-white' },
-      { key: 'kare-siyah',   label: 'Kare Seri Siyah',     count: 'Siyah',                  shape: 'square', photo: 'kavi-black' },
-      { key: 'international',label: 'International Seri',  count: 'Yuvarlak klasik',        shape: 'round',  photo: 'gozde-white' },
+      { key: 'kare',         label: 'Kare Seri',           count: 'Beyaz',                  shape: 'square', photo: 'kare-517' },
+      { key: 'kare-siyah',   label: 'Kare Seri Siyah',     count: 'Siyah',                  shape: 'square', photo: 'kare-siyah-517s' },
+      { key: 'international',label: 'International Seri',  count: 'Yuvarlak klasik',        shape: 'round',  photo: 'international-125' },
       { key: 'elegant',      label: 'Elegant Seri',        count: 'Taş dokulu',             shape: 'trays' },
       { key: 'acikbufe',     label: 'Açık Büfe · Servis',  count: 'Sunum & catering',       shape: 'serve' },
       { key: 'tepsiler',     label: 'Tepsiler',            count: 'Mermer · baskılı',       shape: 'trays' },
@@ -2445,9 +2445,9 @@ function Categories({ lang, navigate }) {
       { key: 'logolu',       label: 'Özel Logolu Ürünler', count: 'Baskılı · kurumsal',     shape: 'deco' },
     ],
     en: [
-      { key: 'kare',         label: 'Square Series',            count: 'White',                 shape: 'square', photo: 'kavi-white' },
-      { key: 'kare-siyah',   label: 'Square Series · Black',    count: 'Black',                 shape: 'square', photo: 'kavi-black' },
-      { key: 'international',label: 'International Series',     count: 'Classic round',         shape: 'round',  photo: 'gozde-white' },
+      { key: 'kare',         label: 'Square Series',            count: 'White',                 shape: 'square', photo: 'kare-517' },
+      { key: 'kare-siyah',   label: 'Square Series · Black',    count: 'Black',                 shape: 'square', photo: 'kare-siyah-517s' },
+      { key: 'international',label: 'International Series',     count: 'Classic round',         shape: 'round',  photo: 'international-125' },
       { key: 'elegant',      label: 'Elegant Series',           count: 'Stone-textured',        shape: 'trays' },
       { key: 'acikbufe',     label: 'Buffet · Serving',         count: 'Presentation & catering', shape: 'serve' },
       { key: 'tepsiler',     label: 'Trays',                    count: 'Marble · printed',      shape: 'trays' },
@@ -2665,6 +2665,7 @@ function ProductGrid({ lang, navigate, openProduct }) {
     if (p.boyut) parts.push(p.boyut);
     else if (p.cap_mm) parts.push('Ø ' + (p.cap_mm / 10) + ' cm');
     else if (p.en_mm && p.boy_mm) parts.push((p.en_mm/10) + '×' + (p.boy_mm/10) + ' cm');
+    if (p.agirlik_g) parts.push(p.agirlik_g + ' g');
     if (p.koli_adet) parts.push((lang === 'tr' ? 'Koli ' : 'Carton ') + p.koli_adet);
     return parts.join(' · ');
   }
@@ -2806,6 +2807,7 @@ function ProductDetail({ lang, product, onBack }) {
   const rows = [];
   const dimVal = dim();
   if (dimVal) rows.push([lang === 'tr' ? 'Boyutlar' : 'Dimensions', dimVal]);
+  if (product.agirlik_g) rows.push([lang === 'tr' ? 'Ağırlık' : 'Weight', product.agirlik_g + ' g']);
   if (product.sku) rows.push(['SKU', product.sku]);
   if (colorLabel) rows.push([t.color, colorLabel]);
   if (product.barkod) rows.push([lang === 'tr' ? 'Barkod' : 'Barcode', String(product.barkod).replace(/\s+/g, '')]);
@@ -2813,6 +2815,7 @@ function ProductDetail({ lang, product, onBack }) {
   const pack = [];
   if (product.koli_adet) pack.push([lang === 'tr' ? 'Kolide adet' : 'Pieces per carton', product.koli_adet]);
   if (product.koli_cm)   pack.push([lang === 'tr' ? 'Koli boyutu' : 'Carton dimensions', product.koli_cm]);
+  if (product.koli_agirlik_kg) pack.push([lang === 'tr' ? 'Koli brüt' : 'Carton gross', product.koli_agirlik_kg + ' kg']);
   if (product.ozel_logolu_uygun) pack.push([t.logo, product.ozel_logolu_uygun === 'evet' ? t.yes : t.no]);
   if (product.kullanim_alani) pack.push([t.useArea, product.kullanim_alani]);
 
