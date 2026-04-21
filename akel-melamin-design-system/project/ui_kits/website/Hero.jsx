@@ -2,7 +2,7 @@
 function Hero({ lang, navigate }) {
   const copy = {
     tr: {
-      eyebrow: '[CITY] · Türkiye · [YEAR]',
+      eyebrow: 'İkitelli OSB · İstanbul · [YEAR]',
       title: 'Sofra için üretim.',
       titleAccent: 'Her boyutta.',
       body: 'Melamin sofra eşyalarında Türkiye\'nin yerleşik üreticisiyiz. Perakende zincirleri ve ihracat distribütörleri için [XX]+ kalem, yıllık [XX] milyon parça kapasite.',
@@ -11,7 +11,7 @@ function Hero({ lang, navigate }) {
       caption: 'Gözde · Beyaz set · nested 6 boy',
     },
     en: {
-      eyebrow: '[CITY] · Türkiye · Since [YEAR]',
+      eyebrow: 'İkitelli OSB · Istanbul · Since [YEAR]',
       title: 'Tableware, made to scale.',
       titleAccent: 'Every size.',
       body: 'A Turkish manufacturer of melamine tableware for retail chains and export distributors. [XX]+ SKUs. [XX] million pieces a year from a single plant.',

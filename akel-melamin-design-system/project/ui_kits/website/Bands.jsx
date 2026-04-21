@@ -4,7 +4,7 @@ function ProductionBand({ lang, navigate }) {
     ? {
         eyebrow: 'Üretim',
         title: '[XX,XXX] m² fabrika. Tek lokasyon.',
-        body: '[CITY]\'deki tesisimizde kalıp, enjeksiyon, dekor ve kalite kontrol tek bir üretim akışında ilerliyor. Her ürün hattı parti bazında örneklenir.',
+        body: 'İkitelli OSB\'deki tesisimizde presleme, kalıplama, dekor ve kalite kontrol tek bir üretim akışında ilerliyor. Her ürün hattı parti bazında örneklenir.',
         items: [
           { k: 'Fabrika alanı',   v: '[XX,XXX] m²' },
           { k: 'Üretim hatları',  v: '[XX] hat' },
@@ -16,7 +16,7 @@ function ProductionBand({ lang, navigate }) {
     : {
         eyebrow: 'Production',
         title: '[XX,XXX] m² plant. One location.',
-        body: 'Moulding, injection, decoration, and QC all flow through a single line in [CITY]. Every batch is sampled before release.',
+        body: 'Moulding, pressing, decoration, and QC all flow through a single line in our İkitelli OSB plant. Every batch is sampled before release.',
         items: [
           { k: 'Plant floor',       v: '[XX,XXX] m²' },
           { k: 'Production lines',  v: '[XX]' },

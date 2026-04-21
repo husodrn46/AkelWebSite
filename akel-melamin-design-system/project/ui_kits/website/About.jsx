@@ -3,7 +3,7 @@ function About({ lang }) {
   const t = lang === 'tr'
     ? {
         eyebrow: 'Hakkımızda',
-        title: '[YEAR]\'den beri [CITY]\'de üretim.',
+        title: '[YEAR]\'den beri İkitelli OSB\'de üretim.',
         lead: 'Akel Melamin, Türkiye\'nin yerleşik melamin sofra eşyası üreticilerinden biridir. [XX]\'in üzerinde ürün kalemini tek lokasyonda üretiyoruz ve [XX] ülkede distribütörlerle çalışıyoruz.',
         facts: [
           { k: 'Kuruluş',           v: '[YEAR]' },
@@ -25,7 +25,7 @@ function About({ lang }) {
       }
     : {
         eyebrow: 'About',
-        title: 'Manufacturing in [CITY] since [YEAR].',
+        title: 'Manufacturing in İkitelli OSB since [YEAR].',
         lead: 'Akel Melamin is an established Turkish manufacturer of melamine tableware. We produce [XX]+ SKUs from a single plant and work with distributors in [XX] countries.',
         facts: [
           { k: 'Founded',             v: '[YEAR]' },

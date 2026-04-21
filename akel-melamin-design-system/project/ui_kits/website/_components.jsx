@@ -90,7 +90,7 @@ window.LangSwitch = LangSwitch;
 function Hero({ lang, navigate }) {
   const copy = {
     tr: {
-      eyebrow: '[CITY] · Türkiye · [YEAR]',
+      eyebrow: 'İkitelli OSB · İstanbul · [YEAR]',
       title: 'Sofra için üretim.',
       titleAccent: 'Her boyutta.',
       body: 'Melamin sofra eşyalarında Türkiye\'nin yerleşik üreticisiyiz. Perakende zincirleri ve ihracat distribütörleri için [XX]+ kalem, yıllık [XX] milyon parça kapasite.',
@@ -99,7 +99,7 @@ function Hero({ lang, navigate }) {
       caption: 'Gözde · Beyaz set · nested 6 boy',
     },
     en: {
-      eyebrow: '[CITY] · Türkiye · Since [YEAR]',
+      eyebrow: 'İkitelli OSB · Istanbul · Since [YEAR]',
       title: 'Tableware, made to scale.',
       titleAccent: 'Every size.',
       body: 'A Turkish manufacturer of melamine tableware for retail chains and export distributors. [XX]+ SKUs. [XX] million pieces a year from a single plant.',
@@ -257,7 +257,7 @@ function ProductionBand({ lang, navigate }) {
     ? {
         eyebrow: 'Üretim',
         title: '[XX,XXX] m² fabrika. Tek lokasyon.',
-        body: '[CITY]\'deki tesisimizde kalıp, enjeksiyon, dekor ve kalite kontrol tek bir üretim akışında ilerliyor. Her ürün hattı parti bazında örneklenir.',
+        body: 'İkitelli OSB\'deki tesisimizde presleme, kalıplama, dekor ve kalite kontrol tek bir üretim akışında ilerliyor. Her ürün hattı parti bazında örneklenir.',
         items: [
           { k: 'Fabrika alanı',   v: '[XX,XXX] m²' },
           { k: 'Üretim hatları',  v: '[XX] hat' },
@@ -269,7 +269,7 @@ function ProductionBand({ lang, navigate }) {
     : {
         eyebrow: 'Production',
         title: '[XX,XXX] m² plant. One location.',
-        body: 'Moulding, injection, decoration, and QC all flow through a single line in [CITY]. Every batch is sampled before release.',
+        body: 'Moulding, pressing, decoration, and QC all flow through a single line in our İkitelli OSB plant. Every batch is sampled before release.',
         items: [
           { k: 'Plant floor',       v: '[XX,XXX] m²' },
           { k: 'Production lines',  v: '[XX]' },
@@ -636,7 +636,7 @@ function About({ lang }) {
   const t = lang === 'tr'
     ? {
         eyebrow: 'Hakkımızda',
-        title: '[YEAR]\'den beri [CITY]\'de üretim.',
+        title: '[YEAR]\'den beri İkitelli OSB\'de üretim.',
         lead: 'Akel Melamin, Türkiye\'nin yerleşik melamin sofra eşyası üreticilerinden biridir. [XX]\'in üzerinde ürün kalemini tek lokasyonda üretiyoruz ve [XX] ülkede distribütörlerle çalışıyoruz.',
         facts: [
           { k: 'Kuruluş',           v: '[YEAR]' },
@@ -658,7 +658,7 @@ function About({ lang }) {
       }
     : {
         eyebrow: 'About',
-        title: 'Manufacturing in [CITY] since [YEAR].',
+        title: 'Manufacturing in İkitelli OSB since [YEAR].',
         lead: 'Akel Melamin is an established Turkish manufacturer of melamine tableware. We produce [XX]+ SKUs from a single plant and work with distributors in [XX] countries.',
         facts: [
           { k: 'Founded',             v: '[YEAR]' },
@@ -744,9 +744,10 @@ function Contact({ lang }) {
         },
         cats: ['Yemek takımları', 'Tepsiler', 'Kaseler', 'Tabaklar', 'Çocuk', 'Dekoratif'],
         direct: 'Doğrudan iletişim', dir: [
-          { i: 'mail', l: '[export@example.com]' },
-          { i: 'phone', l: '[+90 XXX XXX XX XX]' },
-          { i: 'map-pin', l: '[Adres]' },
+          { i: 'mail', l: 'info@akelmelamin.com' },
+          { i: 'phone', l: '+90 507 425 34 46' },
+          { i: 'map-pin', l: 'İSTOÇ 10. Ada No:9/11, Bağcılar / İstanbul' },
+          { i: 'instagram', l: '@akelmelamin' },
         ],
         sent: 'Talebiniz alındı.',
         sentBody: 'İhracat ekibimiz iki iş günü içinde size geri dönecek.',
@@ -763,9 +764,10 @@ function Contact({ lang }) {
         },
         cats: ['Dinner sets', 'Trays', 'Bowls', 'Plates', 'Kids', 'Decorative'],
         direct: 'Direct contact', dir: [
-          { i: 'mail', l: '[export@example.com]' },
-          { i: 'phone', l: '[+90 XXX XXX XX XX]' },
-          { i: 'map-pin', l: '[Address]' },
+          { i: 'mail', l: 'info@akelmelamin.com' },
+          { i: 'phone', l: '+90 507 425 34 46' },
+          { i: 'map-pin', l: 'İSTOÇ 10. Ada No:9/11, Bağcılar / Istanbul' },
+          { i: 'instagram', l: '@akelmelamin' },
         ],
         sent: 'Your inquiry is received.',
         sentBody: 'Our export team will reply within two business days.',
