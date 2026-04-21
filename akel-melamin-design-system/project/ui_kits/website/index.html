@@ -474,7 +474,12 @@ body::before {
 @media (max-width: 960px) { .hero__ring { display: none; } }
 
 /* Photo stack — multiple product photos crossfading */
-.hero__photo-stack { position: absolute; inset: 0; overflow: hidden; }
+.hero__photo-stack {
+  position: absolute; inset: 0; overflow: hidden;
+  transform: translateY(var(--parallax-y, 0px));
+  transition: transform 120ms linear;
+  will-change: transform;
+}
 .hero__photo-stack img {
   position: absolute; inset: 0; width: 100%; height: 100%;
   object-fit: cover; object-position: center 55%;
@@ -1252,14 +1257,31 @@ body { overflow-x: hidden; }
 .fact__v { font-family: var(--font-display); font-weight: 700; font-size: 28px; color: var(--paper); letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
 
 .catalog-band {
+  position: relative;
   background: var(--bone); border: 1px solid var(--border);
   border-radius: 4px; padding: 48px;
   display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center;
+  overflow: hidden;
 }
-.catalog-band__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.025em; color: var(--ink); line-height: 1.05; margin: 10px 0 14px; }
-.catalog-band__body { color: var(--slate); max-width: 46ch; margin: 0; font-size: 16px; line-height: 1.55; }
-.catalog-band__right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; }
+.catalog-band__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.025em; color: var(--ink); line-height: 1.05; margin: 10px 0 14px; position: relative; z-index: 1; }
+.catalog-band__body { color: var(--slate); max-width: 46ch; margin: 0; font-size: 16px; line-height: 1.55; position: relative; z-index: 1; }
+.catalog-band__right { display: flex; flex-direction: column; align-items: flex-end; gap: 10px; position: relative; z-index: 1; }
 .catalog-band__note { color: var(--slate); }
+.catalog-band__ring {
+  position: absolute; width: 140px; height: 140px;
+  left: 40%; top: -30px;
+  animation: ring-spin 36s linear infinite;
+  z-index: 0;
+  opacity: 0.55;
+  pointer-events: none;
+}
+.catalog-band__ring svg { width: 100%; height: 100%; overflow: visible; }
+.catalog-band__ring text {
+  font-family: var(--font-mono); font-size: 8.5px;
+  letter-spacing: 0.22em; fill: var(--graphite);
+  text-transform: uppercase;
+}
+@media (max-width: 720px) { .catalog-band__ring { display: none; } }
 
 /* ---------- PRODUCT GRID ---------- */
 /* Shared form primitives — used by products toolbar search/sort */
@@ -2064,26 +2086,28 @@ html,body{margin:0;background:var(--paper,#F7F6F3);}#root{min-height:100vh;}
     });
   }
 
-  // Gentle parallax for the hero photo — translate on scroll
+  // Gentle parallax for the hero photo stack — shifts slightly upward as the
+  // viewport scrolls past. Subtle (max ±50 px), desktop only, honours rm.
   function setupHeroParallax(root) {
     if (PREFERS_REDUCED || IS_NARROW) return;
-    const el = root.querySelector('[data-anim="hero-photo"]');
+    const el = root.querySelector('.hero__photo-stack');
     if (!el) return;
-    const scrollRoot = window;
-    const getY = () => window.scrollY;
+    if (el.__paraBound) return;
+    el.__paraBound = true;
     let rafId = null;
     function loop() {
-      const y = getY();
       const r = el.getBoundingClientRect();
       if (r.bottom > 0 && r.top < window.innerHeight) {
-        const progress = (r.top - window.innerHeight) / -1200;
-        const shift = Math.max(-40, Math.min(40, progress * 30));
+        // r.top is 0 when hero is at the top of viewport; goes negative as
+        // we scroll past. Shift direction matches scroll (visual lags).
+        const shift = Math.max(-50, Math.min(50, r.top * -0.14));
         el.style.setProperty('--parallax-y', shift + 'px');
       }
       rafId = null;
     }
-    const onScroll = () => { if (rafId == null) rafId = requestAnimationFrame(loop); };
-    scrollRoot.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('scroll', () => {
+      if (rafId == null) rafId = requestAnimationFrame(loop);
+    }, { passive: true });
     loop();
   }
 
@@ -2857,6 +2881,18 @@ function CatalogBand({ lang, navigate }) {
   return (
     <section className="section" data-anim="section">
       <div className="catalog-band" data-anim="fade-up">
+        <div className="catalog-band__ring" aria-hidden="true">
+          <svg viewBox="0 0 128 128">
+            <defs>
+              <path id="catalog-ring-path" d="M 64 64 m -52 0 a 52 52 0 1 1 104 0 a 52 52 0 1 1 -104 0" />
+            </defs>
+            <text>
+              <textPath href="#catalog-ring-path" startOffset="0">
+                KATALOG · 2026 · 56 SAYFA · TR · EN · ÜCRETSİZ · KATALOG · 2026 · 56 SAYFA · TR · EN · ÜCRETSİZ ·
+              </textPath>
+            </text>
+          </svg>
+        </div>
         <div>
           <span className="eyebrow">{t.eyebrow}</span>
           <h2 className="catalog-band__title">{t.title}</h2>
