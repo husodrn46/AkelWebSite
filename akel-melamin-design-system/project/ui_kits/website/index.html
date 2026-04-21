@@ -2259,9 +2259,21 @@ function Hero({ lang, navigate }) {
   }, []);
 
   const photos = [
-    { src: './img/akel-hero-1.jpg', label: lang === 'tr' ? 'Akel Melamin · Koleksiyon 01' : 'Akel Melamin · Collection 01' },
-    { src: './img/akel-hero-2.jpg', label: lang === 'tr' ? 'Akel Melamin · Koleksiyon 02' : 'Akel Melamin · Collection 02' },
-    { src: './img/akel-hero-3.jpg', label: lang === 'tr' ? 'Akel Melamin · Koleksiyon 03' : 'Akel Melamin · Collection 03' },
+    {
+      src: './img/akel-hero-1.jpg',
+      label: lang === 'tr' ? 'Akel Melamin · Mermer Tepsi Serisi'  : 'Akel Melamin · Marble Tray Series',
+      tag:   lang === 'tr' ? 'MERMER · TEPSİ'                       : 'MARBLE · TRAY',
+    },
+    {
+      src: './img/akel-hero-2.jpg',
+      label: lang === 'tr' ? 'Akel Melamin · Desenli Servis Tepsisi' : 'Akel Melamin · Patterned Serving Tray',
+      tag:   lang === 'tr' ? 'DESENLİ · SERVİS'                      : 'PATTERNED · SERVING',
+    },
+    {
+      src: './img/akel-hero-3.jpg',
+      label: lang === 'tr' ? 'Akel Melamin · Ekmek & Servis Koleksiyonu' : 'Akel Melamin · Bread & Serving Set',
+      tag:   lang === 'tr' ? 'EKMEK · SERVİS'                            : 'BREAD · SERVING',
+    },
   ];
   const [active, setActive] = React.useState(0);
   React.useEffect(() => {
@@ -2321,7 +2333,7 @@ function Hero({ lang, navigate }) {
             />
           ))}
         </div>
-        <span className="hero__visual-crop">4:5 · FRAME 0{active + 1}</span>
+        <span className="hero__visual-crop">{photos[active].tag}</span>
         <div className="hero__photo-nav" role="tablist" aria-label={lang === 'tr' ? 'Ürün galerisi' : 'Product gallery'}>
           {photos.map((p, i) => (
             <button
