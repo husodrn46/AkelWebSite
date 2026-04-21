@@ -2553,10 +2553,10 @@ function Hero({ lang, navigate }) {
       <div className="hero__text">
         <span className="eyebrow">{copy.eyebrow}</span>
         <h1 className="hero__title">
-          <span className="hero__title-line">{copy.title}</span>
+          <span className="hero__title-line"><span data-split-text>{copy.title}</span></span>
           <br />
           <span className="hero__title-line">
-            <span className="hero__title-accent pull-serif">{copy.titleAccent}</span>
+            <span className="hero__title-accent pull-serif"><span data-split-text>{copy.titleAccent}</span></span>
           </span>
         </h1>
         <p className="hero__body">{copy.body}</p>
