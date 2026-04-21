@@ -997,7 +997,7 @@ body { overflow-x: hidden; }
   margin: 0 auto var(--space-7);
   padding: 0 var(--page-gutter);
   aspect-ratio: auto;
-  height: clamp(340px, 55vh, 620px);
+  height: clamp(420px, 68vh, 780px);
   background: transparent;
   position: relative;
   display: block;
@@ -1024,7 +1024,7 @@ body { overflow-x: hidden; }
   inset: 0 var(--page-gutter);
   border-radius: 4px;
 }
-@media (max-width: 720px) { .hero__visual { height: clamp(260px, 40vh, 420px); } }
+@media (max-width: 720px) { .hero__visual { height: clamp(320px, 50vh, 520px); } }
 .hero__photo {
   width: 100%; height: 100%; object-fit: cover; object-position: center 52%;
   user-select: none; -webkit-user-drag: none;
@@ -2423,18 +2423,18 @@ function Hero({ lang, navigate }) {
   const photos = [
     {
       src: './img/akel-hero-1.webp',
-      label: lang === 'tr' ? 'Akel Melamin · Mermer Tepsi Serisi'  : 'Akel Melamin · Marble Tray Series',
-      tag:   lang === 'tr' ? 'MERMER · TEPSİ'                       : 'MARBLE · TRAY',
+      label: lang === 'tr' ? 'Akel Melamin · Restoran Sofra Serisi' : 'Akel Melamin · Restaurant Tabletop',
+      tag:   lang === 'tr' ? 'SOFRA · SERVİS'                        : 'TABLE · SERVICE',
     },
     {
       src: './img/akel-hero-2.webp',
-      label: lang === 'tr' ? 'Akel Melamin · Desenli Servis Tepsisi' : 'Akel Melamin · Patterned Serving Tray',
-      tag:   lang === 'tr' ? 'DESENLİ · SERVİS'                      : 'PATTERNED · SERVING',
+      label: lang === 'tr' ? 'Akel Melamin · Yemek Servisi'    : 'Akel Melamin · Dining Service',
+      tag:   lang === 'tr' ? 'YEMEK · SUNUM'                   : 'DINING · PRESENTATION',
     },
     {
       src: './img/akel-hero-3.webp',
-      label: lang === 'tr' ? 'Akel Melamin · Ekmek & Servis Koleksiyonu' : 'Akel Melamin · Bread & Serving Set',
-      tag:   lang === 'tr' ? 'EKMEK · SERVİS'                            : 'BREAD · SERVING',
+      label: lang === 'tr' ? 'Akel Melamin · Kase Serisi' : 'Akel Melamin · Bowl Series',
+      tag:   lang === 'tr' ? 'KASE · KOLEKSİYON'          : 'BOWL · COLLECTION',
     },
   ];
   const [active, setActive] = React.useState(0);
@@ -2495,8 +2495,8 @@ function Hero({ lang, navigate }) {
               className={i === active ? 'is-active' : ''}
               src={p.src}
               alt={p.label}
-              width="1200"
-              height="960"
+              width="1600"
+              height="1600"
               loading={i === 0 ? 'eager' : 'lazy'}
               decoding="async"
             />
