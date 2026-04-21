@@ -689,11 +689,9 @@ body::before {
    Akel Melamin — Marketing site UI kit
    ============================================================ */
 
+html { scroll-behavior: smooth; }
+body { overflow-x: hidden; }
 .kit-scroll {
-  height: 100vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scroll-behavior: smooth;
   background: var(--paper);
   position: relative;
 }
@@ -1761,8 +1759,7 @@ body::before {
   .products-toolbar__meta { grid-column: 1 / -1; justify-content: flex-start; min-height: auto; }
   .product-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 16px; }
   .product-card__name { font-size: 15px; }
-  .filter-row { gap: 6px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 6px; margin: 0 calc(-1 * var(--page-gutter)) 24px; padding-left: var(--page-gutter); padding-right: var(--page-gutter); scrollbar-width: none; }
-  .filter-row::-webkit-scrollbar { display: none; }
+  .filter-row { gap: 6px; flex-wrap: wrap; }
   .chip { flex-shrink: 0; }
 
   /* Product detail */
@@ -1910,8 +1907,8 @@ html,body{margin:0;background:var(--paper,#F7F6F3);}#root{min-height:100vh;}
       root.querySelectorAll('.anim-init').forEach(el => el.classList.add('anim-in'));
       return;
     }
-    // Use the inner scroll container as the observer root if present.
-    const scrollRoot = root.querySelector && root.querySelector('.kit-scroll');
+    // Native document scroll — IntersectionObserver root null = viewport.
+    const scrollRoot = null;
     const io = new IntersectionObserver((entries) => {
       entries.forEach(e => {
         if (!e.isIntersecting) return;
@@ -2014,8 +2011,8 @@ html,body{margin:0;background:var(--paper,#F7F6F3);}#root{min-height:100vh;}
     if (PREFERS_REDUCED || IS_NARROW) return;
     const el = root.querySelector('[data-anim="hero-photo"]');
     if (!el) return;
-    const scrollRoot = root.closest('.kit-scroll') || document.querySelector('.kit-scroll') || window;
-    const getY = () => scrollRoot === window ? window.scrollY : scrollRoot.scrollTop;
+    const scrollRoot = window;
+    const getY = () => window.scrollY;
     let rafId = null;
     function loop() {
       const y = getY();
@@ -2079,16 +2076,15 @@ html,body{margin:0;background:var(--paper,#F7F6F3);}#root{min-height:100vh;}
     const bar = document.createElement('div');
     bar.className = 'scroll-progress';
     document.body.appendChild(bar);
-    const scrollRoot = document.querySelector('.kit-scroll');
     let rafId = null;
     const update = () => {
-      if (!scrollRoot) return;
-      const max = scrollRoot.scrollHeight - scrollRoot.clientHeight;
-      const pct = max > 0 ? (scrollRoot.scrollTop / max) * 100 : 0;
+      const doc = document.documentElement;
+      const max = doc.scrollHeight - doc.clientHeight;
+      const pct = max > 0 ? (window.scrollY / max) * 100 : 0;
       bar.style.width = pct + '%';
       rafId = null;
     };
-    (scrollRoot || window).addEventListener('scroll', () => {
+    window.addEventListener('scroll', () => {
       if (rafId == null) rafId = requestAnimationFrame(update);
     }, { passive: true });
     update();
@@ -2206,13 +2202,9 @@ function Header({ lang, setLang, currentPath, navigate }) {
   const [scrolled, setScrolled] = React.useState(false);
   const [menuOpen, setMenuOpen] = React.useState(false);
   React.useEffect(() => {
-    const el = document.querySelector('.kit-scroll') || window;
-    const onScroll = () => {
-      const y = el === window ? window.scrollY : el.scrollTop;
-      setScrolled(y > 8);
-    };
-    el.addEventListener('scroll', onScroll);
-    return () => el.removeEventListener('scroll', onScroll);
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
   // Close menu on route change or Esc
   React.useEffect(() => { setMenuOpen(false); }, [currentPath]);
@@ -2220,16 +2212,12 @@ function Header({ lang, setLang, currentPath, navigate }) {
     if (!menuOpen) return;
     const onKey = (e) => { if (e.key === 'Escape') setMenuOpen(false); };
     document.addEventListener('keydown', onKey);
-    const scrollEl = document.querySelector('.kit-scroll');
     const prevBody = document.body.style.overflow;
-    const prevScroll = scrollEl ? scrollEl.style.overflow : '';
     document.body.style.overflow = 'hidden';
-    if (scrollEl) scrollEl.style.overflow = 'hidden';
     if (window.lucide) window.lucide.createIcons();
     return () => {
       document.removeEventListener('keydown', onKey);
       document.body.style.overflow = prevBody;
-      if (scrollEl) scrollEl.style.overflow = prevScroll;
     };
   }, [menuOpen]);
 
@@ -3914,7 +3902,7 @@ function App() {
     return () => window.removeEventListener('popstate', onPop);
   }, []);
 
-  const scrollTop = () => requestAnimationFrame(() => { const s = document.querySelector('.kit-scroll'); if (s) s.scrollTop = 0; });
+  const scrollTop = () => requestAnimationFrame(() => window.scrollTo({ top: 0, left: 0, behavior: 'auto' }));
   const pushURL = (url) => { if (window.location.pathname + window.location.search !== url) history.pushState(null, '', url); };
   const navigate = (p, opts) => {
     setPath(p); setProduct(null); setPendingSlug(null);
@@ -3970,16 +3958,11 @@ function App() {
 function ScrollToTop({ lang }) {
   const [show, setShow] = React.useState(false);
   React.useEffect(() => {
-    const el = document.querySelector('.kit-scroll');
-    const onScroll = () => { setShow((el ? el.scrollTop : window.scrollY) > 800); };
-    (el || window).addEventListener('scroll', onScroll, { passive: true });
-    return () => (el || window).removeEventListener('scroll', onScroll);
+    const onScroll = () => setShow(window.scrollY > 800);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
-  const up = () => {
-    const el = document.querySelector('.kit-scroll');
-    if (el) el.scrollTo({ top: 0, behavior: 'smooth' });
-    else window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
+  const up = () => window.scrollTo({ top: 0, behavior: 'smooth' });
   return (
     <button
       type="button"
