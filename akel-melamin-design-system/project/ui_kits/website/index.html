@@ -1645,46 +1645,80 @@ body { overflow-x: hidden; }
 .catalog-cover__grid img:hover { transform: scale(1.02); }
 .catalog-cover__foot { border-top: 1px solid var(--border); padding-top: 16px; margin-top: 20px; }
 
-/* Embedded PDF viewer */
-.catalog-viewer {
+/* pdf.js + StPageFlip catalog flipbook */
+.flipbook {
   margin: var(--space-8) 0 var(--space-9);
+  background: var(--paper-soft);
   border: 1px solid var(--border);
   border-radius: 4px;
-  background: var(--paper-soft);
-  overflow: hidden;
   box-shadow: var(--shadow-2);
+  overflow: hidden;
 }
-.catalog-viewer__head {
-  display: grid; grid-template-columns: 1fr auto;
-  gap: 20px; align-items: center;
-  padding: 20px 28px;
-  border-bottom: 1px solid transparent;
+.flipbook__head {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 20px; padding: 20px 28px;
   background: var(--paper);
-  transition: border-color 220ms;
+  border-bottom: 1px solid var(--border);
 }
-.catalog-viewer.is-open .catalog-viewer__head { border-bottom-color: var(--border); }
-.catalog-viewer__heading { display: flex; flex-direction: column; gap: 6px; }
-.catalog-viewer__head .eyebrow { padding-left: 18px; }
-.catalog-viewer__head .h3 {
-  font-family: var(--font-display); font-weight: 700;
-  font-variation-settings: "wdth" 88, "opsz" 48;
-  letter-spacing: -0.015em; font-size: 18px; color: var(--ink);
-  margin: 0;
+.flipbook__head .eyebrow { display: block; margin-bottom: 6px; }
+.flipbook__hint { font-size: 13px; color: var(--slate); }
+.flipbook__actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.flipbook__stage {
+  position: relative;
+  min-height: 72vh;
+  display: grid; place-items: center;
+  padding: 28px;
+  background:
+    radial-gradient(circle at 50% 40%, rgba(0,0,0,0.03), transparent 60%),
+    var(--bone);
 }
-.catalog-viewer__hint { font-size: 12.5px; color: var(--slate); }
-.catalog-viewer__actions { display: flex; gap: 8px; flex-wrap: wrap; }
-.catalog-viewer__frame,
-.catalog-viewer object,
-.catalog-viewer iframe {
-  width: 100%; min-height: 85vh; height: 85vh;
-  display: block; border: 0; background: var(--bone);
+.flipbook__container {
+  width: 100%;
+  max-width: 1080px;
+  aspect-ratio: 4 / 3;
 }
-.catalog-viewer__fallback {
-  padding: 24px; text-align: center; color: var(--slate);
+.flipbook__container canvas { display: block; width: 100%; height: auto; }
+.flipbook__page { background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,0.08); }
+.flipbook__status {
+  position: absolute; inset: 0;
+  display: grid; place-items: center; gap: 12px;
+  grid-auto-rows: min-content; align-content: center;
+  font-family: var(--font-mono); font-size: 13px;
+  letter-spacing: 0.04em; color: var(--graphite);
+  background: rgba(244,242,237,0.92);
+  pointer-events: none;
 }
+.flipbook__status--error { pointer-events: auto; }
+.flipbook__spinner {
+  width: 28px; height: 28px; border-radius: 50%;
+  border: 2px solid rgba(17,17,16,0.18);
+  border-top-color: var(--red);
+  animation: flipbook-spin 900ms linear infinite;
+  margin: 0 auto;
+}
+@keyframes flipbook-spin { to { transform: rotate(360deg); } }
+.flipbook__controls {
+  display: flex; justify-content: center; align-items: center; gap: 18px;
+  padding: 16px 28px;
+  background: var(--paper);
+  border-top: 1px solid var(--border);
+}
+.flipbook__btn {
+  width: 40px; height: 40px; padding: 0;
+  display: grid; place-items: center;
+  font-size: 22px; line-height: 1;
+  background: var(--paper-soft);
+  border: 1px solid var(--border); border-radius: 50%;
+  color: var(--ink); cursor: pointer;
+  transition: background var(--dur-fast), border-color var(--dur-fast), color var(--dur-fast);
+}
+.flipbook__btn:hover { background: var(--red); border-color: var(--red); color: var(--paper); }
+.flipbook__pos { font-family: var(--font-mono); font-size: 13px; color: var(--graphite); letter-spacing: 0.04em; font-variant-numeric: tabular-nums; }
+.flipbook__pos strong { font-weight: 700; color: var(--ink); }
 @media (max-width: 720px) {
-  .catalog-viewer__head { grid-template-columns: 1fr; }
-  .catalog-viewer__frame, .catalog-viewer iframe { min-height: 70vh; height: 70vh; }
+  .flipbook__head { flex-direction: column; align-items: stretch; padding: 16px; gap: 12px; }
+  .flipbook__actions .btn { flex: 1 1 auto; justify-content: center; }
+  .flipbook__stage { padding: 16px; min-height: 60vh; }
 }
 
 .catalog-contents { background: var(--bone); border-radius: 4px; padding: 40px 48px; }
@@ -1834,9 +1868,6 @@ body { overflow-x: hidden; }
   .catalog-contents { padding: 28px 20px; }
   .catalog-contents li { grid-template-columns: 32px 1fr; padding: 12px 0; font-size: 14.5px; }
 
-  .catalog-viewer__head { grid-template-columns: 1fr; padding: 16px; gap: 14px; }
-  .catalog-viewer__actions { gap: 6px; }
-  .catalog-viewer__actions .btn { flex: 1 1 auto; min-width: 120px; justify-content: center; }
 
   /* Footer */
   .site-footer__top { grid-template-columns: 1fr 1fr; gap: 32px; padding: var(--space-7) var(--page-gutter); }
@@ -1863,7 +1894,6 @@ body { overflow-x: hidden; }
   .product-card__ph { aspect-ratio: 1/1; }
   .about__facts { grid-template-columns: 1fr 1fr; }
   .band__facts { grid-template-columns: 1fr; }
-  .catalog-viewer__frame, .catalog-viewer iframe { min-height: 60vh; height: 60vh; }
   .site-footer__brand img { width: 148px; }
 }
 
@@ -1899,7 +1929,6 @@ body { overflow-x: hidden; }
   .site-footer__top { grid-template-columns: 1fr; gap: 28px; }
   .site-footer__brand { grid-column: span 1; }
 
-  .catalog-viewer__actions .btn { flex-basis: 100%; }
 
   /* Buttons full-width on narrow */
   .section__head .btn--link { font-size: 14px; }
@@ -3667,8 +3696,8 @@ function CatalogPage({ lang }) {
         </div>
       </div>
 
-      {/* ---- PDF preview — opt-in via button, not open by default ---- */}
-      <CatalogPreview lang={lang} pdfUrl={pdfUrl} />
+      {/* ---- Flipbook preview: StPageFlip + pdf.js ---- */}
+      <CatalogFlipbook lang={lang} pdfUrl={pdfUrl} />
 
       <div className="catalog-contents" data-anim="fade-up">
         <span className="eyebrow">{t.what}</span>
@@ -3684,66 +3713,185 @@ function CatalogPage({ lang }) {
 
 // Opt-in PDF viewer — user clicks "Önizle" to load the iframe. Keeps initial
 // page light (no 6MB fetch on catalog route entry).
-function CatalogPreview({ lang, pdfUrl }) {
-  const [open, setOpen] = React.useState(false);
-  React.useEffect(() => {
-    if (open && window.lucide) window.lucide.createIcons();
-  }, [open]);
+/* ====== CatalogFlipbook.jsx ====== */
+// pdf.js renders each catalog page to a canvas; StPageFlip (page-flip lib)
+// wraps the canvases into a real book with turn animation, drag-to-flip
+// and keyboard shortcuts. Libraries are loaded on demand — the bundle
+// for the rest of the site stays lean, and only users who land on
+// /katalog pay the ~250 KB JS cost.
+const CATALOG_LIBS = {
+  pdfjs:    'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.min.js',
+  pdfWorker:'https://cdn.jsdelivr.net/npm/pdfjs-dist@3.11.174/build/pdf.worker.min.js',
+  pageFlip: 'https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js',
+};
+
+function loadScriptOnce(src) {
+  return new Promise((resolve, reject) => {
+    if (document.querySelector(`script[src="${src}"]`)) return resolve();
+    const el = document.createElement('script');
+    el.src = src; el.async = true;
+    el.onload = () => resolve();
+    el.onerror = () => reject(new Error('Script load failed: ' + src));
+    document.head.appendChild(el);
+  });
+}
+
+function CatalogFlipbook({ lang, pdfUrl }) {
+  const containerRef = React.useRef(null);
+  const flipRef = React.useRef(null);
+  const [status, setStatus] = React.useState('loading'); // 'loading' | 'ready' | 'error'
+  const [progress, setProgress] = React.useState({ done: 0, total: 0 });
+  const [page, setPage] = React.useState(1);
+  const [totalPages, setTotalPages] = React.useState(0);
   const t = lang === 'tr'
-    ? { open: 'Önizlemeyi aç', close: 'Önizlemeyi kapat', hint: '56 sayfa · 6,3 MB PDF — açmak isteğe bağlıdır.',
-        openTab: 'Yeni sekmede aç', download: 'İndir',
-        title: 'Melamin Servis Ekipmanları 2026 · v23' }
-    : { open: 'Open preview', close: 'Close preview', hint: '56 pages · 6.3 MB PDF — opening is optional.',
-        openTab: 'Open in new tab', download: 'Download',
-        title: 'Melamine Service Equipment 2026 · v23' };
+    ? { title: 'Katalog önizlemesi', hint: 'Sayfaları çevirerek tamamını incele.',
+        loading: 'Katalog hazırlanıyor', prev: 'Önceki', next: 'Sonraki',
+        error: 'Önizleme yüklenemedi — katalogu doğrudan indirebilirsin.',
+        download: 'İndir', openTab: 'Yeni sekmede aç', page: 'Sayfa' }
+    : { title: 'Catalog preview', hint: 'Flip through the pages.',
+        loading: 'Preparing catalog', prev: 'Prev', next: 'Next',
+        error: 'Preview failed to load — you can download the catalog directly.',
+        download: 'Download', openTab: 'Open in new tab', page: 'Page' };
+
+  React.useEffect(() => {
+    let cancelled = false;
+    async function init() {
+      try {
+        await Promise.all([
+          loadScriptOnce(CATALOG_LIBS.pdfjs),
+          loadScriptOnce(CATALOG_LIBS.pageFlip),
+        ]);
+        if (cancelled) return;
+        const pdfjsLib = window.pdfjsLib;
+        const PageFlipCtor = (window.St && window.St.PageFlip) || window.PageFlip;
+        if (!pdfjsLib || !PageFlipCtor) throw new Error('libs missing');
+        pdfjsLib.GlobalWorkerOptions.workerSrc = CATALOG_LIBS.pdfWorker;
+
+        const pdf = await pdfjsLib.getDocument(pdfUrl).promise;
+        if (cancelled) return;
+        const num = pdf.numPages;
+        setTotalPages(num);
+        setProgress({ done: 0, total: num });
+
+        const container = containerRef.current;
+        if (!container) return;
+        container.innerHTML = '';
+
+        // Target render resolution scaled by DPR, capped for memory.
+        const first = await pdf.getPage(1);
+        const v1 = first.getViewport({ scale: 1 });
+        const targetW = Math.min(900, v1.width * 1.25);
+        const scale = targetW / v1.width;
+
+        for (let i = 1; i <= num; i++) {
+          if (cancelled) return;
+          const page = await pdf.getPage(i);
+          const viewport = page.getViewport({ scale });
+          const canvas = document.createElement('canvas');
+          canvas.width  = viewport.width;
+          canvas.height = viewport.height;
+          canvas.style.width = '100%';
+          canvas.style.height = 'auto';
+          await page.render({ canvasContext: canvas.getContext('2d'), viewport }).promise;
+          const wrap = document.createElement('div');
+          wrap.className = 'flipbook__page';
+          wrap.appendChild(canvas);
+          container.appendChild(wrap);
+          setProgress({ done: i, total: num });
+        }
+        if (cancelled) return;
+
+        const firstCanvas = container.querySelector('canvas');
+        const book = new PageFlipCtor(container, {
+          width: firstCanvas.width,
+          height: firstCanvas.height,
+          size: 'stretch',
+          minWidth: 280,
+          maxWidth: 1200,
+          minHeight: 360,
+          maxHeight: 1700,
+          showCover: true,
+          flippingTime: 650,
+          usePortrait: true,
+          maxShadowOpacity: 0.35,
+          mobileScrollSupport: true,
+        });
+        book.loadFromHTML(container.querySelectorAll('.flipbook__page'));
+        flipRef.current = book;
+        book.on('flip', (e) => setPage(Number(e.data) + 1));
+        setStatus('ready');
+      } catch (err) {
+        if (!cancelled) { console.error('[flipbook]', err); setStatus('error'); }
+      }
+    }
+    init();
+    return () => {
+      cancelled = true;
+      try { flipRef.current && flipRef.current.destroy && flipRef.current.destroy(); } catch (_) {}
+    };
+  }, [pdfUrl]);
+
+  // Keyboard shortcuts: ←/→ arrows flip pages while the flipbook is in view
+  React.useEffect(() => {
+    if (status !== 'ready') return;
+    const onKey = (e) => {
+      if (!flipRef.current) return;
+      if (e.key === 'ArrowLeft') flipRef.current.flipPrev();
+      else if (e.key === 'ArrowRight') flipRef.current.flipNext();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [status]);
+
   return (
-    <div className={`catalog-viewer ${open ? 'is-open' : ''}`} data-anim="fade-up">
-      <div className="catalog-viewer__head">
-        <div className="catalog-viewer__heading">
-          <span className="eyebrow">{lang === 'tr' ? 'Önizleme' : 'Preview'}</span>
-          <h3 className="h3">{t.title}</h3>
-          <span className="catalog-viewer__hint">{t.hint}</span>
+    <div className="flipbook" data-anim="fade-up">
+      <div className="flipbook__head">
+        <div>
+          <span className="eyebrow">{t.title}</span>
+          <span className="flipbook__hint">{t.hint}</span>
         </div>
-        <div className="catalog-viewer__actions">
-          <button type="button"
-            className="btn btn--primary btn--sm magnetic"
-            onClick={() => setOpen(o => !o)}
-            aria-expanded={open}
-          >
-            <i data-lucide={open ? 'x' : 'eye'}></i> {open ? t.close : t.open}
-          </button>
+        <div className="flipbook__actions">
           <a className="btn btn--ghost btn--sm" href={pdfUrl} target="_blank" rel="noopener">
-            <i data-lucide="external-link"></i> {t.openTab}
+            {t.openTab} ↗
           </a>
           <a className="btn btn--ghost btn--sm" href={pdfUrl} download="Akel-Melamin-Katalog-2026.pdf">
-            <i data-lucide="download"></i> {t.download}
+            {t.download} ↓
           </a>
         </div>
       </div>
-      {open && (
-        <object
-          className="catalog-viewer__frame"
-          data={pdfUrl + '#view=FitH&toolbar=1&navpanes=0'}
-          type="application/pdf"
-        >
-          <iframe
-            src={pdfUrl + '#view=FitH'}
-            title="Akel Katalog 2026"
-            loading="lazy"
-          ></iframe>
-          <p className="catalog-viewer__fallback">
-            {lang === 'tr'
-              ? 'Tarayıcın PDF gömmeyi desteklemiyor. '
-              : 'Your browser does not support embedded PDFs. '}
-            <a href={pdfUrl} download>{lang === 'tr' ? 'Kataloğu indir' : 'Download the catalog'}</a>.
-          </p>
-        </object>
+
+      <div className="flipbook__stage">
+        <div ref={containerRef} className="flipbook__container" aria-hidden={status !== 'ready'}></div>
+        {status === 'loading' && (
+          <div className="flipbook__status">
+            <span className="flipbook__spinner" aria-hidden="true"></span>
+            <span>{t.loading}{progress.total ? ` · ${progress.done}/${progress.total}` : '…'}</span>
+          </div>
+        )}
+        {status === 'error' && (
+          <div className="flipbook__status flipbook__status--error">
+            <span>{t.error}</span>
+            <a className="btn btn--primary btn--sm" href={pdfUrl} download>{t.download} ↓</a>
+          </div>
+        )}
+      </div>
+
+      {status === 'ready' && (
+        <div className="flipbook__controls">
+          <button type="button" className="flipbook__btn" aria-label={t.prev}
+            onClick={() => flipRef.current && flipRef.current.flipPrev()}>‹</button>
+          <span className="flipbook__pos">
+            {t.page} <strong>{page}</strong> / {totalPages}
+          </span>
+          <button type="button" className="flipbook__btn" aria-label={t.next}
+            onClick={() => flipRef.current && flipRef.current.flipNext()}>›</button>
+        </div>
       )}
     </div>
   );
 }
 
-window.CatalogPreview = CatalogPreview;
+window.CatalogFlipbook = CatalogFlipbook;
 window.CatalogPage = CatalogPage;
 
 
