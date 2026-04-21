@@ -1632,6 +1632,95 @@ body { overflow-x: hidden; }
 .contact__direct li { display: flex; align-items: center; gap: 10px; font-size: 14.5px; color: var(--graphite); }
 .contact__direct svg { width: 18px; height: 18px; color: var(--slate); stroke-width: 1.75; flex-shrink: 0; }
 
+.contact__photo {
+  margin: var(--space-8) 0 0;
+  position: relative;
+}
+.contact__photo img {
+  width: 100%; aspect-ratio: 4 / 3;
+  object-fit: cover; object-position: center 55%;
+  border-radius: 4px; box-shadow: var(--shadow-2);
+}
+.contact__photo figcaption {
+  position: absolute; left: 20px; bottom: 20px;
+  padding: 6px 12px;
+  background: rgba(247,246,243,0.92); color: var(--graphite);
+  border-radius: 2px; backdrop-filter: blur(4px);
+}
+
+.contact__process {
+  margin-top: var(--space-8);
+  padding: 40px 0 0; border-top: 1px solid var(--border);
+}
+.contact__process .eyebrow { display: block; margin-bottom: 20px; }
+.contact__process-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
+}
+.contact-step {
+  display: flex; flex-direction: column; gap: 10px;
+  padding-top: 16px; border-top: 2px solid var(--ink);
+}
+.contact-step__n {
+  font-family: var(--font-mono); font-size: 11px;
+  letter-spacing: 0.18em; color: var(--red);
+}
+.contact-step__k {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 17px; color: var(--ink); line-height: 1.2;
+}
+.contact-step__v { color: var(--slate); font-size: 14px; line-height: 1.55; margin: 0; }
+
+.contact__map {
+  margin-top: var(--space-8);
+  border: 1px solid var(--border); border-radius: 4px;
+  background: var(--paper-soft); overflow: hidden;
+}
+.contact__map-head {
+  display: flex; justify-content: space-between; align-items: center;
+  gap: 20px; padding: 20px 28px;
+  background: var(--paper); border-bottom: 1px solid var(--border);
+}
+.contact__map-note { margin: 6px 0 0; font-size: 14px; color: var(--graphite); }
+.contact__map-frame {
+  width: 100%; height: 420px; border: 0; display: block;
+  background: var(--bone);
+}
+
+.contact__faq { margin-top: var(--space-8); }
+.contact__faq .eyebrow { display: block; margin-bottom: 16px; }
+.faq { list-style: none; margin: 0; padding: 0; }
+.faq__item { border-bottom: 1px solid var(--border); }
+.faq__item:first-child { border-top: 1px solid var(--border); }
+.faq__q {
+  width: 100%; display: flex; justify-content: space-between; align-items: center;
+  gap: 24px; padding: 20px 4px;
+  background: none; border: 0; cursor: pointer;
+  font-family: var(--font-display); font-weight: 600;
+  font-size: 17px; color: var(--ink); text-align: left;
+  transition: color 160ms;
+}
+.faq__q:hover { color: var(--red); }
+.faq__sign {
+  font-family: var(--font-mono); font-size: 22px;
+  color: var(--red); font-weight: 400;
+  flex-shrink: 0;
+}
+.faq__a {
+  margin: 0 4px 20px; max-width: 68ch;
+  color: var(--graphite); font-size: 15px; line-height: 1.65;
+}
+
+@media (max-width: 720px) {
+  .contact__process-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
+  .contact__map-head { flex-direction: column; align-items: stretch; padding: 16px; gap: 10px; }
+  .contact__map-frame { height: 320px; }
+  .contact__photo figcaption { left: 10px; bottom: 10px; font-size: 11px; }
+  .faq__q { font-size: 15.5px; padding: 16px 2px; }
+}
+@media (max-width: 480px) {
+  .contact__process-grid { grid-template-columns: 1fr; }
+}
+
 /* ---------- CATALOG PAGE ---------- */
 .catalog-page { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: var(--space-9); }
 .catalog-page__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: -0.035em; color: var(--ink); line-height: 1; margin: 16px 0 20px; text-wrap: balance; }
@@ -3600,6 +3689,7 @@ window.About = About;
 /* ====== Contact.jsx ====== */
 // Contact.jsx — export inquiry form
 function Contact({ lang }) {
+  const [openFaq, setOpenFaq] = React.useState(null);
   const t = lang === 'tr'
     ? {
         eyebrow: 'İletişim',
@@ -3608,14 +3698,25 @@ function Contact({ lang }) {
         waPrimary: 'WhatsApp üzerinden yaz',
         emailSecondary: 'E-posta gönder',
         direct: 'Doğrudan iletişim',
-        dir: [
-          { i: 'phone',           l: '+90 507 425 34 46',                              href: 'tel:+905074253446' },
-          { i: 'phone',           l: '+90 532 161 88 46',                              href: 'tel:+905321618846' },
-          { i: 'map-pin',         l: 'Showroom · İSTOÇ 10. Ada No:9/11, Bağcılar / İstanbul', href: 'https://maps.google.com/?q=İSTOÇ+10.Ada+No:9/11+Bağcılar+İstanbul' },
-          { i: 'factory',         l: 'Üretim · İkitelli OSB / İstanbul',                href: null },
-          { i: 'clock',           l: 'Pzt – Cuma · 08:00 – 17:30   ·   Cumartesi · 08:00 – 14:30', href: null },
-          { i: 'globe',           l: 'akelmelamin.com',                                 href: 'https://akelmelamin.com' },
-          { i: 'instagram',       l: '@akelmelamin',                                    href: 'https://instagram.com/akelmelamin' },
+        showroomCap: 'Showroom · İSTOÇ 10. Ada',
+        mapTitle: 'Showroom',
+        mapNote: 'İSTOÇ 10. Ada No:9/11, Bağcılar / İstanbul',
+        mapCta: 'Yol tarifi al',
+        processTitle: 'Nasıl çalışır?',
+        process: [
+          { n: '01', k: 'İletişim', v: 'WhatsApp veya e-posta ile talebinizi paylaşın.' },
+          { n: '02', k: 'Teklif & numune', v: 'Fiyat, koli bilgisi ve gerekirse numune ile döneriz.' },
+          { n: '03', k: 'Sipariş onayı', v: 'Özel logolu üretim ve miktar birlikte netleşir.' },
+          { n: '04', k: 'Üretim & sevkiyat', v: 'Üretim + kargo süreleri paylaşılır, takipte tutarız.' },
+        ],
+        faqTitle: 'Sık sorulanlar',
+        faqs: [
+          { q: 'Minimum sipariş adedi var mı?', a: 'Standart ürünlerde minimum bir koli; özel logolu ürünlerde ürün bazında değişiklik gösterir. WhatsApp üzerinden iletin, size özel yanıt verelim.' },
+          { q: 'Özel logolu (kurumsal) üretim şartları nedir?', a: 'Kurumsal / belediye / promosyon projeleri için tipik minimum 500–1000 adet bandında başlar, baskı tekniğine göre değişir. Örneklerimizi kataloğumuzdan inceleyebilirsiniz.' },
+          { q: 'Numune gönderimi var mı?', a: 'Ciddi talepler için evet — seçilen ürün(ler)in numunesi gönderilir. Kargo ücreti talebe göre değerlendirilir.' },
+          { q: 'İhracat yapıyor musunuz?', a: 'Evet. Afrika, Arap ülkeleri başta olmak üzere 23+ ülkeye düzenli sevkiyatımız var. Liman/ülke bazlı fiyat ve lead-time için iletişime geçin.' },
+          { q: 'Ürünler gıda ile temas için uygun mu?', a: 'Tüm hammadde ve mamul ürünler gıda teması sertifikalıdır — ISO 22000, Intertek, FQC raporlu. Detay kataloğumuzda.' },
+          { q: 'Ödeme şartları nedir?', a: 'Yurt içi / yurt dışı için farklı koşullarımız var. Sipariş görüşmesi sırasında netleştirilir.' },
         ],
       }
     : {
@@ -3625,16 +3726,40 @@ function Contact({ lang }) {
         waPrimary: 'Message on WhatsApp',
         emailSecondary: 'Send an email',
         direct: 'Direct contact',
-        dir: [
-          { i: 'phone',           l: '+90 507 425 34 46',                              href: 'tel:+905074253446' },
-          { i: 'phone',           l: '+90 532 161 88 46',                              href: 'tel:+905321618846' },
-          { i: 'map-pin',         l: 'Showroom · İSTOÇ 10. Ada No:9/11, Bağcılar / Istanbul', href: 'https://maps.google.com/?q=İSTOÇ+10.Ada+No:9/11+Bağcılar+İstanbul' },
-          { i: 'factory',         l: 'Production · İkitelli OSB / Istanbul',           href: null },
-          { i: 'clock',           l: 'Mon – Fri · 08:00 – 17:30   ·   Sat · 08:00 – 14:30', href: null },
-          { i: 'globe',           l: 'akelmelamin.com',                                 href: 'https://akelmelamin.com' },
-          { i: 'instagram',       l: '@akelmelamin',                                    href: 'https://instagram.com/akelmelamin' },
+        showroomCap: 'Showroom · İSTOÇ 10. Ada',
+        mapTitle: 'Showroom',
+        mapNote: 'İSTOÇ 10. Ada No:9/11, Bağcılar / Istanbul',
+        mapCta: 'Get directions',
+        processTitle: 'How we work',
+        process: [
+          { n: '01', k: 'Contact', v: 'Share your request on WhatsApp or email.' },
+          { n: '02', k: 'Quote & sample', v: 'Price, carton details and samples if needed.' },
+          { n: '03', k: 'Order confirmation', v: 'Custom-logo specs and quantities confirmed together.' },
+          { n: '04', k: 'Production & shipping', v: 'Production + shipping timeline shared and tracked.' },
+        ],
+        faqTitle: 'Frequently asked',
+        faqs: [
+          { q: 'Is there a minimum order quantity?', a: 'For standard products, a single carton; for custom-logo items the MOQ varies by product. Ping us on WhatsApp for a specific answer.' },
+          { q: 'What about custom-logo (corporate) orders?', a: 'Corporate / municipal / promotional projects typically start around 500–1000 units depending on the printing technique. Examples are in our catalog.' },
+          { q: 'Do you send samples?', a: 'Yes for serious inquiries — samples of the selected product(s) can be shipped. Shipping cost handled case by case.' },
+          { q: 'Do you export?', a: 'Yes. Regular shipments to 23+ countries, mainly Africa and the Arab region. Contact us for port/country pricing and lead time.' },
+          { q: 'Are the products food-safe?', a: 'All raw materials and finished goods carry food-contact certifications — ISO 22000, Intertek, FQC. Details are in the catalog.' },
+          { q: 'What are the payment terms?', a: 'Different terms for domestic and export. Finalised during the order discussion.' },
         ],
       };
+  const dir = [
+    { i: 'phone',     l: '+90 507 425 34 46', href: 'tel:+905074253446' },
+    { i: 'phone',     l: '+90 532 161 88 46', href: 'tel:+905321618846' },
+    { i: 'map-pin',   l: lang === 'tr' ? 'Showroom · İSTOÇ 10. Ada No:9/11, Bağcılar / İstanbul' : 'Showroom · İSTOÇ 10. Ada No:9/11, Bağcılar / Istanbul',
+                      href: 'https://maps.google.com/?q=İSTOÇ+10.Ada+No:9/11+Bağcılar+İstanbul' },
+    { i: 'factory',   l: lang === 'tr' ? 'Üretim · İkitelli OSB / İstanbul' : 'Production · İkitelli OSB / Istanbul', href: null },
+    { i: 'clock',     l: lang === 'tr' ? 'Pzt – Cuma · 08:00 – 17:30   ·   Cumartesi · 08:00 – 14:30' : 'Mon – Fri · 08:00 – 17:30   ·   Sat · 08:00 – 14:30', href: null },
+    { i: 'globe',     l: 'akelmelamin.com', href: 'https://akelmelamin.com' },
+    { i: 'instagram', l: '@akelmelamin',   href: 'https://instagram.com/akelmelamin' },
+  ];
+  const mapQuery = encodeURIComponent('Akel Melamin, İSTOÇ 10. Ada No:9/11, Bağcılar, İstanbul');
+  const mapEmbed = `https://www.google.com/maps?q=${mapQuery}&output=embed`;
+  const mapLink  = `https://maps.google.com/?q=${mapQuery}`;
 
   return (
     <section className="section" data-anim="section">
@@ -3657,7 +3782,7 @@ function Contact({ lang }) {
         <div className="contact__direct" data-anim="fade-up" data-anim-delay="100">
           <span className="meta">{t.direct}</span>
           <ul>
-            {t.dir.map((d, i) => (
+            {dir.map((d, i) => (
               <li key={i}>
                 <i data-lucide={d.i}></i>
                 {d.href
@@ -3667,6 +3792,57 @@ function Contact({ lang }) {
             ))}
           </ul>
         </div>
+      </div>
+
+      <figure className="contact__photo" data-anim="fade-up" data-anim-delay="120">
+        <img src="./img/showroom-exterior.webp" alt="" loading="lazy" decoding="async" width="680" height="510" />
+        <figcaption className="meta">{t.showroomCap}</figcaption>
+      </figure>
+
+      <div className="contact__process" data-anim="fade-up">
+        <span className="eyebrow">{t.processTitle}</span>
+        <div className="contact__process-grid" data-anim-stagger>
+          {t.process.map((step) => (
+            <div key={step.n} className="contact-step" data-anim="stagger-item">
+              <span className="contact-step__n">{step.n}</span>
+              <span className="contact-step__k">{step.k}</span>
+              <p className="contact-step__v">{step.v}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <div className="contact__map" data-anim="fade-up">
+        <div className="contact__map-head">
+          <div>
+            <span className="eyebrow">{t.mapTitle}</span>
+            <p className="contact__map-note">{t.mapNote}</p>
+          </div>
+          <a className="btn btn--ghost btn--sm" href={mapLink} target="_blank" rel="noopener">
+            {t.mapCta} ↗
+          </a>
+        </div>
+        <iframe className="contact__map-frame"
+          src={mapEmbed}
+          loading="lazy"
+          referrerPolicy="no-referrer-when-downgrade"
+          title="Akel Melamin — Showroom"></iframe>
+      </div>
+
+      <div className="contact__faq" data-anim="fade-up">
+        <span className="eyebrow">{t.faqTitle}</span>
+        <ul className="faq">
+          {t.faqs.map((f, i) => (
+            <li key={i} className={`faq__item ${openFaq === i ? 'is-open' : ''}`}>
+              <button type="button" className="faq__q" aria-expanded={openFaq === i}
+                onClick={() => setOpenFaq(openFaq === i ? null : i)}>
+                <span>{f.q}</span>
+                <span className="faq__sign" aria-hidden="true">{openFaq === i ? '−' : '+'}</span>
+              </button>
+              {openFaq === i && <p className="faq__a">{f.a}</p>}
+            </li>
+          ))}
+        </ul>
       </div>
     </section>
   );
