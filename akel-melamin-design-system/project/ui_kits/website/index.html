@@ -1230,6 +1230,7 @@ body::before {
 .chip.is-on { background: var(--ink); color: var(--paper); border-color: var(--ink); }
 
 .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px 24px; }
+.product-grid__more { display: flex; justify-content: center; margin-top: 40px; }
 .product-card {
   background: none; border: 0; padding: 0; text-align: left; cursor: pointer;
   display: flex; flex-direction: column;
@@ -2605,9 +2606,12 @@ window.CatalogBand = CatalogBand;
 /* ====== ProductGrid.jsx ====== */
 // ProductGrid.jsx — category listing with real Gözde/Kavi lines + variant swatch
 function ProductGrid({ lang, navigate, openProduct }) {
+  const PAGE = 36;
   const [active, setActive] = React.useState('all');
   const [data, setData] = React.useState(null);
   const [err, setErr] = React.useState(null);
+  const [limit, setLimit] = React.useState(PAGE);
+  React.useEffect(() => { setLimit(PAGE); }, [active]);
 
   React.useEffect(() => {
     fetch('./data/products.json', { cache: 'no-cache' })
@@ -2620,8 +2624,8 @@ function ProductGrid({ lang, navigate, openProduct }) {
   }, []);
 
   const t = lang === 'tr'
-    ? { title: 'Tüm ürünler', count: (n) => `${n} ürün`, empty: 'Henüz ürün eklenmedi.', loading: 'Yükleniyor…', all: 'Tümü', errorLabel: 'Ürünler yüklenemedi:' }
-    : { title: 'All products', count: (n) => `${n} products`, empty: 'No products yet.', loading: 'Loading…', all: 'All', errorLabel: 'Could not load products:' };
+    ? { title: 'Tüm ürünler', count: (n) => `${n} ürün`, empty: 'Henüz ürün eklenmedi.', loading: 'Yükleniyor…', all: 'Tümü', errorLabel: 'Ürünler yüklenemedi:', loadMore: 'Daha fazla yükle' }
+    : { title: 'All products', count: (n) => `${n} products`, empty: 'No products yet.', loading: 'Loading…', all: 'All', errorLabel: 'Could not load products:', loadMore: 'Load more' };
 
   if (err) {
     return (
@@ -2696,7 +2700,7 @@ function ProductGrid({ lang, navigate, openProduct }) {
         <p className="lead" style={{padding: '48px 0'}}>{t.empty}</p>
       ) : (
         <div className="product-grid" data-anim-stagger>
-          {shown.map((p, i) => {
+          {shown.slice(0, limit).map((p, i) => {
             const spec = buildSpec(p);
             const name = lang === 'tr' ? p.ad_tr : (p.ad_en || p.ad_tr);
             return (
@@ -2714,7 +2718,8 @@ function ProductGrid({ lang, navigate, openProduct }) {
                       className="product-card__photo"
                       src={`./img/${p.foto_dosya_adi}.jpg`}
                       alt={name}
-                      loading="lazy"
+                      loading={i < 6 ? 'eager' : 'lazy'}
+                      fetchpriority={i < 3 ? 'high' : 'auto'}
                       decoding="async"
                       width="600"
                       height="450"
@@ -2750,6 +2755,14 @@ function ProductGrid({ lang, navigate, openProduct }) {
               </div>
             );
           })}
+        </div>
+      )}
+
+      {shown.length > limit && (
+        <div className="product-grid__more">
+          <button type="button" className="btn btn--ghost" onClick={() => setLimit(l => l + PAGE)}>
+            {t.loadMore} ({shown.length - limit})
+          </button>
         </div>
       )}
     </section>
