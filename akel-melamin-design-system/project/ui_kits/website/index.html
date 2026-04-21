@@ -1285,6 +1285,20 @@ body::before {
   font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
   padding: 5px 10px; background: var(--ink); color: var(--paper);
   border-radius: 2px;
+  z-index: 3;
+}
+/* SKU chip on the card photo — catalog-style, top-right. Paper bg with a
+   hint of blur so it stays legible on both light plates and photographic
+   tabletops. */
+.product-card__code {
+  position: absolute; top: 12px; right: 12px;
+  font-family: var(--font-mono); font-size: 10.5px;
+  padding: 4px 9px; background: rgba(247,246,243,0.92);
+  color: var(--graphite); border-radius: 2px;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  backdrop-filter: blur(4px);
+  z-index: 3;
 }
 .variant-dot:hover { transform: scale(1.15); }
 .variant-dot.is-on { outline: 1.5px solid var(--ink); outline-offset: 2px; }
@@ -2753,6 +2767,7 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
                   </div>
                   {spec && <span className="product-card__spec-reveal">{spec} · {lang === 'tr' ? 'İncele' : 'View'} →</span>}
                   {p.etiket && <span className="product-card__badge">{p.etiket}</span>}
+                  {p.sku && <span className="product-card__code">#{p.sku}</span>}
                 </div>
                 <div className="product-card__body">
                   <div className="product-card__meta">
