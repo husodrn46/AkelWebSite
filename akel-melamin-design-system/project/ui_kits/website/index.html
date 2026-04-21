@@ -1263,8 +1263,32 @@ body::before {
   width: 92%; height: 92%; object-fit: contain;
   mix-blend-mode: multiply;
   transition: transform var(--dur-slow) var(--ease-out);
+  position: relative; z-index: 2;
 }
 .product-card:hover .product-card__photo { transform: scale(1.04); }
+
+/* Photo-missing placeholder — SKU label on tinted ph bg. Visible by default;
+   hidden once onLoad tags the container with .is-photo-loaded. */
+.product-card__placeholder {
+  position: absolute; inset: 0;
+  display: grid; place-items: center; gap: 6px;
+  grid-auto-rows: min-content;
+  align-content: center;
+  padding: 16px; text-align: center;
+  color: var(--slate);
+  z-index: 1;
+}
+.product-card__ph.is-photo-loaded .product-card__placeholder { display: none; }
+.product-card__placeholder-sku {
+  font-family: var(--font-mono); font-size: 13px;
+  letter-spacing: 0.06em; color: var(--graphite);
+  font-variant-numeric: tabular-nums;
+}
+.product-card__placeholder-note {
+  font-family: var(--font-mono); font-size: 9px;
+  letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--slate); opacity: 0.72;
+}
 
 .product-card__variants { display: inline-flex; gap: 6px; }
 .variant-dot {
@@ -1307,6 +1331,24 @@ body::before {
   position: relative;
 }
 .pd__caption { position: absolute; bottom: 16px; left: 20px; color: var(--slate); }
+.pd__photo { position: relative; z-index: 2; }
+.pd__placeholder {
+  position: absolute; inset: 0;
+  display: grid; place-items: center; gap: 10px;
+  grid-auto-rows: min-content; align-content: center;
+  padding: 24px; text-align: center; z-index: 1;
+}
+.pd__placeholder-sku {
+  font-family: var(--font-mono); font-size: 22px;
+  letter-spacing: 0.06em; color: var(--graphite);
+  font-variant-numeric: tabular-nums;
+}
+.pd__placeholder-note {
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.22em; text-transform: uppercase;
+  color: var(--slate); opacity: 0.72;
+}
+.pd__hero.is-photo-loaded .pd__placeholder { display: none; }
 .pd__thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
 .pd__thumb {
   aspect-ratio: 1; background: var(--bone); border-radius: 2px;
@@ -2668,23 +2710,28 @@ function ProductGrid({ lang, navigate, openProduct }) {
                 tabIndex="0"
               >
                 <div className={`product-card__ph product-card__ph--${i % 4}`} aria-hidden="true">
-                  {p.foto_dosya_adi
-                    ? <img
-                        className="product-card__photo"
-                        src={`./img/${p.foto_dosya_adi}.jpg`}
-                        alt={name}
-                        loading="lazy"
-                        decoding="async"
-                        width="600"
-                        height="450"
-                        onError={(e) => {
-                          if (!e.target.__triedPng) {
-                            e.target.__triedPng = true;
-                            e.target.src = `./img/${p.foto_dosya_adi}.png`;
-                          } else { e.target.style.display = 'none'; }
-                        }}
-                      />
-                    : <div className={`plate plate--${p.kategori || ''}`}></div>}
+                  {p.foto_dosya_adi && (
+                    <img
+                      className="product-card__photo"
+                      src={`./img/${p.foto_dosya_adi}.jpg`}
+                      alt={name}
+                      loading="lazy"
+                      decoding="async"
+                      width="600"
+                      height="450"
+                      onLoad={(e) => e.target.closest('.product-card__ph').classList.add('is-photo-loaded')}
+                      onError={(e) => {
+                        if (!e.target.__triedPng) {
+                          e.target.__triedPng = true;
+                          e.target.src = `./img/${p.foto_dosya_adi}.png`;
+                        } else { e.target.style.display = 'none'; }
+                      }}
+                    />
+                  )}
+                  <div className="product-card__placeholder">
+                    <span className="product-card__placeholder-sku">{p.sku}</span>
+                    <span className="product-card__placeholder-note">{lang === 'tr' ? 'Görsel yakında' : 'Photo soon'}</span>
+                  </div>
                   {spec && <span className="product-card__spec-reveal">{spec} · {lang === 'tr' ? 'İncele' : 'View'} →</span>}
                   {p.etiket && <span className="product-card__badge">{p.etiket}</span>}
                 </div>
@@ -2781,17 +2828,22 @@ function ProductDetail({ lang, product, onBack }) {
       <div className="pd">
         <div className="pd__gallery" data-anim="fade-up">
           <div className="pd__hero" aria-hidden="true">
-            {photoSrc
-              ? <img className="pd__photo" src={photoSrc}
-                     alt={lang === 'tr' ? product.ad_tr : (product.ad_en || product.ad_tr)}
-                     width="800" height="800" decoding="async"
-                     onError={(e) => {
-                       if (!e.target.__triedPng) {
-                         e.target.__triedPng = true;
-                         e.target.src = `./img/${product.foto_dosya_adi}.png`;
-                       } else { e.target.style.display = 'none'; }
-                     }} />
-              : <div className={`plate plate--${product.kategori} plate--xl`}></div>}
+            {photoSrc && (
+              <img className="pd__photo" src={photoSrc}
+                   alt={lang === 'tr' ? product.ad_tr : (product.ad_en || product.ad_tr)}
+                   width="800" height="800" decoding="async"
+                   onLoad={(e) => e.target.closest('.pd__hero').classList.add('is-photo-loaded')}
+                   onError={(e) => {
+                     if (!e.target.__triedPng) {
+                       e.target.__triedPng = true;
+                       e.target.src = `./img/${product.foto_dosya_adi}.png`;
+                     } else { e.target.style.display = 'none'; }
+                   }} />
+            )}
+            <div className="pd__placeholder">
+              <span className="pd__placeholder-sku">{product.sku}</span>
+              <span className="pd__placeholder-note">{lang === 'tr' ? 'Görsel yakında' : 'Photo soon'}</span>
+            </div>
             <span className="pd__caption meta">{t.images}</span>
           </div>
         </div>

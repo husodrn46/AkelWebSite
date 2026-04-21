@@ -83,10 +83,8 @@ COLS = [
     "en_mm",
     "boy_mm",
     "yukseklik_mm",
-    "agirlik_g",
     "koli_adet",
     "koli_cm",
-    "koli_agirlik_kg",
     "aciklama_tr",
     "aciklama_en",
     "kullanim_alani",
@@ -188,7 +186,6 @@ def main():
             "en_mm",
             "boy_mm",
             "yukseklik_mm",
-            "agirlik_g",
             "koli_adet",
             "oncelik",
         ):
@@ -198,11 +195,6 @@ def main():
                 except (ValueError, TypeError):
                     warnings.append(f"Satır {r} ({row['sku']}): {num_key} sayı değil")
                     row[num_key] = None
-        if row.get("koli_agirlik_kg") is not None:
-            try:
-                row["koli_agirlik_kg"] = float(row["koli_agirlik_kg"])
-            except (ValueError, TypeError):
-                row["koli_agirlik_kg"] = None
 
         # Default aktif=evet if blank
         if not row.get("aktif"):
