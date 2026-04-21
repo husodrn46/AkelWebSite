@@ -3420,7 +3420,7 @@ function ProductDetail({ lang, product, onBack, navigate }) {
 
         <div className="pd__info" data-anim="fade-up" data-anim-delay="80">
           <span className="eyebrow">{(product.kategori || '').toUpperCase()}</span>
-          <h1 className="pd__title">{productName}</h1>
+          <h1 className="pd__title"><span data-split-text>{productName}</span></h1>
           {productDesc && (
             <p className="pd__spec lead">{productDesc}</p>
           )}
@@ -3622,7 +3622,7 @@ function Contact({ lang }) {
       <div className="contact contact--direct-only">
         <div className="contact__intro" data-anim="fade-up">
           <span className="eyebrow">{t.eyebrow}</span>
-          <h1 className="contact__title">{t.title}</h1>
+          <h1 className="contact__title"><span data-split-text>{t.title}</span></h1>
           <p className="lead">{t.lead}</p>
 
           <div className="contact__cta">
@@ -3711,7 +3711,7 @@ function CatalogPage({ lang }) {
       <div className="catalog-page">
         <div className="catalog-page__hero" data-anim="fade-up">
           <span className="eyebrow">{t.eyebrow}</span>
-          <h1 className="catalog-page__title">{t.title}</h1>
+          <h1 className="catalog-page__title"><span data-split-text>{t.title}</span></h1>
           <p className="lead">{t.lead}</p>
 
           <div className="catalog-page__action">
