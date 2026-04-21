@@ -950,7 +950,8 @@ body { overflow-x: hidden; }
   max-width: 100%; margin: 0;
   padding: 0;
   position: relative; z-index: 1;
-  display: block;
+  display: flex;
+  flex-direction: column;
 }
 .hero__text {
   max-width: var(--page-max);
@@ -981,7 +982,11 @@ body { overflow-x: hidden; }
   font-size: 19px; line-height: 1.6; color: rgba(17,17,16,0.74);
   max-width: 52ch; margin: 0 0 28px; text-wrap: pretty;
 }
-.hero__cta { display: flex; gap: 20px; align-items: center; margin-bottom: 0; flex-wrap: wrap; }
+.hero__cta {
+  display: flex; gap: 20px; align-items: center;
+  margin-bottom: 0; flex-wrap: wrap;
+  position: relative; z-index: 3;
+}
 
 /* Contained banner photo — matches categories / section max-width */
 .hero__visual {
