@@ -483,7 +483,7 @@ function ProductDetail({ lang, product, onBack }) {
         specs: 'Teknik özellikler',
         pack: 'Ambalaj ve lojistik',
         materials: 'Malzeme ve sertifikalar',
-        matList: ['%100 melamin reçine', '[CERT] sertifikalı', '[CERT] sertifikalı', 'Bulaşık makinesi uyumlu', '[−XX°C / +XXX°C]'],
+        matList: ['Melaminden üretilmiştir', '[CERT] sertifikalı', '[CERT] sertifikalı', 'Bulaşık makinesi uyumlu', '[−XX°C / +XXX°C]'],
         images: 'Stüdyo referans görseli',
         finish: 'Finiş',
       }
@@ -493,7 +493,7 @@ function ProductDetail({ lang, product, onBack }) {
         specs: 'Technical specs',
         pack: 'Packaging & logistics',
         materials: 'Material & certifications',
-        matList: ['100% melamine resin', '[CERT] certified', '[CERT] certified', 'Dishwasher safe', '[−XX°C to +XXX°C]'],
+        matList: ['Made from melamine', '[CERT] certified', '[CERT] certified', 'Dishwasher safe', '[−XX°C to +XXX°C]'],
         images: 'Studio reference image',
         finish: 'Finish',
       };
