@@ -1308,7 +1308,8 @@ body::before {
 }
 
 .product-card__photo {
-  width: 100%; height: 100%; object-fit: cover;
+  width: 100%; height: 100%; object-fit: contain;
+  padding: 4%;
   transform: scale(var(--sz-scale, 1));
   transition: transform var(--dur-slow) var(--ease-out);
   position: relative; z-index: 2;
