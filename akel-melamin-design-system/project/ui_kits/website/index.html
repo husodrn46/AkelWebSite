@@ -2663,7 +2663,6 @@ function ProductGrid({ lang, navigate, openProduct }) {
     if (p.boyut) parts.push(p.boyut);
     else if (p.cap_mm) parts.push('Ø ' + (p.cap_mm / 10) + ' cm');
     else if (p.en_mm && p.boy_mm) parts.push((p.en_mm/10) + '×' + (p.boy_mm/10) + ' cm');
-    if (p.agirlik_g) parts.push(p.agirlik_g + ' g');
     if (p.koli_adet) parts.push((lang === 'tr' ? 'Koli ' : 'Carton ') + p.koli_adet);
     return parts.join(' · ');
   }
@@ -2794,28 +2793,26 @@ function ProductDetail({ lang, product, onBack }) {
     if (product.en_mm) parts.push(product.en_mm / 10);
     if (product.boy_mm) parts.push(product.boy_mm / 10);
     if (product.yukseklik_mm) parts.push(product.yukseklik_mm / 10);
-    return parts.length ? parts.join(' × ') + ' cm' : (product.boyut || '—');
+    if (parts.length) return parts.join(' × ') + ' cm';
+    return product.boyut || null;
   }
 
   const colorLabel = product.renk
     ? (lang === 'tr'
         ? { beyaz: 'Beyaz', siyah: 'Siyah', desenli: 'Desenli', kirmizi: 'Kırmızı', mavi: 'Mavi', yesil: 'Yeşil' }[product.renk] || product.renk
         : { beyaz: 'White', siyah: 'Black', desenli: 'Patterned', kirmizi: 'Red', mavi: 'Blue', yesil: 'Green' }[product.renk] || product.renk)
-    : '—';
+    : null;
 
-  const rows = [
-    [lang === 'tr' ? 'Boyutlar' : 'Dimensions', dim()],
-    [lang === 'tr' ? 'Ağırlık' : 'Weight',      product.agirlik_g ? product.agirlik_g + ' g' : '—'],
-    ['SKU',                                      product.sku],
-    [t.color,                                    colorLabel],
-  ];
-  if (product.barkod) rows.push([lang === 'tr' ? 'Barkod' : 'Barcode', product.barkod]);
+  const rows = [];
+  const dimVal = dim();
+  if (dimVal) rows.push([lang === 'tr' ? 'Boyutlar' : 'Dimensions', dimVal]);
+  if (product.sku) rows.push(['SKU', product.sku]);
+  if (colorLabel) rows.push([t.color, colorLabel]);
+  if (product.barkod) rows.push([lang === 'tr' ? 'Barkod' : 'Barcode', String(product.barkod).replace(/\s+/g, '')]);
 
-  const pack = [
-    [lang === 'tr' ? 'Kolide adet' : 'Pieces per carton', product.koli_adet || '—'],
-    [lang === 'tr' ? 'Koli boyutu' : 'Carton dimensions', product.koli_cm || '—'],
-    [lang === 'tr' ? 'Koli brüt'   : 'Carton gross',      product.koli_agirlik_kg ? product.koli_agirlik_kg + ' kg' : '—'],
-  ];
+  const pack = [];
+  if (product.koli_adet) pack.push([lang === 'tr' ? 'Kolide adet' : 'Pieces per carton', product.koli_adet]);
+  if (product.koli_cm)   pack.push([lang === 'tr' ? 'Koli boyutu' : 'Carton dimensions', product.koli_cm]);
   if (product.ozel_logolu_uygun) pack.push([t.logo, product.ozel_logolu_uygun === 'evet' ? t.yes : t.no]);
   if (product.kullanim_alani) pack.push([t.useArea, product.kullanim_alani]);
 
@@ -2876,6 +2873,7 @@ function ProductDetail({ lang, product, onBack }) {
 }
 
 function SpecBlock({ title, rows }) {
+  if (!rows || !rows.length) return null;
   return (
     <div className="spec-block">
       <span className="meta">{title}</span>
