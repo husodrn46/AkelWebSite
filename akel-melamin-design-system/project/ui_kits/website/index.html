@@ -2096,7 +2096,7 @@ function Header({ lang, setLang, currentPath, navigate }) {
       <div className="site-header__inner">
         <a
           className="site-header__brand"
-          href="#/"
+          href={pathToURL('home')}
           onClick={(e) => { e.preventDefault(); goto('home'); }}
           title="Akel Melamin Plastik San.Tic.Ltd.Şti."
           aria-label="Akel Melamin — anasayfa"
@@ -2110,7 +2110,7 @@ function Header({ lang, setLang, currentPath, navigate }) {
           {nav.map((item) => (
             <a
               key={item.path}
-              href={`#/${item.path}`}
+              href={pathToURL(item.path)}
               className={currentPath === item.path ? 'is-active' : ''}
               onClick={(e) => { e.preventDefault(); goto(item.path); }}
               aria-current={currentPath === item.path ? 'page' : undefined}
@@ -2163,13 +2163,13 @@ function Header({ lang, setLang, currentPath, navigate }) {
               </button>
             </div>
             <nav className="mobile-drawer__nav" aria-label={lang === 'tr' ? 'Mobil menü' : 'Mobile menu'}>
-              <a href="#/home" className={currentPath === 'home' ? 'is-active' : ''} onClick={(e) => { e.preventDefault(); goto('home'); }} aria-current={currentPath === 'home' ? 'page' : undefined}>
+              <a href={pathToURL('home')} className={currentPath === 'home' ? 'is-active' : ''} onClick={(e) => { e.preventDefault(); goto('home'); }} aria-current={currentPath === 'home' ? 'page' : undefined}>
                 {lang === 'tr' ? 'Anasayfa' : 'Home'}
               </a>
               {nav.map((item) => (
                 <a
                   key={item.path}
-                  href={`#/${item.path}`}
+                  href={pathToURL(item.path)}
                   className={currentPath === item.path ? 'is-active' : ''}
                   onClick={(e) => { e.preventDefault(); goto(item.path); }}
                   aria-current={currentPath === item.path ? 'page' : undefined}
@@ -2469,7 +2469,7 @@ function Categories({ lang, navigate }) {
           <span className="eyebrow" data-anim="fade-up">{t.eyebrow}</span>
           <h2 className="section__title"><span data-split-text>{t.heading}</span></h2>
         </div>
-        <a className="btn btn--link" href="#/products" onClick={(e) => { e.preventDefault(); navigate('products'); }} data-anim="fade-up" data-anim-delay="120">
+        <a className="btn btn--link" href={pathToURL('products')} onClick={(e) => { e.preventDefault(); navigate('products'); }} data-anim="fade-up" data-anim-delay="120">
           {t.cta} →
         </a>
       </div>
@@ -2477,7 +2477,7 @@ function Categories({ lang, navigate }) {
         {cats.map((c, i) => (
           <a
             key={c.key}
-            href={`#/products?cat=${c.key}`}
+            href={pathToURL('products')}
             className={`cat-card cat-card--${c.key}`}
             onClick={(e) => { e.preventDefault(); navigate('products'); }}
             data-anim="stagger-item"
@@ -3439,7 +3439,7 @@ function Footer({ lang, navigate }) {
                       >{label}</a>
                     ) : (
                       <a
-                        href={`#/${pathOrHref}`}
+                        href={pathToURL(pathOrHref)}
                         onClick={(e) => { e.preventDefault(); navigate(pathOrHref); }}
                       >{label}</a>
                     )}
@@ -3468,14 +3468,90 @@ window.Footer = Footer;
 
 
 /* ====== App.jsx ====== */
+// URL routing: real paths via history.pushState.
+//   /                → home
+//   /urunler         → products
+//   /urunler/<slug>  → product detail (slug = foto_dosya_adi or lowercased SKU)
+//   /hakkimizda      → about
+//   /iletisim        → contact
+//   /katalog         → catalog
+// BASE auto-detects when served from the dev subfolder (/ui_kits/website)
+// so browser back/forward and copy-pasted URLs work there too. CF Workers
+// Static Assets (wrangler.toml: not_found_handling = "single-page-application")
+// rewrites unknown routes back to index.html so deep links load.
+const ROUTES = {
+  home:     '/',
+  products: '/urunler',
+  about:    '/hakkimizda',
+  contact:  '/iletisim',
+  catalog:  '/katalog',
+};
+const URL_TO_PATH = { '/': 'home', '/urunler': 'products', '/hakkimizda': 'about', '/iletisim': 'contact', '/katalog': 'catalog' };
+const BASE = (() => {
+  // Dev server serves from /ui_kits/website/; strip that prefix.
+  const p = window.location.pathname;
+  const devPrefix = '/ui_kits/website';
+  if (p === devPrefix || p.startsWith(devPrefix + '/')) return devPrefix;
+  return '';
+})();
+function parseURL() {
+  let p = window.location.pathname;
+  if (BASE && p.startsWith(BASE)) p = p.slice(BASE.length) || '/';
+  p = p.replace(/\/+$/, '') || '/';
+  if (p.startsWith('/urunler/')) return { path: 'product', slug: decodeURIComponent(p.slice('/urunler/'.length)) };
+  return { path: URL_TO_PATH[p] || 'home' };
+}
+function pathToURL(path, slug) {
+  if (path === 'product' && slug) return BASE + '/urunler/' + slug;
+  return BASE + (ROUTES[path] || '/');
+}
+function productSlug(p) { return p.foto_dosya_adi || String(p.sku).toLowerCase(); }
+
 function App() {
   const [lang, setLang] = React.useState(() => localStorage.getItem('akel-lang') || 'tr');
-  const [path, setPath] = React.useState(() => localStorage.getItem('akel-path') || 'home');
+  const initial = React.useMemo(parseURL, []);
+  const [path, setPath] = React.useState(initial.path);
   const [product, setProduct] = React.useState(null);
+  const [pendingSlug, setPendingSlug] = React.useState(initial.slug || null);
+
   React.useEffect(() => { localStorage.setItem('akel-lang', lang); document.documentElement.lang = lang; }, [lang]);
-  React.useEffect(() => { localStorage.setItem('akel-path', path); }, [path]);
-  const navigate = (p) => { setPath(p); setProduct(null); requestAnimationFrame(() => { const s = document.querySelector('.kit-scroll'); if (s) s.scrollTop = 0; }); };
-  const openProduct = (p) => { setProduct(p); setPath('product'); requestAnimationFrame(() => { const s = document.querySelector('.kit-scroll'); if (s) s.scrollTop = 0; }); };
+
+  // Resolve a product slug (deep link like /urunler/kare-517) by fetching the catalog once.
+  React.useEffect(() => {
+    if (path === 'product' && pendingSlug && !product) {
+      fetch('./data/products.json').then(r => r.json()).then(d => {
+        const hit = d.products.find(p => productSlug(p) === pendingSlug);
+        if (hit) { setProduct(hit); setPendingSlug(null); }
+        else { setPath('products'); setPendingSlug(null); history.replaceState(null, '', BASE + ROUTES.products); }
+      }).catch(() => { setPath('home'); setPendingSlug(null); });
+    }
+  }, [path, pendingSlug, product]);
+
+  // Browser back/forward
+  React.useEffect(() => {
+    const onPop = () => {
+      const s = parseURL();
+      setPath(s.path);
+      if (s.slug) { setPendingSlug(s.slug); setProduct(null); }
+      else { setPendingSlug(null); setProduct(null); }
+    };
+    window.addEventListener('popstate', onPop);
+    return () => window.removeEventListener('popstate', onPop);
+  }, []);
+
+  const scrollTop = () => requestAnimationFrame(() => { const s = document.querySelector('.kit-scroll'); if (s) s.scrollTop = 0; });
+  const pushURL = (url) => { if (window.location.pathname !== url) history.pushState(null, '', url); };
+  const navigate = (p) => {
+    setPath(p); setProduct(null); setPendingSlug(null);
+    pushURL(pathToURL(p));
+    scrollTop();
+  };
+  const openProduct = (p) => {
+    setProduct(p); setPath('product'); setPendingSlug(null);
+    pushURL(pathToURL('product', productSlug(p)));
+    scrollTop();
+  };
+
   React.useEffect(() => {
     if (window.lucide) window.lucide.createIcons();
     if (window.__akelAnimations) window.__akelAnimations.init(document);
@@ -3495,7 +3571,8 @@ function App() {
         <CatalogBand lang={lang} navigate={navigate} />
       </>}
       {path === 'products' && <ProductGrid lang={lang} navigate={navigate} openProduct={openProduct} />}
-      {path === 'product' && product && <ProductDetail lang={lang} product={product} onBack={() => setPath('products')} />}
+      {path === 'product' && product && <ProductDetail lang={lang} product={product} onBack={() => navigate('products')} />}
+      {path === 'product' && !product && <section className="section"><p className="lead">{lang === 'tr' ? 'Yükleniyor…' : 'Loading…'}</p></section>}
       {path === 'about' && <About lang={lang} navigate={navigate} />}
       {path === 'contact' && <Contact lang={lang} />}
       {path === 'catalog' && <CatalogPage lang={lang} navigate={navigate} />}
