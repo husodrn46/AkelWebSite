@@ -1615,7 +1615,18 @@ body { overflow-x: hidden; }
 .catalog-cover__year { font-family: var(--font-display); font-weight: 700; font-size: 80px; letter-spacing: -0.04em; line-height: 1; color: var(--red); }
 .catalog-cover__label { font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.15em; color: var(--slate); }
 .catalog-cover__logo { width: 50%; align-self: flex-start; margin-top: 20px; }
-.catalog-cover__foot { border-top: 1px solid var(--border); padding-top: 16px; }
+.catalog-cover__grid {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
+  margin-top: 24px;
+}
+.catalog-cover__grid img {
+  width: 100%; aspect-ratio: 1/1;
+  object-fit: cover; border-radius: 2px;
+  box-shadow: var(--shadow-1);
+  transition: transform var(--dur-med) var(--ease-out);
+}
+.catalog-cover__grid img:hover { transform: scale(1.02); }
+.catalog-cover__foot { border-top: 1px solid var(--border); padding-top: 16px; margin-top: 20px; }
 
 /* Embedded PDF viewer */
 .catalog-viewer {
@@ -3566,6 +3577,12 @@ function CatalogPage({ lang }) {
               <span className="catalog-cover__label">v23 · KATALOG</span>
             </div>
             <img className="catalog-cover__logo" src="./img/akel-logo-cropped.png" alt="Akel Melamin logosu" width="200" height="99" decoding="async" />
+            <div className="catalog-cover__grid" aria-hidden="true">
+              <img src="./img/catalog-preview-1.webp" alt="" loading="lazy" decoding="async" />
+              <img src="./img/catalog-preview-2.webp" alt="" loading="lazy" decoding="async" />
+              <img src="./img/catalog-preview-3.webp" alt="" loading="lazy" decoding="async" />
+              <img src="./img/catalog-preview-4.webp" alt="" loading="lazy" decoding="async" />
+            </div>
             <div className="catalog-cover__foot">
               <span className="meta">56 pp · EN · TR · 6,3 MB</span>
             </div>
@@ -3883,7 +3900,6 @@ function App() {
         <StatsRow lang={lang} />
         <Categories lang={lang} navigate={navigate} />
         <EditorialSpread lang={lang} />
-        <ProductionBand lang={lang} navigate={navigate} />
         <CatalogBand lang={lang} navigate={navigate} />
       </>}
       {path === 'products' && <ProductGrid lang={lang} navigate={navigate} openProduct={openProduct} initialCat={catHint} onCatChange={replaceCat} />}
