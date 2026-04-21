@@ -15,8 +15,8 @@ function ProductionBand({ lang, navigate }) {
       }
     : {
         eyebrow: 'Production',
-        title: '[XX,XXX] m² plant. One location.',
-        body: 'Moulding, pressing, decoration, and QC all flow through a single line in our İkitelli OSB plant. Every batch is sampled before release.',
+        title: '[XX,XXX] m² plant. One facility.',
+        body: 'Moulding, pressing, decoration and quality control run through a single production flow at our İkitelli OSB facility. Every batch is sampled before release.',
         items: [
           { k: 'Plant floor',       v: '[XX,XXX] m²' },
           { k: 'Production lines',  v: '[XX]' },
@@ -62,7 +62,7 @@ function CatalogBand({ lang, navigate }) {
     : {
         eyebrow: 'Catalog · [YYYY]',
         title: '[XX]+ SKUs. One PDF.',
-        body: 'Every product family, dimensions, carton info, and container loading in a single file. [XX] pages, [XX] MB.',
+        body: 'Every product family, dimensions, carton details and container loading data in a single file. [XX] pages, [XX] MB.',
         primary: 'Download catalog',
         note: 'PDF · [XX] MB · TR & EN',
       };

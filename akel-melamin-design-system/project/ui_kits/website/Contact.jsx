@@ -24,24 +24,24 @@ function Contact({ lang }) {
         sentBody: 'İhracat ekibimiz iki iş günü içinde size geri dönecek.',
       }
     : {
-        eyebrow: 'Export inquiry',
-        title: 'We\'re selectively adding distributors.',
-        lead: 'Fill in the form below; our export team replies within two business days. Sample requests accommodated.',
+        eyebrow: 'Contact',
+        title: 'Get in touch.',
+        lead: 'Fill in the form below for distributor, export or sample requests. Our team replies within two business days.',
         f: {
           name: 'Full name', company: 'Company', email: 'Email', phone: 'Phone',
           country: 'Country', volume: 'Estimated annual volume (pcs)',
           incoterms: 'Incoterms', interest: 'Product families of interest',
           msg: 'Message', submit: 'Send inquiry',
         },
-        cats: ['Dinner sets', 'Trays', 'Bowls', 'Plates', 'Kids', 'Decorative'],
+        cats: ['Square Series', 'International Series', 'Elegant Series', 'Eco Series', 'Trays', 'Kids\' Plates', 'Compartment Plates', 'Custom Logo Products'],
         direct: 'Direct contact', dir: [
           { i: 'mail', l: 'info@akelmelamin.com' },
           { i: 'phone', l: '+90 507 425 34 46' },
           { i: 'map-pin', l: 'İSTOÇ 10. Ada No:9/11, Bağcılar / Istanbul' },
           { i: 'instagram', l: '@akelmelamin' },
         ],
-        sent: 'Your inquiry is received.',
-        sentBody: 'Our export team will reply within two business days.',
+        sent: 'Your inquiry has been received.',
+        sentBody: 'Our team will reply within two business days.',
       };
 
   // Replace with the real list of target export markets.

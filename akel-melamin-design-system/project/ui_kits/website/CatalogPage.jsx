@@ -24,19 +24,19 @@ function CatalogPage({ lang }) {
       }
     : { eyebrow: 'Catalog · [YEAR]',
         title: '[XX]+ products. One PDF.',
-        lead: 'Every category, dimensions, carton info, and container loading capacity. [XX] pages, [XX] MB.',
+        lead: 'Product series, dimensions, carton details and container loading data in one file. [XX] pages, [XX] MB.',
         gate: 'Email for new edition notifications (optional)',
-        gateNote: 'If you share your email, we\'ll notify you when new editions drop. Not required.',
+        gateNote: 'If you share your email, we\'ll let you know when a new edition is available. Not required.',
         skip: 'Skip, just download',
         submit: 'Download catalog',
         downloaded: 'Downloading...',
         what: 'What\'s in the catalog',
         rows: [
           'All product families with SKU codes',
-          'Dimensions, weights, and color options per item',
+          'Dimensions, weights and color options for each item',
           'Carton contents and carton dimensions',
           'Loading capacities for 20\' DC and 40\' HC containers',
-          'Food-safety and certification data',
+          'Food-safety and certification information',
         ],
       };
 

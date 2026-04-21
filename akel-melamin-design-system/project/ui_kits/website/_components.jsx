@@ -100,9 +100,9 @@ function Hero({ lang, navigate }) {
     },
     en: {
       eyebrow: 'İkitelli OSB · Istanbul · Since [YEAR]',
-      title: 'Tableware, made to scale.',
+      title: 'Tableware, made at scale.',
       titleAccent: 'Every size.',
-      body: 'A Turkish manufacturer of melamine tableware for retail chains and export distributors. [XX]+ SKUs. [XX] million pieces a year from a single plant.',
+      body: 'A Turkish manufacturer of melamine tableware for retail chains and export distributors. [XX]+ SKUs and [XX] million pieces a year from a single facility.',
       primary: 'Download catalog',
       secondary: 'See the factory',
       caption: 'Gözde · White set · 6 nested sizes',
@@ -203,9 +203,9 @@ function Categories({ lang, navigate }) {
       { key: 'kavi',   label: 'Kavi — square',     count: '[XX] SKUs', shape: 'square', photo: 'kavi-white' },
       { key: 'bowls',  label: 'Bowls',             count: '[XX] SKUs', shape: 'bowls' },
       { key: 'trays',  label: 'Serving trays',     count: '[XX] SKUs', shape: 'trays' },
-      { key: 'serve',  label: 'Serveware',         count: '[XX] SKUs', shape: 'serve' },
-      { key: 'kids',   label: 'Kids tableware',    count: '[XX] SKUs', shape: 'kids' },
-      { key: 'deco',   label: 'Decorative series', count: '[XX] SKUs', shape: 'deco' },
+      { key: 'serve',  label: 'Serving pieces',    count: '[XX] SKUs', shape: 'serve' },
+      { key: 'kids',   label: 'Kids\' Plates',     count: '[XX] SKUs', shape: 'kids' },
+      { key: 'deco',   label: 'Decorative range',  count: '[XX] SKUs', shape: 'deco' },
     ],
   }[lang];
   const t = lang === 'tr'
@@ -268,8 +268,8 @@ function ProductionBand({ lang, navigate }) {
       }
     : {
         eyebrow: 'Production',
-        title: '[XX,XXX] m² plant. One location.',
-        body: 'Moulding, pressing, decoration, and QC all flow through a single line in our İkitelli OSB plant. Every batch is sampled before release.',
+        title: '[XX,XXX] m² plant. One facility.',
+        body: 'Moulding, pressing, decoration and quality control run through a single production flow at our İkitelli OSB facility. Every batch is sampled before release.',
         items: [
           { k: 'Plant floor',       v: '[XX,XXX] m²' },
           { k: 'Production lines',  v: '[XX]' },
@@ -315,7 +315,7 @@ function CatalogBand({ lang, navigate }) {
     : {
         eyebrow: 'Catalog · [YYYY]',
         title: '[XX]+ SKUs. One PDF.',
-        body: 'Every product family, dimensions, carton info, and container loading in a single file. [XX] pages, [XX] MB.',
+        body: 'Every product family, dimensions, carton details and container loading data in a single file. [XX] pages, [XX] MB.',
         primary: 'Download catalog',
         note: 'PDF · [XX] MB · TR & EN',
       };
@@ -493,7 +493,7 @@ function ProductDetail({ lang, product, onBack }) {
         specs: 'Technical specs',
         pack: 'Packaging & logistics',
         materials: 'Material & certifications',
-        matList: ['Made from melamine', '[CERT] certified', '[CERT] certified', 'Dishwasher safe', '[−XX°C to +XXX°C]'],
+        matList: ['Made from melamine', '[CERT] certified', '[CERT] certified', 'Dishwasher-safe', '[−XX°C to +XXX°C]'],
         images: 'Studio reference image',
         finish: 'Finish',
       };
@@ -659,7 +659,7 @@ function About({ lang }) {
     : {
         eyebrow: 'About',
         title: 'Manufacturing in İkitelli OSB since [YEAR].',
-        lead: 'Akel Melamin is an established Turkish manufacturer of melamine tableware. We produce [XX]+ SKUs from a single plant and work with distributors in [XX] countries.',
+        lead: 'Akel Melamin is an established Turkish manufacturer of melamine tableware. We produce [XX]+ SKUs in a single facility and work with distributors across [XX] countries.',
         facts: [
           { k: 'Founded',             v: '[YEAR]' },
           { k: 'Plant floor',         v: '[XX,XXX] m²' },
@@ -753,24 +753,24 @@ function Contact({ lang }) {
         sentBody: 'İhracat ekibimiz iki iş günü içinde size geri dönecek.',
       }
     : {
-        eyebrow: 'Export inquiry',
-        title: 'We\'re selectively adding distributors.',
-        lead: 'Fill in the form below; our export team replies within two business days. Sample requests accommodated.',
+        eyebrow: 'Contact',
+        title: 'Get in touch.',
+        lead: 'Fill in the form below for distributor, export or sample requests. Our team replies within two business days.',
         f: {
           name: 'Full name', company: 'Company', email: 'Email', phone: 'Phone',
           country: 'Country', volume: 'Estimated annual volume (pcs)',
           incoterms: 'Incoterms', interest: 'Product families of interest',
           msg: 'Message', submit: 'Send inquiry',
         },
-        cats: ['Dinner sets', 'Trays', 'Bowls', 'Plates', 'Kids', 'Decorative'],
+        cats: ['Square Series', 'International Series', 'Elegant Series', 'Eco Series', 'Trays', 'Kids\' Plates', 'Compartment Plates', 'Custom Logo Products'],
         direct: 'Direct contact', dir: [
           { i: 'mail', l: 'info@akelmelamin.com' },
           { i: 'phone', l: '+90 507 425 34 46' },
           { i: 'map-pin', l: 'İSTOÇ 10. Ada No:9/11, Bağcılar / Istanbul' },
           { i: 'instagram', l: '@akelmelamin' },
         ],
-        sent: 'Your inquiry is received.',
-        sentBody: 'Our export team will reply within two business days.',
+        sent: 'Your inquiry has been received.',
+        sentBody: 'Our team will reply within two business days.',
       };
 
   // Replace with the real list of target export markets.
@@ -893,19 +893,19 @@ function CatalogPage({ lang }) {
       }
     : { eyebrow: 'Catalog · [YEAR]',
         title: '[XX]+ products. One PDF.',
-        lead: 'Every category, dimensions, carton info, and container loading capacity. [XX] pages, [XX] MB.',
+        lead: 'Product series, dimensions, carton details and container loading data in one file. [XX] pages, [XX] MB.',
         gate: 'Email for new edition notifications (optional)',
-        gateNote: 'If you share your email, we\'ll notify you when new editions drop. Not required.',
+        gateNote: 'If you share your email, we\'ll let you know when a new edition is available. Not required.',
         skip: 'Skip, just download',
         submit: 'Download catalog',
         downloaded: 'Downloading...',
         what: 'What\'s in the catalog',
         rows: [
           'All product families with SKU codes',
-          'Dimensions, weights, and color options per item',
+          'Dimensions, weights and color options for each item',
           'Carton contents and carton dimensions',
           'Loading capacities for 20\' DC and 40\' HC containers',
-          'Food-safety and certification data',
+          'Food-safety and certification information',
         ],
       };
 
@@ -998,10 +998,10 @@ function Footer({ lang, navigate }) {
         legal: '© [YEAR] Akel Melamin. Tüm hakları saklıdır.',
       }
     : {
-        tag: 'Melamine tableware manufacturing. [CITY], Türkiye since [YEAR].',
+        tag: 'Akel Melamin. Melamine tableware made in Türkiye. Based in Istanbul since [YEAR].',
         cols: [
-          { h: 'Products', links: [['Dinner sets','products'],['Trays','products'],['Bowls','products'],['Plates','products'],['Kids','products'],['Decorative','products']] },
-          { h: 'Company',  links: [['About','about'],['Factory','about'],['Export','contact'],['Certifications','about']] },
+          { h: 'Products', links: [['Square Series','products'],['International Series','products'],['Elegant Series','products'],['Eco Series','products'],['Trays','products'],['Kids\' Plates','products'],['Compartment Plates','products'],['Custom Logo Products','products']] },
+          { h: 'Company',  links: [['About','about'],['Manufacturing & Quality','about'],['Contact','contact'],['Certifications','about']] },
           { h: 'Resources', links: [['Catalog PDF','catalog'],['Contact','contact']] },
         ],
         legal: '© [YEAR] Akel Melamin. All rights reserved.',

@@ -11,10 +11,10 @@ function Footer({ lang, navigate }) {
         legal: '© [YEAR] Akel Melamin. Tüm hakları saklıdır.',
       }
     : {
-        tag: 'Melamine tableware manufacturing. [CITY], Türkiye since [YEAR].',
+        tag: 'Akel Melamin. Melamine tableware made in Türkiye. Based in Istanbul since [YEAR].',
         cols: [
-          { h: 'Products', links: [['Dinner sets','products'],['Trays','products'],['Bowls','products'],['Plates','products'],['Kids','products'],['Decorative','products']] },
-          { h: 'Company',  links: [['About','about'],['Factory','about'],['Export','contact'],['Certifications','about']] },
+          { h: 'Products', links: [['Square Series','products'],['International Series','products'],['Elegant Series','products'],['Eco Series','products'],['Trays','products'],['Kids\' Plates','products'],['Compartment Plates','products'],['Custom Logo Products','products']] },
+          { h: 'Company',  links: [['About','about'],['Manufacturing & Quality','about'],['Contact','contact'],['Certifications','about']] },
           { h: 'Resources', links: [['Catalog PDF','catalog'],['Contact','contact']] },
         ],
         legal: '© [YEAR] Akel Melamin. All rights reserved.',

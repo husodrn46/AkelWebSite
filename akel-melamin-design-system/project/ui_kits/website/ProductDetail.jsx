@@ -21,7 +21,7 @@ function ProductDetail({ lang, product, onBack }) {
         specs: 'Technical specs',
         pack: 'Packaging & logistics',
         materials: 'Material & certifications',
-        matList: ['Made from melamine', '[CERT] certified', '[CERT] certified', 'Dishwasher safe', '[−XX°C to +XXX°C]'],
+        matList: ['Made from melamine', '[CERT] certified', '[CERT] certified', 'Dishwasher-safe', '[−XX°C to +XXX°C]'],
         images: 'Studio reference image',
         finish: 'Finish',
       };

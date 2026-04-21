@@ -12,9 +12,9 @@ function Hero({ lang, navigate }) {
     },
     en: {
       eyebrow: 'İkitelli OSB · Istanbul · Since [YEAR]',
-      title: 'Tableware, made to scale.',
+      title: 'Tableware, made at scale.',
       titleAccent: 'Every size.',
-      body: 'A Turkish manufacturer of melamine tableware for retail chains and export distributors. [XX]+ SKUs. [XX] million pieces a year from a single plant.',
+      body: 'A Turkish manufacturer of melamine tableware for retail chains and export distributors. [XX]+ SKUs and [XX] million pieces a year from a single facility.',
       primary: 'Download catalog',
       secondary: 'See the factory',
       caption: 'Gözde · White set · 6 nested sizes',

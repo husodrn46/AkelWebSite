@@ -26,7 +26,7 @@ function About({ lang }) {
     : {
         eyebrow: 'About',
         title: 'Manufacturing in İkitelli OSB since [YEAR].',
-        lead: 'Akel Melamin is an established Turkish manufacturer of melamine tableware. We produce [XX]+ SKUs from a single plant and work with distributors in [XX] countries.',
+        lead: 'Akel Melamin is an established Turkish manufacturer of melamine tableware. We produce [XX]+ SKUs in a single facility and work with distributors across [XX] countries.',
         facts: [
           { k: 'Founded',             v: '[YEAR]' },
           { k: 'Plant floor',         v: '[XX,XXX] m²' },

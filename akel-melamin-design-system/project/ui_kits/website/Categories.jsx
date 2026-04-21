@@ -17,9 +17,9 @@ function Categories({ lang, navigate }) {
       { key: 'kavi',   label: 'Kavi — square',     count: '[XX] SKUs', shape: 'square', photo: 'kavi-white' },
       { key: 'bowls',  label: 'Bowls',             count: '[XX] SKUs', shape: 'bowls' },
       { key: 'trays',  label: 'Serving trays',     count: '[XX] SKUs', shape: 'trays' },
-      { key: 'serve',  label: 'Serveware',         count: '[XX] SKUs', shape: 'serve' },
-      { key: 'kids',   label: 'Kids tableware',    count: '[XX] SKUs', shape: 'kids' },
-      { key: 'deco',   label: 'Decorative series', count: '[XX] SKUs', shape: 'deco' },
+      { key: 'serve',  label: 'Serving pieces',    count: '[XX] SKUs', shape: 'serve' },
+      { key: 'kids',   label: 'Kids\' Plates',     count: '[XX] SKUs', shape: 'kids' },
+      { key: 'deco',   label: 'Decorative range',  count: '[XX] SKUs', shape: 'deco' },
     ],
   }[lang];
   const t = lang === 'tr'
