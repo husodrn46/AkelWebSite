@@ -1266,6 +1266,35 @@ body { overflow-x: hidden; }
 .catalog-band__note { color: var(--slate); }
 
 /* ---------- PRODUCT GRID ---------- */
+/* Shared form primitives — used by products toolbar search/sort */
+.field { display: flex; flex-direction: column; gap: 6px; }
+.field__lbl { font-family: var(--font-display); font-weight: 600; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--graphite); }
+.input, .select, textarea.input {
+  font-family: var(--font-body); font-size: 15px;
+  padding: 12px 14px;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  background: var(--paper-soft);
+  color: var(--graphite);
+  outline: none;
+  transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
+  width: 100%;
+}
+.input:focus, .select:focus, textarea.input:focus {
+  border-color: var(--red);
+  box-shadow: 0 0 0 2px rgba(205,24,30,0.18);
+}
+.select {
+  appearance: none;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--slate) 50%),
+    linear-gradient(-45deg, transparent 50%, var(--slate) 50%);
+  background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
+  background-size: 5px 5px; background-repeat: no-repeat;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
 .products-toolbar {
   display: grid;
   grid-template-columns: minmax(0, 1.4fr) 220px auto;
@@ -1279,11 +1308,6 @@ body { overflow-x: hidden; }
   min-height: 46px;
 }
 .products-toolbar__meta .meta { color: var(--graphite); }
-.products-toolbar__input,
-.products-toolbar__select {
-  background: rgba(247,246,243,0.86);
-  border-color: rgba(17,17,16,0.12);
-}
 .filter-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--space-6); }
 .chip {
   display: inline-flex; align-items: center; gap: 6px;
@@ -2624,8 +2648,8 @@ function Categories({ lang, navigate }) {
     ],
   }[lang];
   const t = lang === 'tr'
-    ? { eyebrow: 'Kategoriler', heading: 'On üç ürün serisi. Tek fabrika.', cta: 'Tümünü gör' }
-    : { eyebrow: 'Categories',  heading: 'Thirteen product series. One plant.', cta: 'View all' };
+    ? { eyebrow: 'Kategoriler', heading: 'On iki ürün serisi. Tek fabrika.', cta: 'Tümünü gör' }
+    : { eyebrow: 'Categories',  heading: 'Twelve product series. One plant.', cta: 'View all' };
 
   return (
     <section className="section" data-anim="section">
@@ -2680,7 +2704,7 @@ window.Categories = Categories;
 function ProductionBand({ lang, navigate }) {
   const t = lang === 'tr'
     ? {
-        eyebrow: 'Üretim',
+        eyebrow: '',
         title: 'İkitelli OSB\'de üretim. 2014\'ten beri.',
         body: 'İkitelli OSB\'deki tesisimizde presleme, kalıplama, dekor ve kalite kontrol tek bir akışta ilerliyor. Gıda ile temasa uygun melamin ürünlerini hijyen ve kalite standartlarına uygun şekilde üretiyoruz.',
         items: [
@@ -2692,7 +2716,7 @@ function ProductionBand({ lang, navigate }) {
         cta: 'Hakkımızda',
       }
     : {
-        eyebrow: 'Production',
+        eyebrow: '',
         title: 'Manufacturing in İkitelli OSB, Istanbul. Since 2014.',
         body: 'Moulding, pressing, decoration and quality control run through a single production flow at our İkitelli OSB facility. We manufacture food-contact-safe melamine tableware to established hygiene and quality standards.',
         items: [
@@ -2731,15 +2755,15 @@ function ProductionBand({ lang, navigate }) {
 function CatalogBand({ lang, navigate }) {
   const t = lang === 'tr'
     ? {
-        eyebrow: 'Katalog · 2026 · v23',
-        title: '13 ürün serisi. Tek PDF.',
+        eyebrow: '',
+        title: '12 ürün serisi. Tek PDF.',
         body: 'Kare Seri, Elegant, Eco, Tepsiler, Çocuk Tabakları, Özel Logolu — tüm serilerimiz 56 sayfa çift dilli (TR/EN) kataloğumuzda. Melamin Servis Ekipmanları 2026.',
         primary: 'Kataloğu indir',
         note: 'PDF · 56 sayfa · 6,3 MB · TR & EN',
       }
     : {
-        eyebrow: 'Catalog · 2026 · v23',
-        title: '13 product series. One PDF.',
+        eyebrow: '',
+        title: '12 product series. One PDF.',
         body: 'Square Series, Elegant Series, International Series, Eco Series, Trays, Kids\' Plates and Custom Logo Products — our main product lines in a 56-page bilingual (TR/EN) catalog. Melamine Service Equipment 2026.',
         primary: 'Download catalog',
         note: 'PDF · 56 pages · 6.3 MB · TR & EN',
@@ -3473,22 +3497,17 @@ window.Contact = Contact;
 /* ====== CatalogPage.jsx ====== */
 // CatalogPage.jsx — PDF download with soft email-gate
 function CatalogPage({ lang }) {
-  const [gated, setGated] = React.useState(true);
-  const [email, setEmail] = React.useState('');
   const [downloaded, setDownloaded] = React.useState(false);
 
   const t = lang === 'tr'
-    ? { eyebrow: 'Katalog · 2026 · v23',
+    ? { eyebrow: 'Katalog',
         title: 'Melamin Servis Ekipmanları 2026.',
-        lead: 'Kare Seri · Elegant · International · Açık Büfe · Eco · Tepsiler · Çocuk Tabakları · Özel Logolu — 13 ürün serisi, 56 sayfa, çift dilli (TR/EN).',
-        gate: 'E-posta ile bildirim al (opsiyonel)',
-        gateNote: 'E-postanı paylaşırsan yeni baskılarda seni haberdar ederiz. Zorunlu değil.',
-        skip: 'Atla, sadece indir',
+        lead: 'Kare Seri · Elegant · International · Açık Büfe · Eco · Tepsiler · Çocuk Tabakları · Özel Logolu — 12 ürün serisi, 56 sayfa, çift dilli (TR/EN).',
         submit: 'Kataloğu indir',
         downloaded: 'İndiriliyor...',
         what: 'Katalogda neler var',
         rows: [
-          '13 ürün serisi ve ürün kodları',
+          '12 ürün serisi ve ürün kodları',
           'Kare Seri (Beyaz/Siyah), Elegant, International, Eco',
           'Masaüstü Aksesuarları · Açık Büfe · Çocuk Tabakları',
           'Tepsiler · Bölmeli · Diplomat Kayık · Günlük Desenli',
@@ -3497,17 +3516,14 @@ function CatalogPage({ lang }) {
           'Üretim ve kalite standartları · Sertifikalar',
         ],
       }
-    : { eyebrow: 'Catalog · 2026 · v23',
+    : { eyebrow: 'Catalog',
         title: 'Melamine Service Equipment 2026',
-        lead: 'Square Series, Elegant Series, International Series, Buffet Service, Eco Series, Trays, Kids\' Plates and Custom Logo Products — 13 product series, 56 pages, bilingual (TR/EN).',
-        gate: 'Email for new edition notifications (optional)',
-        gateNote: 'If you share your email, we\'ll let you know when a new edition is available. Not required.',
-        skip: 'Skip, just download',
+        lead: 'Square Series, Elegant Series, International Series, Buffet Service, Eco Series, Trays, Kids\' Plates and Custom Logo Products — 12 product series, 56 pages, bilingual (TR/EN).',
         submit: 'Download catalog',
         downloaded: 'Downloading...',
         what: 'What\'s in the catalog',
         rows: [
-          '13 product series with SKU codes',
+          '12 product series with SKU codes',
           'Square Series (White/Black), Elegant Series, International Series and Eco Series',
           'Tabletop Accessories · Buffet Service · Kids\' Plates',
           'Trays · Compartment Plates · Diplomat Oval Serving Range · Everyday Pattern Series',
@@ -3520,7 +3536,6 @@ function CatalogPage({ lang }) {
   const pdfUrl = './catalog/akel-2026.pdf';
 
   function trigger() {
-    setGated(false);
     setDownloaded(true);
     const a = document.createElement('a');
     a.href = pdfUrl;
@@ -3538,34 +3553,9 @@ function CatalogPage({ lang }) {
           <p className="lead">{t.lead}</p>
 
           <div className="catalog-page__action">
-            {gated ? (
-              <form onSubmit={(e) => { e.preventDefault(); trigger(); }} className="catalog-gate">
-                <label className="field">
-                  <span className="field__lbl">{t.gate}</span>
-                  <input
-                    className="input"
-                    type="email"
-                    placeholder="you@company.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                  />
-                  <span className="field__hint">{t.gateNote}</span>
-                </label>
-                <div className="catalog-gate__row">
-                  <button type="submit" className="btn btn--primary btn--lg magnetic">
-                    <i data-lucide="download"></i> {t.submit}
-                  </button>
-                  <button type="button" className="btn btn--link" onClick={trigger}>
-                    {t.skip} →
-                  </button>
-                </div>
-              </form>
-            ) : (
-              <div className="catalog-downloaded">
-                <i data-lucide="check-circle"></i>
-                <span>{downloaded ? t.downloaded : (lang === 'tr' ? 'İndirildi.' : 'Downloaded.')}</span>
-              </div>
-            )}
+            <button type="button" className="btn btn--primary btn--lg magnetic" onClick={trigger}>
+              <i data-lucide="download"></i> {downloaded ? t.downloaded : t.submit}
+            </button>
           </div>
         </div>
 
