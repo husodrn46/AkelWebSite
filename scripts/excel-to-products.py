@@ -34,6 +34,7 @@ EXCEL = ROOT / "akel-urunler.xlsx"
 SITE = ROOT / "akel-melamin-design-system" / "project" / "ui_kits" / "website"
 IMG_DIR = SITE / "img"
 JSON_OUT = SITE / "data" / "products.json"
+CATALOG_ORDER = ROOT / "scripts" / "catalog-order.json"
 
 # ---- Kategori / renk whitelist'leri ----
 VALID_CATEGORIES = {
@@ -109,6 +110,28 @@ def norm(v):
 
 def is_row_empty(values) -> bool:
     return all(norm(v) in (None, "") for v in values)
+
+
+def load_catalog_order() -> tuple[dict[str, int], dict[str, int]]:
+    if not CATALOG_ORDER.exists():
+        print(f"UYARI: katalog sirasi bulunamadi -> {CATALOG_ORDER}")
+        return {}, {}
+
+    try:
+        payload = json.loads(CATALOG_ORDER.read_text(encoding="utf-8"))
+    except json.JSONDecodeError as exc:
+        print(f"UYARI: katalog sirasi okunamadi ({exc})")
+        return {}, {}
+
+    product_rank = {
+        str(key): int(value)
+        for key, value in payload.get("product_rank", {}).items()
+    }
+    sku_rank = {
+        str(key).upper(): int(value)
+        for key, value in payload.get("sku_rank", {}).items()
+    }
+    return product_rank, sku_rank
 
 
 def main():
@@ -213,13 +236,21 @@ def main():
 
         products.append(row)
 
-    # ---- Sort: aktif önce, oncelik'e göre (boş = sonda), sonra SKU ----
+    product_rank, sku_rank = load_catalog_order()
+
+    # ---- Sort: aktif önce, katalog sirasi, sonra fallback anahtarlar ----
     def sort_key(p):
+        product_key = p.get("foto_dosya_adi")
+        sku_key = str(p.get("sku") or "").upper()
+        catalog_rank = product_rank.get(product_key)
+        if catalog_rank is None:
+            catalog_rank = sku_rank.get(sku_key, 99999)
         return (
             p.get("aktif") != "evet",
+            catalog_rank,
             p.get("oncelik") if p.get("oncelik") is not None else 999,
-            p.get("kategori") or "",
             p.get("sku") or "",
+            product_key or "",
         )
 
     products.sort(key=sort_key)
