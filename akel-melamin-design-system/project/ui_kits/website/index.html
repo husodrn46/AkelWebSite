@@ -3249,14 +3249,45 @@ function ProductDetail({ lang, product, onBack, navigate }) {
   ];
   const mailHref = `mailto:info@akelmelamin.com?subject=${encodeURIComponent(`Akel Melamin · ${productName}${product.sku ? ` (${product.sku})` : ''}`)}`;
 
-  // Gallery: product studio shot + one lifestyle imaj keyed on category.
-  // The lifestyle file won't exist for every category — onError on the <img>
-  // hides its thumb, so the user never sees a broken frame.
+  // Gallery = every colour/finish variant of this product + one lifestyle imaj.
+  // Variants share (kategori, ad_tr) but differ by SKU suffix (S, K, D, MB...).
+  // We fetch products.json once and filter; while it's loading we at least
+  // render the main photo so the page doesn't flash.
+  const VARIANT_RANK = { beyaz: 0, siyah: 1, desenli: 2, kirmizi: 3, 'kırmızı': 3, mavi: 4, yesil: 5, 'yeşil': 5 };
+  const [siblings, setSiblings] = React.useState([product]);
+  React.useEffect(() => {
+    let cancel = false;
+    fetch('./data/products.json', { cache: 'no-cache' })
+      .then(r => r.json())
+      .then(d => {
+        if (cancel) return;
+        const list = d.products.filter(p =>
+          p.kategori === product.kategori && p.ad_tr === product.ad_tr
+        );
+        if (!list.length) { setSiblings([product]); return; }
+        list.sort((a, b) => (VARIANT_RANK[a.renk] ?? 9) - (VARIANT_RANK[b.renk] ?? 9));
+        setSiblings(list);
+      })
+      .catch(() => setSiblings([product]));
+    return () => { cancel = true; };
+  }, [product.sku]);
+
   const lifestyleSrc = product.kategori ? `./img/lifestyle-${product.kategori}.webp` : null;
+  const variantLabel = (p) => {
+    const key = (p.renk || '').toLowerCase();
+    const trMap = { beyaz: 'Beyaz', siyah: 'Siyah', desenli: 'Desenli', kirmizi: 'Kırmızı', 'kırmızı': 'Kırmızı', mavi: 'Mavi', yesil: 'Yeşil', 'yeşil': 'Yeşil' };
+    const enMap = { beyaz: 'White', siyah: 'Black', desenli: 'Patterned', kirmizi: 'Red', 'kırmızı': 'Red', mavi: 'Blue', yesil: 'Green', 'yeşil': 'Green' };
+    return (lang === 'tr' ? trMap[key] : enMap[key]) || p.renk || '';
+  };
   const gallery = [
-    { src: photoSrc, kind: 'product', caption: t.images },
+    ...siblings.filter(p => p.foto_dosya_adi).map(p => ({
+      src: `./img/${p.foto_dosya_adi}.webp`,
+      kind: 'product',
+      sku: p.sku,
+      caption: variantLabel(p) || t.images,
+    })),
     ...(lifestyleSrc ? [{ src: lifestyleSrc, kind: 'lifestyle', caption: lang === 'tr' ? 'Kullanımda' : 'In use' }] : []),
-  ].filter(g => g.src);
+  ];
   const [galleryIdx, setGalleryIdx] = React.useState(0);
   React.useEffect(() => { setGalleryIdx(0); }, [product.sku]);
   const [lifestyleOk, setLifestyleOk] = React.useState(true);
@@ -3282,23 +3313,21 @@ function ProductDetail({ lang, product, onBack, navigate }) {
           >
             {activeImage?.kind === 'lifestyle' && lifestyleOk && (
               <img className="pd__photo pd__photo--lifestyle"
+                   key={activeImage.src}
                    src={activeImage.src}
                    alt=""
                    width="1400" height="1000" decoding="async"
                    onLoad={(e) => e.target.closest('.pd__hero').classList.add('is-photo-loaded')}
                    onError={() => { setLifestyleOk(false); setGalleryIdx(0); }} />
             )}
-            {activeImage?.kind === 'product' && photoSrc && (
-              <img className="pd__photo" src={photoSrc}
+            {activeImage?.kind === 'product' && activeImage.src && (
+              <img className="pd__photo"
+                   key={activeImage.src}
+                   src={activeImage.src}
                    alt={lang === 'tr' ? product.ad_tr : (product.ad_en || product.ad_tr)}
                    width="800" height="800" decoding="async"
                    onLoad={(e) => e.target.closest('.pd__hero').classList.add('is-photo-loaded')}
-                   onError={(e) => {
-                     if (!e.target.__triedPng) {
-                       e.target.__triedPng = true;
-                       e.target.src = `./img/${product.foto_dosya_adi}.png`;
-                     } else { e.target.style.display = 'none'; }
-                   }} />
+                   onError={(e) => { e.target.style.display = 'none'; }} />
             )}
             <div className="pd__placeholder">
               <span className="pd__placeholder-sku">{product.sku}</span>
