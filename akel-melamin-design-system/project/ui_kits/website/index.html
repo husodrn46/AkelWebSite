@@ -1686,36 +1686,11 @@ body { overflow-x: hidden; }
   background: var(--bone);
 }
 
-.contact__faq { margin-top: var(--space-8); }
-.contact__faq .eyebrow { display: block; margin-bottom: 16px; }
-.faq { list-style: none; margin: 0; padding: 0; }
-.faq__item { border-bottom: 1px solid var(--border); }
-.faq__item:first-child { border-top: 1px solid var(--border); }
-.faq__q {
-  width: 100%; display: flex; justify-content: space-between; align-items: center;
-  gap: 24px; padding: 20px 4px;
-  background: none; border: 0; cursor: pointer;
-  font-family: var(--font-display); font-weight: 600;
-  font-size: 17px; color: var(--ink); text-align: left;
-  transition: color 160ms;
-}
-.faq__q:hover { color: var(--red); }
-.faq__sign {
-  font-family: var(--font-mono); font-size: 22px;
-  color: var(--red); font-weight: 400;
-  flex-shrink: 0;
-}
-.faq__a {
-  margin: 0 4px 20px; max-width: 68ch;
-  color: var(--graphite); font-size: 15px; line-height: 1.65;
-}
-
 @media (max-width: 720px) {
   .contact__process-grid { grid-template-columns: 1fr 1fr; gap: 18px; }
   .contact__map-head { flex-direction: column; align-items: stretch; padding: 16px; gap: 10px; }
   .contact__map-frame { height: 320px; }
   .contact__photo figcaption { left: 10px; bottom: 10px; font-size: 11px; }
-  .faq__q { font-size: 15.5px; padding: 16px 2px; }
 }
 @media (max-width: 480px) {
   .contact__process-grid { grid-template-columns: 1fr; }
@@ -3689,7 +3664,6 @@ window.About = About;
 /* ====== Contact.jsx ====== */
 // Contact.jsx — export inquiry form
 function Contact({ lang }) {
-  const [openFaq, setOpenFaq] = React.useState(null);
   const t = lang === 'tr'
     ? {
         eyebrow: 'İletişim',
@@ -3709,15 +3683,6 @@ function Contact({ lang }) {
           { n: '03', k: 'Sipariş onayı', v: 'Özel logolu üretim ve miktar birlikte netleşir.' },
           { n: '04', k: 'Üretim & sevkiyat', v: 'Üretim + kargo süreleri paylaşılır, takipte tutarız.' },
         ],
-        faqTitle: 'Sık sorulanlar',
-        faqs: [
-          { q: 'Minimum sipariş adedi var mı?', a: 'Standart ürünlerde minimum bir koli; özel logolu ürünlerde ürün bazında değişiklik gösterir. WhatsApp üzerinden iletin, size özel yanıt verelim.' },
-          { q: 'Özel logolu (kurumsal) üretim şartları nedir?', a: 'Kurumsal / belediye / promosyon projeleri için tipik minimum 500–1000 adet bandında başlar, baskı tekniğine göre değişir. Örneklerimizi kataloğumuzdan inceleyebilirsiniz.' },
-          { q: 'Numune gönderimi var mı?', a: 'Ciddi talepler için evet — seçilen ürün(ler)in numunesi gönderilir. Kargo ücreti talebe göre değerlendirilir.' },
-          { q: 'İhracat yapıyor musunuz?', a: 'Evet. Afrika, Arap ülkeleri başta olmak üzere 23+ ülkeye düzenli sevkiyatımız var. Liman/ülke bazlı fiyat ve lead-time için iletişime geçin.' },
-          { q: 'Ürünler gıda ile temas için uygun mu?', a: 'Tüm hammadde ve mamul ürünler gıda teması sertifikalıdır — ISO 22000, Intertek, FQC raporlu. Detay kataloğumuzda.' },
-          { q: 'Ödeme şartları nedir?', a: 'Yurt içi / yurt dışı için farklı koşullarımız var. Sipariş görüşmesi sırasında netleştirilir.' },
-        ],
       }
     : {
         eyebrow: 'Contact',
@@ -3736,15 +3701,6 @@ function Contact({ lang }) {
           { n: '02', k: 'Quote & sample', v: 'Price, carton details and samples if needed.' },
           { n: '03', k: 'Order confirmation', v: 'Custom-logo specs and quantities confirmed together.' },
           { n: '04', k: 'Production & shipping', v: 'Production + shipping timeline shared and tracked.' },
-        ],
-        faqTitle: 'Frequently asked',
-        faqs: [
-          { q: 'Is there a minimum order quantity?', a: 'For standard products, a single carton; for custom-logo items the MOQ varies by product. Ping us on WhatsApp for a specific answer.' },
-          { q: 'What about custom-logo (corporate) orders?', a: 'Corporate / municipal / promotional projects typically start around 500–1000 units depending on the printing technique. Examples are in our catalog.' },
-          { q: 'Do you send samples?', a: 'Yes for serious inquiries — samples of the selected product(s) can be shipped. Shipping cost handled case by case.' },
-          { q: 'Do you export?', a: 'Yes. Regular shipments to 23+ countries, mainly Africa and the Arab region. Contact us for port/country pricing and lead time.' },
-          { q: 'Are the products food-safe?', a: 'All raw materials and finished goods carry food-contact certifications — ISO 22000, Intertek, FQC. Details are in the catalog.' },
-          { q: 'What are the payment terms?', a: 'Different terms for domestic and export. Finalised during the order discussion.' },
         ],
       };
   const dir = [
@@ -3829,21 +3785,6 @@ function Contact({ lang }) {
           title="Akel Melamin — Showroom"></iframe>
       </div>
 
-      <div className="contact__faq" data-anim="fade-up">
-        <span className="eyebrow">{t.faqTitle}</span>
-        <ul className="faq">
-          {t.faqs.map((f, i) => (
-            <li key={i} className={`faq__item ${openFaq === i ? 'is-open' : ''}`}>
-              <button type="button" className="faq__q" aria-expanded={openFaq === i}
-                onClick={() => setOpenFaq(openFaq === i ? null : i)}>
-                <span>{f.q}</span>
-                <span className="faq__sign" aria-hidden="true">{openFaq === i ? '−' : '+'}</span>
-              </button>
-              {openFaq === i && <p className="faq__a">{f.a}</p>}
-            </li>
-          ))}
-        </ul>
-      </div>
     </section>
   );
 }
