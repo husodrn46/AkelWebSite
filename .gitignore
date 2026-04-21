@@ -58,3 +58,7 @@ AKEL*.JPG
 Ürün Kataloğu*
 *.pdf
 !akel-melamin-design-system/project/ui_kits/website/catalog/*.pdf
+
+# Local-only assets (screenshots, zips)
+output/
+*.zip
