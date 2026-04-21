@@ -2714,6 +2714,19 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
     return parts.join(' · ');
   }
 
+  // Short size tag for the card title — 5 Kare Tabak rows in a row all share
+  // the same photo, so the size in the name is what lets a buyer tell them
+  // apart at a glance. Ø 25 cm / 29 cm / 35×24 cm, etc.
+  function sizeTag(p) {
+    if (p.cap_mm) return 'Ø ' + (p.cap_mm / 10) + ' cm';
+    const en = p.en_mm, boy = p.boy_mm;
+    if (en && boy) {
+      if (en === boy) return (en / 10) + ' cm';
+      return (en / 10) + '×' + (boy / 10) + ' cm';
+    }
+    return null;
+  }
+
   function catLabel(k) {
     const c = data.categories.find(x => x.key === k);
     return c ? c[lang] : k;
@@ -2745,7 +2758,9 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
         <div className="product-grid" data-anim-stagger>
           {groups.slice(0, limit).map(({ primary: p, variants }, i) => {
             const spec = buildSpec(p);
-            const name = lang === 'tr' ? p.ad_tr : (p.ad_en || p.ad_tr);
+            const baseName = lang === 'tr' ? p.ad_tr : (p.ad_en || p.ad_tr);
+            const sz = sizeTag(p);
+            const name = sz ? `${baseName} · ${sz}` : baseName;
             const dotFor = (v) => v.renk === 'siyah' ? 'black' : v.renk === 'beyaz' ? 'white' : 'custom';
             return (
               <div
