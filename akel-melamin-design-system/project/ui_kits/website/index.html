@@ -888,6 +888,19 @@ body { overflow-x: hidden; }
 /* ============================================================
    MOTION PRIMITIVES — reveals, stagger, magnetic
    ============================================================ */
+/* Route change: fade the whole <main> in. Key={path} on main forces a
+   remount so this keyframe replays every navigation. */
+.page-fade {
+  animation: page-fade-in 260ms var(--ease-out) both;
+}
+@keyframes page-fade-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .page-fade { animation: none; }
+}
+
 /* Initial hidden state applied by JS (`.anim-init`). Kept off by default
    so the page still works with JS disabled. */
 .anim-init {
@@ -1172,6 +1185,15 @@ body { overflow-x: hidden; }
   object-fit: cover; object-position: center 60%;
   border-radius: 4px; display: block;
   box-shadow: var(--shadow-2);
+  animation: editorial-kenburns 22s ease-in-out infinite alternate;
+  will-change: transform;
+}
+@keyframes editorial-kenburns {
+  0%   { transform: scale(1.02) translate3d(0, 0, 0); }
+  100% { transform: scale(1.09) translate3d(-1.2%, -0.8%, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .editorial__photo { animation: none; transform: none; }
 }
 .editorial__caption {
   position: absolute; left: calc(var(--page-gutter) + 36px);
@@ -2730,7 +2752,7 @@ function Categories({ lang, navigate }) {
           <a
             key={c.key}
             href={pathToURL('products', { cat: c.key })}
-            className={`cat-card cat-card--${c.key}`}
+            className={`cat-card cat-card--${c.key} tilt`}
             onClick={(e) => { e.preventDefault(); navigate('products', { cat: c.key }); }}
             data-anim="stagger-item"
             aria-label={`${c.label} — ${c.count}`}
@@ -4125,7 +4147,7 @@ function App() {
         {lang === 'tr' ? 'İçeriğe geç' : 'Skip to content'}
       </a>
       <Header lang={lang} setLang={setLang} currentPath={path} navigate={navigate} />
-      <main id="main" tabIndex="-1">
+      <main id="main" tabIndex="-1" key={path} className="page-fade">
       {path === 'home' && <>
         <Hero lang={lang} navigate={navigate} />
         <StatsRow lang={lang} />
