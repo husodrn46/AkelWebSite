@@ -1,5 +1,20 @@
 <!DOCTYPE html>
 <html lang="tr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<script>
+// Inject a <base> so relative URLs (./img/*, ./data/*, ./catalog/*) keep
+// resolving correctly once real-URL routing puts us under /urunler/<slug>.
+// On CF this is '/'; on the dev server it's '/ui_kits/website/'. Must run
+// before any <link rel="icon"> or inline scripts reference relative paths.
+(function(){
+  var p = window.location.pathname;
+  var base = (p === '/ui_kits/website' || p.indexOf('/ui_kits/website/') === 0)
+    ? '/ui_kits/website/'
+    : '/';
+  var el = document.createElement('base');
+  el.href = base;
+  document.head.appendChild(el);
+})();
+</script>
 <title>Akel Melamin — Her Sofrada Kaliteye Yer Açın</title>
 <meta name="description" content="Akel Melamin — 2014'te 35 yıllık üretim mirası üzerine kurulan Türk melamin sofra eşyası üreticisi. Otel, restoran, kafe ve ev için 13 ürün serisi. Gıda ile temasa uygun, ISO 9001 / ISO 22000 sertifikalı.">
 <meta name="theme-color" content="#CD181E">
