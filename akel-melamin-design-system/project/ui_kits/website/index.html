@@ -1187,6 +1187,45 @@ body { overflow-x: hidden; }
 }
 .cat-card:hover .cat-card__photo { transform: scale(1.03); }
 
+/* ---------- EDITORIAL SPREAD ---------- */
+.editorial {
+  position: relative; width: 100%;
+  max-width: var(--page-max); margin: var(--space-8) auto 0;
+  padding: 0 var(--page-gutter);
+}
+.editorial__photo {
+  width: 100%; aspect-ratio: 16 / 9;
+  object-fit: cover; object-position: center 58%;
+  border-radius: 4px; display: block;
+  box-shadow: var(--shadow-2);
+}
+.editorial__caption {
+  position: absolute; left: calc(var(--page-gutter) + 36px);
+  bottom: 36px; max-width: 460px;
+  padding: 24px 28px;
+  background: rgba(17,17,16,0.72);
+  backdrop-filter: blur(8px);
+  border-radius: 4px;
+  color: var(--paper);
+}
+.eyebrow--light { color: rgba(247,246,243,0.72); }
+.editorial__title {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(1.5rem, 2.4vw, 2.2rem);
+  letter-spacing: -0.02em; line-height: 1.08;
+  margin: 10px 0 10px; color: var(--paper);
+}
+.editorial__body {
+  font-size: 14.5px; line-height: 1.55;
+  color: rgba(247,246,243,0.86);
+  margin: 0;
+}
+@media (max-width: 720px) {
+  .editorial__photo { aspect-ratio: 4 / 5; object-position: center 55%; }
+  .editorial__caption { left: calc(var(--page-gutter) + 16px); right: calc(var(--page-gutter) + 16px); bottom: 16px; padding: 18px 20px; max-width: none; }
+  .editorial__body { font-size: 13.5px; }
+}
+
 /* ---------- BANDS ---------- */
 .band {
   background: var(--ink); color: var(--paper);
@@ -2517,6 +2556,35 @@ window.Hero = Hero;
 window.StatsRow = StatsRow;
 window.MarqueeBand = MarqueeBand;
 
+/* ====== EditorialSpread.jsx ====== */
+// Full-bleed tabletop photo as a breather between Categories and the
+// production band. Two-line caption overlay, bottom-left, so the frame
+// never reads as a blank poster.
+function EditorialSpread({ lang }) {
+  const t = lang === 'tr'
+    ? { eyebrow: 'Sofrada', title: 'Her ayrıntıda hizmet.', body: 'Otel, restoran ve catering için tasarlanmış; bir restoran servisinin yoğunluğuna göre üretilmiş, estetiği koruyan melamin sofra.' }
+    : { eyebrow: 'At the table', title: 'Service in every detail.', body: 'Built for hotels, restaurants and catering — melamine tableware that keeps its look under the pace of a real service.' };
+  return (
+    <section className="editorial" data-anim="section" aria-label={t.title}>
+      <img
+        src="./img/editorial-dining.webp"
+        alt=""
+        className="editorial__photo"
+        loading="lazy"
+        decoding="async"
+        width="1800"
+        height="1753"
+      />
+      <div className="editorial__caption">
+        <span className="eyebrow eyebrow--light">{t.eyebrow}</span>
+        <h2 className="editorial__title">{t.title}</h2>
+        <p className="editorial__body">{t.body}</p>
+      </div>
+    </section>
+  );
+}
+window.EditorialSpread = EditorialSpread;
+
 
 /* ====== Categories.jsx ====== */
 // Categories.jsx — product families grid
@@ -3824,6 +3892,7 @@ function App() {
         <Hero lang={lang} navigate={navigate} />
         <StatsRow lang={lang} />
         <Categories lang={lang} navigate={navigate} />
+        <EditorialSpread lang={lang} />
         <ProductionBand lang={lang} navigate={navigate} />
         <CatalogBand lang={lang} navigate={navigate} />
       </>}
