@@ -2258,17 +2258,17 @@ function Hero({ lang, navigate }) {
 
   const photos = [
     {
-      src: './img/akel-hero-1.jpg',
+      src: './img/akel-hero-1.webp',
       label: lang === 'tr' ? 'Akel Melamin · Mermer Tepsi Serisi'  : 'Akel Melamin · Marble Tray Series',
       tag:   lang === 'tr' ? 'MERMER · TEPSİ'                       : 'MARBLE · TRAY',
     },
     {
-      src: './img/akel-hero-2.jpg',
+      src: './img/akel-hero-2.webp',
       label: lang === 'tr' ? 'Akel Melamin · Desenli Servis Tepsisi' : 'Akel Melamin · Patterned Serving Tray',
       tag:   lang === 'tr' ? 'DESENLİ · SERVİS'                      : 'PATTERNED · SERVING',
     },
     {
-      src: './img/akel-hero-3.jpg',
+      src: './img/akel-hero-3.webp',
       label: lang === 'tr' ? 'Akel Melamin · Ekmek & Servis Koleksiyonu' : 'Akel Melamin · Bread & Serving Set',
       tag:   lang === 'tr' ? 'EKMEK · SERVİS'                            : 'BREAD · SERVING',
     },
@@ -2428,33 +2428,33 @@ function Categories({ lang, navigate }) {
   // primary plate-shape split; the rest are category aggregations.
   const cats = {
     tr: [
-      { key: 'kare',         label: 'Kare Seri',           count: 'Beyaz',                  shape: 'square', photo: 'kare-517' },
-      { key: 'kare-siyah',   label: 'Kare Seri Siyah',     count: 'Siyah',                  shape: 'square', photo: 'kare-siyah-517s' },
+      { key: 'kare',         label: 'Kare Seri',           count: 'Beyaz',                  shape: 'square', photo: 'kare-526' },
+      { key: 'kare-siyah',   label: 'Kare Seri Siyah',     count: 'Siyah',                  shape: 'square', photo: 'kare-siyah-508s' },
       { key: 'international',label: 'International Seri',  count: 'Yuvarlak klasik',        shape: 'round',  photo: 'international-125' },
-      { key: 'elegant',      label: 'Elegant Seri',        count: 'Taş dokulu',             shape: 'trays' },
-      { key: 'acikbufe',     label: 'Açık Büfe · Servis',  count: 'Sunum & catering',       shape: 'serve' },
-      { key: 'tepsiler',     label: 'Tepsiler',            count: 'Mermer · baskılı',       shape: 'trays' },
-      { key: 'eco',          label: 'Eco Seri',            count: 'Ekonomik günlük',        shape: 'plates' },
-      { key: 'diplomat',     label: 'Diplomat Kayık Seri', count: 'Uzun servis',            shape: 'serve' },
-      { key: 'gunluk',       label: 'Günlük Desenli Seri', count: 'Desen baskı',            shape: 'bowls' },
-      { key: 'masaustu',     label: 'Masaüstü Aksesuarları', count: 'Tuzluk · şekerlik',    shape: 'serve' },
-      { key: 'kids',         label: 'Çocuk Tabakları',     count: 'Bölmeli & eğlenceli',    shape: 'kids' },
-      { key: 'bolmeli',      label: 'Bölmeli Tabaklar',    count: 'Porsiyon kontrolü',      shape: 'plates' },
+      { key: 'elegant',      label: 'Elegant Seri',        count: 'Taş dokulu',             shape: 'trays',  photo: 'elegant-347' },
+      { key: 'acikbufe',     label: 'Açık Büfe · Servis',  count: 'Sunum & catering',       shape: 'serve',  photo: 'acikbufe-402' },
+      { key: 'tepsiler',     label: 'Tepsiler',            count: 'Mermer · baskılı',       shape: 'trays',  photo: 'tepsiler-350' },
+      { key: 'eco',          label: 'Eco Seri',            count: 'Ekonomik günlük',        shape: 'plates', photo: 'eco-019' },
+      { key: 'diplomat',     label: 'Diplomat Kayık Seri', count: 'Uzun servis',            shape: 'serve',  photo: 'diplomat-093' },
+      { key: 'gunluk',       label: 'Günlük Desenli Seri', count: 'Desen baskı',            shape: 'bowls',  photo: 'gunluk-327d' },
+      { key: 'masaustu',     label: 'Masaüstü Aksesuarları', count: 'Tuzluk · şekerlik',    shape: 'serve',  photo: 'masaustu-400' },
+      { key: 'kids',         label: 'Çocuk Tabakları',     count: 'Bölmeli & eğlenceli',    shape: 'kids',   photo: 'kids-150d' },
+      { key: 'bolmeli',      label: 'Bölmeli Tabaklar',    count: 'Porsiyon kontrolü',      shape: 'plates', photo: 'bolmeli-150' },
       { key: 'logolu',       label: 'Özel Logolu Ürünler', count: 'Baskılı · kurumsal',     shape: 'deco' },
     ],
     en: [
-      { key: 'kare',         label: 'Square Series',            count: 'White',                 shape: 'square', photo: 'kare-517' },
-      { key: 'kare-siyah',   label: 'Square Series · Black',    count: 'Black',                 shape: 'square', photo: 'kare-siyah-517s' },
+      { key: 'kare',         label: 'Square Series',            count: 'White',                 shape: 'square', photo: 'kare-526' },
+      { key: 'kare-siyah',   label: 'Square Series · Black',    count: 'Black',                 shape: 'square', photo: 'kare-siyah-508s' },
       { key: 'international',label: 'International Series',     count: 'Classic round',         shape: 'round',  photo: 'international-125' },
-      { key: 'elegant',      label: 'Elegant Series',           count: 'Stone-textured',        shape: 'trays' },
-      { key: 'acikbufe',     label: 'Buffet · Serving',         count: 'Presentation & catering', shape: 'serve' },
-      { key: 'tepsiler',     label: 'Trays',                    count: 'Marble · printed',      shape: 'trays' },
-      { key: 'eco',          label: 'Eco Series',               count: 'Everyday economy',      shape: 'plates' },
-      { key: 'diplomat',     label: 'Diplomat Boat Series',     count: 'Oblong serving',        shape: 'serve' },
-      { key: 'gunluk',       label: 'Everyday Pattern Line',    count: 'Printed patterns',      shape: 'bowls' },
-      { key: 'masaustu',     label: 'Tabletop Accessories',     count: 'Salt · sugar · cruet',  shape: 'serve' },
-      { key: 'kids',         label: 'Kids\' Plates',            count: 'Compartment & playful', shape: 'kids' },
-      { key: 'bolmeli',      label: 'Compartment Plates',       count: 'Portion control',       shape: 'plates' },
+      { key: 'elegant',      label: 'Elegant Series',           count: 'Stone-textured',        shape: 'trays',  photo: 'elegant-347' },
+      { key: 'acikbufe',     label: 'Buffet · Serving',         count: 'Presentation & catering', shape: 'serve',  photo: 'acikbufe-402' },
+      { key: 'tepsiler',     label: 'Trays',                    count: 'Marble · printed',      shape: 'trays',  photo: 'tepsiler-350' },
+      { key: 'eco',          label: 'Eco Series',               count: 'Everyday economy',      shape: 'plates', photo: 'eco-019' },
+      { key: 'diplomat',     label: 'Diplomat Boat Series',     count: 'Oblong serving',        shape: 'serve',  photo: 'diplomat-093' },
+      { key: 'gunluk',       label: 'Everyday Pattern Line',    count: 'Printed patterns',      shape: 'bowls',  photo: 'gunluk-327d' },
+      { key: 'masaustu',     label: 'Tabletop Accessories',     count: 'Salt · sugar · cruet',  shape: 'serve',  photo: 'masaustu-400' },
+      { key: 'kids',         label: 'Kids\' Plates',            count: 'Compartment & playful', shape: 'kids',   photo: 'kids-150d' },
+      { key: 'bolmeli',      label: 'Compartment Plates',       count: 'Portion control',       shape: 'plates', photo: 'bolmeli-150' },
       { key: 'logolu',       label: 'Custom-logo Products',     count: 'Printed · corporate',   shape: 'deco' },
     ],
   }[lang];
@@ -2487,7 +2487,7 @@ function Categories({ lang, navigate }) {
               {c.photo
                 ? <img
                     className="cat-card__photo"
-                    src={`./img/${c.photo}.jpg`}
+                    src={`./img/${c.photo}.webp`}
                     alt={`${c.label} — Akel Melamin`}
                     loading="lazy"
                     decoding="async"
@@ -2660,6 +2660,26 @@ function ProductGrid({ lang, navigate, openProduct }) {
 
   const shown = active === 'all' ? visible : visible.filter(p => p.kategori === active);
 
+  // Group color/finish variants (402 beyaz + 402S siyah + 402K kırmızı) into a
+  // single card. Keyed by category + SKU stripped of trailing variant letters
+  // (S/K/D + KB/MB/TB doubled). Primary is beyaz → siyah → first.
+  const VARIANT_RANK = { beyaz: 0, siyah: 1, desenli: 2, kirmizi: 3, 'kırmızı': 3, mavi: 4, yesil: 5, 'yeşil': 5 };
+  function baseKey(p) {
+    const s = String(p.sku || '').toUpperCase();
+    const stripped = s.replace(/(KB|MB|TB)$/, '').replace(/[SKD]$/, '');
+    return `${p.kategori}::${stripped}`;
+  }
+  const groupMap = new Map();
+  for (const p of shown) {
+    const k = baseKey(p);
+    if (!groupMap.has(k)) groupMap.set(k, []);
+    groupMap.get(k).push(p);
+  }
+  const groups = [...groupMap.values()].map(g => {
+    const sorted = g.slice().sort((a, b) => (VARIANT_RANK[a.renk] ?? 9) - (VARIANT_RANK[b.renk] ?? 9));
+    return { primary: sorted[0], variants: sorted };
+  });
+
   // Build a per-product spec line out of sized fields
   function buildSpec(p) {
     const parts = [];
@@ -2683,7 +2703,7 @@ function ProductGrid({ lang, navigate, openProduct }) {
           <span className="eyebrow" data-anim="fade-up">{lang === 'tr' ? 'Katalog' : 'Catalog'}</span>
           <h2 className="section__title"><span data-split-text>{t.title}</span></h2>
         </div>
-        <span className="meta">{t.count(shown.length)}</span>
+        <span className="meta">{t.count(groups.length)}</span>
       </div>
 
       <div className="filter-row" data-anim="fade-up">
@@ -2696,16 +2716,17 @@ function ProductGrid({ lang, navigate, openProduct }) {
         ))}
       </div>
 
-      {shown.length === 0 ? (
+      {groups.length === 0 ? (
         <p className="lead" style={{padding: '48px 0'}}>{t.empty}</p>
       ) : (
         <div className="product-grid" data-anim-stagger>
-          {shown.slice(0, limit).map((p, i) => {
+          {groups.slice(0, limit).map(({ primary: p, variants }, i) => {
             const spec = buildSpec(p);
             const name = lang === 'tr' ? p.ad_tr : (p.ad_en || p.ad_tr);
+            const dotFor = (v) => v.renk === 'siyah' ? 'black' : v.renk === 'beyaz' ? 'white' : 'custom';
             return (
               <div
-                key={p.sku}
+                key={p.foto_dosya_adi || p.sku}
                 className="product-card tilt"
                 data-anim="stagger-item"
                 onClick={() => openProduct(p)}
@@ -2716,7 +2737,7 @@ function ProductGrid({ lang, navigate, openProduct }) {
                   {p.foto_dosya_adi && (
                     <img
                       className="product-card__photo"
-                      src={`./img/${p.foto_dosya_adi}.jpg`}
+                      src={`./img/${p.foto_dosya_adi}.webp`}
                       alt={name}
                       loading={i < 6 ? 'eager' : 'lazy'}
                       fetchpriority={i < 3 ? 'high' : 'auto'}
@@ -2742,10 +2763,15 @@ function ProductGrid({ lang, navigate, openProduct }) {
                 <div className="product-card__body">
                   <div className="product-card__meta">
                     <span className="product-card__eyebrow">{catLabel(p.kategori)}</span>
-                    {p.renk && (
+                    {variants.length > 0 && (
                       <div className="product-card__variants" aria-hidden="true">
-                        <span className={`variant-dot variant-dot--${p.renk === 'siyah' ? 'black' : p.renk === 'beyaz' ? 'white' : 'custom'}`}
-                              style={p.renk !== 'beyaz' && p.renk !== 'siyah' ? {background: 'var(--red)'} : undefined}></span>
+                        {variants.map(v => (
+                          <span
+                            key={v.sku}
+                            className={`variant-dot variant-dot--${dotFor(v)}`}
+                            style={v.renk !== 'beyaz' && v.renk !== 'siyah' ? {background: 'var(--red)'} : undefined}
+                          />
+                        ))}
                       </div>
                     )}
                   </div>
@@ -2758,10 +2784,10 @@ function ProductGrid({ lang, navigate, openProduct }) {
         </div>
       )}
 
-      {shown.length > limit && (
+      {groups.length > limit && (
         <div className="product-grid__more">
           <button type="button" className="btn btn--ghost" onClick={() => setLimit(l => l + PAGE)}>
-            {t.loadMore} ({shown.length - limit})
+            {t.loadMore} ({groups.length - limit})
           </button>
         </div>
       )}
@@ -2829,7 +2855,7 @@ function ProductDetail({ lang, product, onBack }) {
   if (product.ozel_logolu_uygun) pack.push([t.logo, product.ozel_logolu_uygun === 'evet' ? t.yes : t.no]);
   if (product.kullanim_alani) pack.push([t.useArea, product.kullanim_alani]);
 
-  const photoSrc = product.foto_dosya_adi ? `./img/${product.foto_dosya_adi}.jpg` : null;
+  const photoSrc = product.foto_dosya_adi ? `./img/${product.foto_dosya_adi}.webp` : null;
 
   return (
     <section className="section" data-anim="section">

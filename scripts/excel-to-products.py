@@ -126,7 +126,7 @@ def main():
     products = []
     errors = []
     warnings = []
-    seen_sku = set()
+    seen_keys = set()
 
     # Row 1 = header, row 2 = example (italic), data starts row 3 onwards.
     # But user might also start at row 2 if they delete the sample. So we try
@@ -167,11 +167,14 @@ def main():
                 f"Satır {r} ({row['sku']}): beklenmeyen renk '{row['renk']}'"
             )
 
-        # --- SKU tekilliği ---
-        if row["sku"] in seen_sku:
-            errors.append(f"Satır {r}: SKU tekrarı '{row['sku']}'")
+        # --- Tekillik: foto adı benzersiz olmalı. SKU farklı ürünlerde
+        #     tekrar edebilir (508 → kare Kare Tabak + masaustu Kare Sosluk
+        #     birer gerçek üründür), ama aynı foto iki satıra denk düşerse
+        #     kopya satır demektir — sessizce atla.
+        uniq = row["foto_dosya_adi"]
+        if uniq in seen_keys:
             continue
-        seen_sku.add(row["sku"])
+        seen_keys.add(uniq)
 
         # --- Foto var mı? ---
         photo_name = row["foto_dosya_adi"]
