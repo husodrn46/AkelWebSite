@@ -2881,9 +2881,10 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
   const sizeScale = (p) => {
     const max = categoryMax[p.kategori || ''];
     const sz = sizeOf(p);
-    if (!max || !sz || max === sz) return 1;
-    // Floor at 0.42 so the smallest item keeps presence without tiny dot.
-    return Math.max(0.42, sz / max);
+    if (!max || !sz) return 0.85;
+    // Ceiling 0.88 keeps even the biggest item (e.g. 222 Katlı Sunumluk
+    // at 28 cm) from flooding the card; floor 0.55 keeps shakers readable.
+    return Math.min(0.88, Math.max(0.55, (sz / max) * 0.88));
   };
 
   // Filter chips: derive from categories actually present in data
