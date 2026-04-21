@@ -2214,32 +2214,77 @@ html,body{margin:0;background:var(--paper,#F7F6F3);}#root{min-height:100vh;}
     });
   }
 
+  // Drop stale motion state before re-running on a route change — otherwise
+  // the elements that just mounted get skipped because they never had
+  // .anim-init / .anim-in to begin with, and anything returned to the tree
+  // would stay stuck in whichever state it was last in.
+  function resetReveals(root) {
+    root.querySelectorAll('.anim-init, .anim-in').forEach(el => {
+      el.classList.remove('anim-init', 'anim-in');
+      el.style.transitionDelay = '';
+    });
+    root.querySelectorAll('.split-text.is-in').forEach(el => {
+      // Re-trigger the split-text intro on route change
+      el.classList.remove('is-in');
+    });
+  }
+
+  let mutationObserver = null;
+  function watchForLateNodes(root) {
+    if (mutationObserver) return;
+    mutationObserver = new MutationObserver((records) => {
+      let hasNew = false;
+      for (const rec of records) {
+        for (const node of rec.addedNodes) {
+          if (!(node instanceof HTMLElement)) continue;
+          if (node.matches && (node.matches('[data-anim]') || node.querySelector('[data-anim]'))) {
+            hasNew = true; break;
+          }
+        }
+        if (hasNew) break;
+      }
+      if (hasNew) {
+        markReveals(root);
+        requestAnimationFrame(() => { setupReveals(root); setupSplitText(root); });
+      }
+    });
+    mutationObserver.observe(root.body || root, { childList: true, subtree: true });
+  }
+
   // Run — call after DOM is ready and React has painted
   window.__akelAnimations = {
     init(root) {
       root = root || document;
       setupCursor();
       setupScrollProgress();
-      markReveals(root);
-      // Next frame, so initial state paints before transitions fire
+      resetReveals(root);
+      // Two rAFs: first frame paints the .anim-init hidden state, second
+      // frame flips matching elements to .anim-in so the transition fires.
       requestAnimationFrame(() => {
-        setupReveals(root);
-        setupCountUps(root);
-        setupMagnetic(root);
-        setupHeroParallax(root);
-        setupSplitText(root);
-        setupTilt(root);
+        markReveals(root);
+        requestAnimationFrame(() => {
+          setupReveals(root);
+          setupCountUps(root);
+          setupMagnetic(root);
+          setupHeroParallax(root);
+          setupSplitText(root);
+          setupTilt(root);
+        });
       });
+      watchForLateNodes(root);
     },
     refresh(root) {
       root = root || document;
-      markReveals(root);
+      resetReveals(root);
       requestAnimationFrame(() => {
-        setupReveals(root);
-        setupCountUps(root);
-        setupMagnetic(root);
-        setupSplitText(root);
-        setupTilt(root);
+        markReveals(root);
+        requestAnimationFrame(() => {
+          setupReveals(root);
+          setupCountUps(root);
+          setupMagnetic(root);
+          setupSplitText(root);
+          setupTilt(root);
+        });
       });
     },
   };
