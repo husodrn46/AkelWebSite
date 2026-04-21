@@ -964,32 +964,6 @@ body { overflow-x: hidden; }
   max-width: 52ch; margin: 0 0 28px; text-wrap: pretty;
 }
 .hero__cta { display: flex; gap: 20px; align-items: center; margin-bottom: 0; flex-wrap: wrap; }
-.hero__proof {
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px; max-width: 720px;
-  margin-top: 28px;
-}
-.hero-proof {
-  padding: 14px 16px;
-  border: 1px solid rgba(17,17,16,0.08);
-  background: rgba(247,246,243,0.9);
-  border-radius: 4px;
-  box-shadow: var(--shadow-1);
-}
-.hero-proof__k {
-  display: block;
-  font-family: var(--font-mono); font-size: 10px;
-  letter-spacing: 0.14em; text-transform: uppercase;
-  color: var(--stone);
-  margin-bottom: 8px;
-}
-.hero-proof__v {
-  display: block;
-  font-family: var(--font-display); font-weight: 700;
-  font-size: 16px; line-height: 1.25;
-  color: var(--ink);
-  letter-spacing: -0.015em;
-}
 
 /* Contained banner photo — matches categories / section max-width */
 .hero__visual {
@@ -1794,7 +1768,6 @@ body { overflow-x: hidden; }
   .hero__body { font-size: 16.5px; max-width: none; }
   .hero__cta { gap: 12px; }
   .hero__cta .btn { width: auto; }
-  .hero__proof { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hero__visual { height: clamp(260px, 44vh, 440px); padding: 0 var(--page-gutter); margin-bottom: var(--space-6); }
   .hero__visual::before { inset: 0 var(--page-gutter); }
   .hero__photo-stack { inset: 0 var(--page-gutter); }
@@ -1884,9 +1857,6 @@ body { overflow-x: hidden; }
 @media (max-width: 720px) {
   .hero__title { font-size: clamp(2.5rem, 12vw, 4.5rem); }
   .hero__body { font-size: 15.5px; }
-  .hero__proof { grid-template-columns: 1fr 1fr; gap: 8px; }
-  .hero-proof { padding: 12px; }
-  .hero-proof__v { font-size: 14px; }
   .hero__visual { height: clamp(220px, 38vh, 360px); }
   .stats-strip__big { font-size: 1.75rem; }
   .stats-strip__small { font-size: 10px; }
@@ -1904,7 +1874,6 @@ body { overflow-x: hidden; }
   .hero__body { margin-bottom: 24px; }
   .hero__cta { flex-direction: column; align-items: stretch; width: 100%; }
   .hero__cta .btn { width: 100%; justify-content: center; }
-  .hero__proof { grid-template-columns: 1fr 1fr; gap: 8px; }
   .hero__visual { height: 240px; }
   .hero__visual-crop { display: none; }
 
@@ -2503,17 +2472,6 @@ function Hero({ lang, navigate }) {
       caption: 'Gözde · White set · professional service',
     },
   }[lang];
-  const proof = lang === 'tr'
-    ? [
-        { k: 'Üretim mirası', v: '35 yıl deneyim' },
-        { k: 'Ürün yelpazesi', v: '13 ürün serisi' },
-        { k: 'Sertifikalar', v: 'ISO 9001 · ISO 22000' },
-      ]
-    : [
-        { k: 'Production heritage', v: '35 years of experience' },
-        { k: 'Product range', v: '13 product series' },
-        { k: 'Certifications', v: 'ISO 9001 · ISO 22000' },
-      ];
 
   React.useEffect(() => {
     const el = document.querySelector('.hero[data-anim="hero"]');
@@ -2567,14 +2525,6 @@ function Hero({ lang, navigate }) {
           <button type="button" className="btn btn--link" onClick={() => navigate('about')}>
             {copy.secondary} →
           </button>
-        </div>
-        <div className="hero__proof" data-anim="fade-up" data-anim-delay="120">
-          {proof.map((item) => (
-            <div key={item.k} className="hero-proof">
-              <span className="hero-proof__k">{item.k}</span>
-              <span className="hero-proof__v">{item.v}</span>
-            </div>
-          ))}
         </div>
       </div>
       <div className="hero__visual" role="region" aria-label={lang === 'tr' ? 'Ürün galerisi' : 'Product gallery'}>
