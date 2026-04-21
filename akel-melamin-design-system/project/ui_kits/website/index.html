@@ -494,7 +494,8 @@ body::before {
   z-index: 3;
 }
 .hero__photo-nav button {
-  width: 22px; height: 4px; padding: 0; background: rgba(42,42,40,0.25);
+  width: 22px; height: 4px; padding: 12px 4px; background-clip: content-box;
+  background: rgba(42,42,40,0.25);
   border: 0; cursor: pointer; transition: background 200ms, width 300ms;
 }
 .hero__photo-nav button.is-on { background: var(--red); width: 36px; }
@@ -990,6 +991,7 @@ body { overflow-x: hidden; }
 
 /* Contained banner photo — matches categories / section max-width */
 .hero__visual {
+  width: 100%;
   max-width: var(--page-max);
   margin: 0 auto var(--space-7);
   padding: 0 var(--page-gutter);
@@ -1334,7 +1336,7 @@ body { overflow-x: hidden; }
 .filter-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--space-6); }
 .chip {
   display: inline-flex; align-items: center; gap: 6px;
-  padding: 8px 16px; border-radius: 999px;
+  padding: 8px 16px; border-radius: 999px; min-height: 44px;
   font-family: var(--font-display); font-weight: 600; font-size: 13px;
   border: 1px solid var(--border-strong); background: var(--paper-soft);
   color: var(--graphite); cursor: pointer;
@@ -1946,7 +1948,7 @@ body { overflow-x: hidden; }
   /* Touch targets — min 44×44 for buttons/links */
   .btn { min-height: 42px; }
   .btn--sm { min-height: 38px; }
-  .lang-switch button { min-height: 36px; padding: 6px 8px; }
+  .lang-switch button { min-height: 44px; min-width: 32px; padding: 6px 8px; }
   .site-header__nav a { padding: 10px 0; }
 }
 
