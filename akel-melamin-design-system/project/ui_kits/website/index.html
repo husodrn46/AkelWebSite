@@ -1151,6 +1151,9 @@ body::before {
 }
 .cat-card:nth-child(3n+2) .cat-card__ph { background: #E8E4DC; }
 .cat-card:nth-child(3n+3) .cat-card__ph { background: #DDD9D0; }
+/* When a real product photo lives in the card, drop the tint so the studio
+   white of the shot isn't framed by a mismatched cream rectangle. */
+.cat-card__ph:has(.cat-card__photo) { background: var(--paper); }
 .cat-card__foot {
   padding: 14px 2px 0; display: flex; justify-content: space-between; align-items: baseline;
 }
@@ -1172,7 +1175,8 @@ body::before {
 .cat-card:nth-child(7) .cat-shape { background: var(--red); }
 
 .cat-card__photo {
-  width: 100%; height: 100%; object-fit: cover;
+  width: 100%; height: 100%; object-fit: contain;
+  padding: 8%;
   transition: transform var(--dur-slow) var(--ease-out);
 }
 .cat-card:hover .cat-card__photo { transform: scale(1.03); }
@@ -1320,9 +1324,9 @@ body::before {
 /* ---------- PRODUCT DETAIL ---------- */
 .pd { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; margin-top: 24px; }
 .pd__hero {
-  aspect-ratio: 1; background: var(--bone);
+  aspect-ratio: 4 / 3; background: var(--paper);
   border-radius: 4px; display: grid; place-items: center;
-  position: relative;
+  position: relative; overflow: hidden;
 }
 .pd__caption { position: absolute; bottom: 16px; left: 20px; color: var(--slate); }
 .pd__photo { position: relative; z-index: 2; }
@@ -1356,7 +1360,8 @@ body::before {
 .pd__thumb--photo img { width: 100%; height: 100%; object-fit: cover; }
 .pd__thumb--photo.is-on { outline: 2px solid var(--ink); outline-offset: 2px; border-color: var(--ink); }
 .pd__photo {
-  width: 100%; height: 100%; object-fit: cover;
+  width: 100%; height: 100%; object-fit: contain;
+  padding: 6%;
 }
 .swatch--btn { padding: 0; cursor: pointer; }
 .swatch--btn.is-on { outline: 1.5px solid var(--ink); outline-offset: 3px; }
@@ -2230,7 +2235,7 @@ window.LangSwitch = LangSwitch;
 function Hero({ lang, navigate }) {
   const copy = {
     tr: {
-      eyebrow: 'İstanbul · Türkiye · 2014',
+      eyebrow: 'İkitelli OSB · İstanbul · 2014',
       title: 'Her sofrada kaliteye',
       titleAccent: 'yer açın.',
       body: 'Akel Melamin, 35 yıllık melamin üretim tecrübesi üstüne 2014\'te kurulan bir Türk üreticidir. Gıda ile temasa uygun, dayanıklı ve estetik melamin sofra ürünlerini ev, otel, restoran ve kafeler için üretir.',
@@ -2239,7 +2244,7 @@ function Hero({ lang, navigate }) {
       caption: 'Gözde · Beyaz set · profesyonel servis',
     },
     en: {
-      eyebrow: 'Istanbul · Türkiye · Since 2014',
+      eyebrow: 'İkitelli OSB · Istanbul · Since 2014',
       title: 'Make room for quality',
       titleAccent: 'at every table.',
       body: 'Akel Melamin is a Turkish manufacturer founded in 2014 on 35 years of melamine-production heritage. Food-safe, durable and refined melamine tableware for homes, hotels, restaurants and cafés.',
@@ -2390,11 +2395,11 @@ function StatsRow({ lang }) {
 function MarqueeBand({ lang }) {
   const rows = {
     tr: [
-      ['Her sofrada kaliteye yer açın', '2014\'ten beri', 'İstanbul · Bağcılar', 'Gıda ile temasa uygun', 'Ev · otel · restoran · kafe', '13 ürün serisi', 'ISO 9001:2015', 'ISO 22000:2018'],
+      ['Her sofrada kaliteye yer açın', '2014\'ten beri', 'İkitelli OSB · İstanbul', 'Gıda ile temasa uygun', 'Ev · otel · restoran · kafe', '13 ürün serisi', 'ISO 9001:2015', 'ISO 22000:2018'],
       ['MADE IN TÜRKİYE', 'Kare Seri · Elegant · Eco', 'Dayanıklı · estetik · hijyenik', 'Bulaşık makinesi güvenli', '-20°C ile +100°C', 'Özel logolu üretim', 'Intertek · FQC', 'Yerli Üretim'],
     ],
     en: [
-      ['Make room for quality at every table', 'Since 2014', 'Istanbul · Bağcılar', 'Food-contact safe', 'Home · hotel · restaurant · café', '13 product lines', 'ISO 9001:2015', 'ISO 22000:2018'],
+      ['Make room for quality at every table', 'Since 2014', 'İkitelli OSB · Istanbul', 'Food-contact safe', 'Home · hotel · restaurant · café', '13 product lines', 'ISO 9001:2015', 'ISO 22000:2018'],
       ['MADE IN TÜRKİYE', 'Kare · Elegant · Eco series', 'Durable · refined · hygienic', 'Dishwasher safe', '-20°C to +100°C', 'Custom-logo printing', 'Intertek · FQC', 'Domestic production'],
     ],
   }[lang];
@@ -2477,9 +2482,9 @@ function Categories({ lang, navigate }) {
         {cats.map((c, i) => (
           <a
             key={c.key}
-            href={pathToURL('products')}
+            href={pathToURL('products', { cat: c.key })}
             className={`cat-card cat-card--${c.key}`}
-            onClick={(e) => { e.preventDefault(); navigate('products'); }}
+            onClick={(e) => { e.preventDefault(); navigate('products', { cat: c.key }); }}
             data-anim="stagger-item"
             aria-label={`${c.label} — ${c.count}`}
           >
@@ -2516,24 +2521,24 @@ function ProductionBand({ lang, navigate }) {
   const t = lang === 'tr'
     ? {
         eyebrow: 'Üretim',
-        title: 'İstanbul Bağcılar\'da üretim. 2014\'ten beri.',
-        body: 'İSTOÇ 10. Ada\'daki tesisimizde presleme, kalıplama, dekor ve kalite kontrol tek bir akışta ilerliyor. Gıda ile temasa uygun melamin ürünlerini hijyen ve kalite standartlarına uygun şekilde üretiyoruz.',
+        title: 'İkitelli OSB\'de üretim. 2014\'ten beri.',
+        body: 'İkitelli OSB\'deki tesisimizde presleme, kalıplama, dekor ve kalite kontrol tek bir akışta ilerliyor. Gıda ile temasa uygun melamin ürünlerini hijyen ve kalite standartlarına uygun şekilde üretiyoruz.',
         items: [
           { k: 'Kuruluş',         v: '2014' },
           { k: 'Üretim mirası',   v: '35 yıl' },
-          { k: 'Lokasyon',        v: 'İSTOÇ · Bağcılar' },
+          { k: 'Lokasyon',        v: 'İkitelli OSB · İstanbul' },
           { k: 'Sertifikasyon',   v: 'ISO 9001 · ISO 22000 · Intertek · FQC' },
         ],
         cta: 'Hakkımızda',
       }
     : {
         eyebrow: 'Production',
-        title: 'Manufactured in Istanbul. Since 2014.',
-        body: 'Moulding, pressing, decoration, and QC all flow through a single line in our İSTOÇ 10 plant. Food-contact melamine products made to hygiene and quality standards.',
+        title: 'Manufactured in İkitelli OSB, Istanbul. Since 2014.',
+        body: 'Moulding, pressing, decoration, and QC all flow through a single line in our İkitelli OSB plant. Food-contact melamine products made to hygiene and quality standards.',
         items: [
           { k: 'Founded',          v: '2014' },
           { k: 'Heritage',         v: '35 years' },
-          { k: 'Location',         v: 'İSTOÇ · Bağcılar' },
+          { k: 'Location',         v: 'İkitelli OSB · Istanbul' },
           { k: 'Certifications',   v: 'ISO 9001 · ISO 22000 · Intertek · FQC' },
         ],
         cta: 'About us',
@@ -2605,13 +2610,21 @@ window.CatalogBand = CatalogBand;
 
 /* ====== ProductGrid.jsx ====== */
 // ProductGrid.jsx — category listing with real Gözde/Kavi lines + variant swatch
-function ProductGrid({ lang, navigate, openProduct }) {
+function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
   const PAGE = 36;
-  const [active, setActive] = React.useState('all');
+  const [active, setActive] = React.useState(initialCat || 'all');
   const [data, setData] = React.useState(null);
   const [err, setErr] = React.useState(null);
   const [limit, setLimit] = React.useState(PAGE);
   React.useEffect(() => { setLimit(PAGE); }, [active]);
+  // Keep chip state in sync with URL changes driven from outside (e.g. the
+  // user clicks a category card on the homepage while we're already on the
+  // products page — rare but covers popstate edge cases).
+  React.useEffect(() => { if (initialCat && initialCat !== active) setActive(initialCat); }, [initialCat]);
+  const setActiveAndURL = (k) => {
+    setActive(k);
+    if (onCatChange) onCatChange(k === 'all' ? null : k);
+  };
 
   React.useEffect(() => {
     fetch('./data/products.json', { cache: 'no-cache' })
@@ -2711,7 +2724,7 @@ function ProductGrid({ lang, navigate, openProduct }) {
           <button type="button"
             key={f.k}
             className={`chip ${active === f.k ? 'is-on' : ''}`}
-            onClick={() => setActive(f.k)}
+            onClick={() => setActiveAndURL(f.k)}
           >{f.l}</button>
         ))}
       </div>
@@ -3045,7 +3058,7 @@ function Contact({ lang }) {
           { i: 'mail',      l: 'info@akelmelamin.com',                          href: 'mailto:info@akelmelamin.com' },
           { i: 'phone',     l: '+90 507 425 34 46',                              href: 'tel:+905074253446' },
           { i: 'phone',     l: '+90 532 161 88 46',                              href: 'tel:+905321618846' },
-          { i: 'map-pin',   l: 'İSTOÇ 10.Ada No:9/11, Bağcılar/İstanbul',        href: 'https://maps.google.com/?q=İSTOÇ+10.Ada+No:9/11+Bağcılar+İstanbul' },
+          { i: 'map-pin',   l: 'İSTOÇ 10. Ada No:9/11, Bağcılar / İstanbul',     href: 'https://maps.google.com/?q=İSTOÇ+10.Ada+No:9/11+Bağcılar+İstanbul' },
           { i: 'globe',     l: 'akelmelamin.com',                                href: 'https://akelmelamin.com' },
           { i: 'instagram', l: '@akelmelamin',                                   href: 'https://instagram.com/akelmelamin' },
         ],
@@ -3066,7 +3079,7 @@ function Contact({ lang }) {
           { i: 'mail',      l: 'info@akelmelamin.com',                         href: 'mailto:info@akelmelamin.com' },
           { i: 'phone',     l: '+90 507 425 34 46',                             href: 'tel:+905074253446' },
           { i: 'phone',     l: '+90 532 161 88 46',                             href: 'tel:+905321618846' },
-          { i: 'map-pin',   l: 'İSTOÇ 10.Ada No:9/11, Bağcılar/Istanbul',       href: 'https://maps.google.com/?q=İSTOÇ+10.Ada+No:9/11+Bağcılar+İstanbul' },
+          { i: 'map-pin',   l: 'İSTOÇ 10. Ada No:9/11, Bağcılar / Istanbul',    href: 'https://maps.google.com/?q=İSTOÇ+10.Ada+No:9/11+Bağcılar+İstanbul' },
           { i: 'globe',     l: 'akelmelamin.com',                               href: 'https://akelmelamin.com' },
           { i: 'instagram', l: '@akelmelamin',                                  href: 'https://instagram.com/akelmelamin' },
         ],
@@ -3498,11 +3511,16 @@ function parseURL() {
   let p = window.location.pathname;
   if (BASE && p.startsWith(BASE)) p = p.slice(BASE.length) || '/';
   p = p.replace(/\/+$/, '') || '/';
+  const qs = new URLSearchParams(window.location.search);
+  const cat = qs.get('cat') || null;
   if (p.startsWith('/urunler/')) return { path: 'product', slug: decodeURIComponent(p.slice('/urunler/'.length)) };
-  return { path: URL_TO_PATH[p] || 'home' };
+  const base = { path: URL_TO_PATH[p] || 'home' };
+  if (base.path === 'products' && cat) base.cat = cat;
+  return base;
 }
-function pathToURL(path, slug) {
-  if (path === 'product' && slug) return BASE + '/urunler/' + slug;
+function pathToURL(path, opts) {
+  if (path === 'product' && typeof opts === 'string') return BASE + '/urunler/' + opts;
+  if (path === 'products' && opts && typeof opts === 'object' && opts.cat) return BASE + '/urunler?cat=' + encodeURIComponent(opts.cat);
   return BASE + (ROUTES[path] || '/');
 }
 function productSlug(p) { return p.foto_dosya_adi || String(p.sku).toLowerCase(); }
@@ -3513,6 +3531,7 @@ function App() {
   const [path, setPath] = React.useState(initial.path);
   const [product, setProduct] = React.useState(null);
   const [pendingSlug, setPendingSlug] = React.useState(initial.slug || null);
+  const [catHint, setCatHint] = React.useState(initial.cat || null);
 
   React.useEffect(() => { localStorage.setItem('akel-lang', lang); document.documentElement.lang = lang; }, [lang]);
 
@@ -3532,6 +3551,7 @@ function App() {
     const onPop = () => {
       const s = parseURL();
       setPath(s.path);
+      setCatHint(s.cat || null);
       if (s.slug) { setPendingSlug(s.slug); setProduct(null); }
       else { setPendingSlug(null); setProduct(null); }
     };
@@ -3540,16 +3560,25 @@ function App() {
   }, []);
 
   const scrollTop = () => requestAnimationFrame(() => { const s = document.querySelector('.kit-scroll'); if (s) s.scrollTop = 0; });
-  const pushURL = (url) => { if (window.location.pathname !== url) history.pushState(null, '', url); };
-  const navigate = (p) => {
+  const pushURL = (url) => { if (window.location.pathname + window.location.search !== url) history.pushState(null, '', url); };
+  const navigate = (p, opts) => {
     setPath(p); setProduct(null); setPendingSlug(null);
-    pushURL(pathToURL(p));
+    const cat = (p === 'products' && opts && typeof opts === 'object') ? (opts.cat || null) : null;
+    setCatHint(cat);
+    pushURL(pathToURL(p, cat ? { cat } : undefined));
     scrollTop();
   };
   const openProduct = (p) => {
     setProduct(p); setPath('product'); setPendingSlug(null);
     pushURL(pathToURL('product', productSlug(p)));
     scrollTop();
+  };
+  // Lets ProductGrid update the URL when user clicks a filter chip, without
+  // going through a full navigate() that would reset state.
+  const replaceCat = (cat) => {
+    setCatHint(cat);
+    const url = pathToURL('products', cat ? { cat } : undefined);
+    if (window.location.pathname + window.location.search !== url) history.replaceState(null, '', url);
   };
 
   React.useEffect(() => {
@@ -3570,7 +3599,7 @@ function App() {
         <ProductionBand lang={lang} navigate={navigate} />
         <CatalogBand lang={lang} navigate={navigate} />
       </>}
-      {path === 'products' && <ProductGrid lang={lang} navigate={navigate} openProduct={openProduct} />}
+      {path === 'products' && <ProductGrid lang={lang} navigate={navigate} openProduct={openProduct} initialCat={catHint} onCatChange={replaceCat} />}
       {path === 'product' && product && <ProductDetail lang={lang} product={product} onBack={() => navigate('products')} />}
       {path === 'product' && !product && <section className="section"><p className="lead">{lang === 'tr' ? 'Yükleniyor…' : 'Loading…'}</p></section>}
       {path === 'about' && <About lang={lang} navigate={navigate} />}
