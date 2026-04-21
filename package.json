@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "node scripts/build.mjs",
-    "dev": "python3 -m http.server 4600 --bind 0.0.0.0 --directory akel-melamin-design-system/project",
+    "dev": "python3 scripts/dev-server.py",
     "data": "python3 scripts/excel-to-products.py",
     "update": "npm run data && npm run build"
   },
