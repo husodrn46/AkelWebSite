@@ -2182,15 +2182,26 @@ html,body{margin:0;background:var(--paper,#F7F6F3);}#root{min-height:100vh;}
         }
       });
     }, { threshold: 0.2 });
-    root.querySelectorAll('.split-text').forEach(el => io.observe(el));
-
-    // Safety: if IntersectionObserver somehow misses an element
-    // (e.g., element rendered inside a clipped container), reveal after 2s
-    // so text never stays hidden.
-    setTimeout(() => {
+    // Above-the-fold titles: reveal on the next frame so the stagger fires
+    // predictably on route change (Contact, Catalog, ProductDetail — where
+    // the title is the first thing the user sees). Below-the-fold titles
+    // still wait for the IO.
+    requestAnimationFrame(() => {
       root.querySelectorAll('.split-text').forEach(el => {
-        el.classList.add('is-in');
+        if (el.classList.contains('is-in')) return;
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight * 0.95 && r.bottom > 0) {
+          el.classList.add('is-in');
+        } else {
+          io.observe(el);
+        }
       });
+    });
+
+    // Safety: if IntersectionObserver somehow misses an element, reveal
+    // after 2s so text never stays hidden.
+    setTimeout(() => {
+      root.querySelectorAll('.split-text').forEach(el => el.classList.add('is-in'));
     }, 2000);
   }
 
