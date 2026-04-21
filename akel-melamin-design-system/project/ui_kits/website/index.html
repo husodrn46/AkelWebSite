@@ -1526,50 +1526,13 @@ body { overflow-x: hidden; }
 .cert-chip--sm { padding: 4px 10px; font-size: 11px; letter-spacing: 0.08em; font-weight: 600; }
 
 /* ---------- CONTACT ---------- */
-.contact { display: grid; grid-template-columns: 1fr 1.2fr; gap: 72px; }
+.contact { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
 .contact__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: -0.03em; color: var(--ink); line-height: 1.05; margin: 14px 0 20px; text-wrap: balance; }
-.contact__direct { margin-top: 40px; padding-top: 24px; border-top: 1px solid var(--border); }
-.contact__direct ul { list-style: none; margin: 10px 0 0; padding: 0; display: flex; flex-direction: column; gap: 10px; }
+.contact__cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+.contact__direct { padding: 24px 28px; background: var(--paper-soft); border: 1px solid var(--border); border-radius: 4px; }
+.contact__direct ul { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
 .contact__direct li { display: flex; align-items: center; gap: 10px; font-size: 14.5px; color: var(--graphite); }
-.contact__direct svg { width: 18px; height: 18px; color: var(--slate); stroke-width: 1.75; }
-
-.field { display: flex; flex-direction: column; gap: 6px; }
-.field__lbl { font-family: var(--font-display); font-weight: 600; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--graphite); }
-.field__hint { font-size: 12px; color: var(--slate); }
-.input, .select, textarea.input {
-  font-family: var(--font-body); font-size: 15px;
-  padding: 12px 14px; border: 1px solid var(--border);
-  border-radius: 2px; background: var(--paper-soft); color: var(--graphite);
-  outline: none; transition: border-color var(--dur-fast), box-shadow var(--dur-fast);
-  width: 100%; resize: vertical;
-}
-.input:focus, .select:focus, textarea.input:focus {
-  border-color: var(--red);
-  box-shadow: 0 0 0 2px rgba(205,24,30,.18);
-}
-.select {
-  appearance: none;
-  background-image:
-    linear-gradient(45deg, transparent 50%, var(--slate) 50%),
-    linear-gradient(-45deg, transparent 50%, var(--slate) 50%);
-  background-position: calc(100% - 18px) 50%, calc(100% - 13px) 50%;
-  background-size: 5px 5px; background-repeat: no-repeat;
-  padding-right: 36px;
-}
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
-.grid-2 .field:last-child { grid-column: span 2; }
-.checks { display: grid; grid-template-columns: 1fr 1fr; gap: 6px 12px; padding-top: 4px; }
-.check { display: flex; align-items: center; gap: 8px; font-size: 14px; color: var(--graphite); cursor: pointer; }
-.check input { accent-color: var(--red); }
-.check--consent { margin: 20px 0 16px; font-size: 13px; color: var(--slate); }
-
-.contact__form > .field { margin-bottom: 16px; }
-.contact__form .btn--primary { margin-top: 8px; }
-
-.sent { text-align: center; padding: 80px 20px; max-width: 480px; margin: 0 auto; }
-.sent svg { width: 56px; height: 56px; color: var(--red); stroke-width: 1.5; margin: 0 auto 24px; }
-.sent .h2 { margin-bottom: 12px; }
-.sent .btn { margin-top: 28px; }
+.contact__direct svg { width: 18px; height: 18px; color: var(--slate); stroke-width: 1.75; flex-shrink: 0; }
 
 /* ---------- CATALOG PAGE ---------- */
 .catalog-page { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: var(--space-9); }
@@ -1768,9 +1731,6 @@ body { overflow-x: hidden; }
 
   /* Contact */
   .contact { grid-template-columns: 1fr; gap: 36px; }
-  .grid-2 { grid-template-columns: 1fr; gap: 14px; }
-  .grid-2 .field:nth-child(8) { grid-column: span 1; }
-  .checks { grid-template-columns: 1fr; }
   .contact__title { font-size: clamp(1.75rem, 7vw, 2.5rem); }
 
   /* Catalog */
@@ -3367,143 +3327,75 @@ window.About = About;
 /* ====== Contact.jsx ====== */
 // Contact.jsx — export inquiry form
 function Contact({ lang }) {
-  const [submitted, setSubmitted] = React.useState(false);
-
   const t = lang === 'tr'
     ? {
         eyebrow: 'İletişim',
         title: 'Bizimle iletişime geçin.',
-        lead: 'Bayi, ihracat, özel logolu üretim veya numune talepleriniz için formu doldurun; ekibimiz iki iş günü içinde size döner.',
-        f: {
-          name: 'Ad soyad', company: 'Şirket', email: 'E-posta', phone: 'Telefon',
-          country: 'Ülke', interest: 'İlgilenilen ürün serileri',
-          msg: 'Mesaj', submit: 'Talep gönder',
-        },
-        cats: ['Kare Seri', 'Kare Seri Siyah', 'International', 'Elegant', 'Açık Büfe · Servis', 'Tepsiler', 'Eco', 'Diplomat Kayık', 'Günlük Desenli', 'Masaüstü Aksesuarları', 'Çocuk', 'Bölmeli', 'Özel Logolu'],
-        direct: 'Doğrudan iletişim', dir: [
-          { i: 'mail',            l: 'info@akelmelamin.com',                          href: 'mailto:info@akelmelamin.com' },
+        lead: 'Bayi, ihracat, özel logolu üretim veya numune talepleri için WhatsApp en hızlı yol — mesajınıza aynı gün dönüyoruz.',
+        waPrimary: 'WhatsApp üzerinden yaz',
+        emailSecondary: 'E-posta gönder',
+        direct: 'Doğrudan iletişim',
+        dir: [
           { i: 'phone',           l: '+90 507 425 34 46',                              href: 'tel:+905074253446' },
           { i: 'phone',           l: '+90 532 161 88 46',                              href: 'tel:+905321618846' },
-          { i: 'message-circle',  l: 'WhatsApp',                                        href: 'https://wa.me/905074253446' },
           { i: 'map-pin',         l: 'Showroom · İSTOÇ 10. Ada No:9/11, Bağcılar / İstanbul', href: 'https://maps.google.com/?q=İSTOÇ+10.Ada+No:9/11+Bağcılar+İstanbul' },
           { i: 'factory',         l: 'Üretim · İkitelli OSB / İstanbul',                href: null },
           { i: 'clock',           l: 'Pzt – Cuma · 08:00 – 17:30   ·   Cumartesi · 08:00 – 14:30', href: null },
           { i: 'globe',           l: 'akelmelamin.com',                                 href: 'https://akelmelamin.com' },
           { i: 'instagram',       l: '@akelmelamin',                                    href: 'https://instagram.com/akelmelamin' },
         ],
-        sent: 'Talebiniz alındı.',
-        sentBody: 'Ekibimiz iki iş günü içinde size geri dönecek.',
-        kvkk: 'Kişisel verilerimin iletişim amacıyla işlenmesini onaylıyorum.',
       }
     : {
         eyebrow: 'Contact',
         title: 'Get in touch.',
-        lead: 'For wholesale, export, custom logo or sample requests, fill in the form and our team will reply within two business days.',
-        f: {
-          name: 'Full name', company: 'Company', email: 'Email', phone: 'Phone',
-          country: 'Country', interest: 'Product series of interest',
-          msg: 'Message', submit: 'Send inquiry',
-        },
-        cats: ['Square Series', 'Square Series · Black', 'International Series', 'Elegant Series', 'Buffet · Serving', 'Trays', 'Eco Series', 'Diplomat Oval Serving', 'Everyday Pattern', 'Tabletop Accessories', 'Kids\' Plates', 'Compartment Plates', 'Custom Logo Products'],
-        direct: 'Direct contact', dir: [
-          { i: 'mail',            l: 'info@akelmelamin.com',                          href: 'mailto:info@akelmelamin.com' },
+        lead: 'For wholesale, export, custom-logo or sample requests, WhatsApp is the fastest channel — we usually reply the same day.',
+        waPrimary: 'Message on WhatsApp',
+        emailSecondary: 'Send an email',
+        direct: 'Direct contact',
+        dir: [
           { i: 'phone',           l: '+90 507 425 34 46',                              href: 'tel:+905074253446' },
           { i: 'phone',           l: '+90 532 161 88 46',                              href: 'tel:+905321618846' },
-          { i: 'message-circle',  l: 'WhatsApp',                                        href: 'https://wa.me/905074253446' },
           { i: 'map-pin',         l: 'Showroom · İSTOÇ 10. Ada No:9/11, Bağcılar / Istanbul', href: 'https://maps.google.com/?q=İSTOÇ+10.Ada+No:9/11+Bağcılar+İstanbul' },
           { i: 'factory',         l: 'Production · İkitelli OSB / Istanbul',           href: null },
           { i: 'clock',           l: 'Mon – Fri · 08:00 – 17:30   ·   Sat · 08:00 – 14:30', href: null },
           { i: 'globe',           l: 'akelmelamin.com',                                 href: 'https://akelmelamin.com' },
           { i: 'instagram',       l: '@akelmelamin',                                    href: 'https://instagram.com/akelmelamin' },
         ],
-        sent: 'Your inquiry has been received.',
-        sentBody: 'Our team will reply within two business days.',
-        kvkk: 'I consent to the processing of my personal data for contact purposes.',
       };
-
-  const countries = ['Türkiye','Fas / Morocco','Tayland / Thailand','Çin / China','Cezayir / Algeria','Mısır / Egypt','BAE / UAE','Suudi Arabistan / Saudi Arabia','Tunus / Tunisia','Libya','Ürdün / Jordan','Lübnan / Lebanon','Irak / Iraq','Other'];
-
-  if (submitted) {
-    return (
-      <section className="section">
-        <div className="sent">
-          <i data-lucide="check-circle"></i>
-          <h2 className="h2">{t.sent}</h2>
-          <p className="lead">{t.sentBody}</p>
-          <button type="button" className="btn btn--ghost" onClick={() => setSubmitted(false)}>
-            {lang === 'tr' ? 'Yeni bir talep' : 'New inquiry'} →
-          </button>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section className="section" data-anim="section">
-      <div className="contact">
+      <div className="contact contact--direct-only">
         <div className="contact__intro" data-anim="fade-up">
           <span className="eyebrow">{t.eyebrow}</span>
           <h1 className="contact__title">{t.title}</h1>
           <p className="lead">{t.lead}</p>
 
-          <div className="contact__direct">
-            <span className="meta">{t.direct}</span>
-            <ul>
-              {t.dir.map((d, i) => (
-                <li key={i}>
-                  <i data-lucide={d.i}></i>
-                  {d.href
-                    ? <a href={d.href} target={d.href.startsWith('http') ? '_blank' : undefined} rel={d.href.startsWith('http') ? 'noopener' : undefined}>{d.l}</a>
-                    : d.l}
-                </li>
-              ))}
-            </ul>
+          <div className="contact__cta">
+            <a className="btn btn--primary btn--lg magnetic" href="https://wa.me/905074253446" target="_blank" rel="noopener">
+              {t.waPrimary} →
+            </a>
+            <a className="btn btn--ghost" href="mailto:info@akelmelamin.com">
+              {t.emailSecondary}
+            </a>
           </div>
         </div>
 
-        <form className="contact__form" data-anim="fade-up" data-anim-delay="100" onSubmit={(e) => { e.preventDefault(); setSubmitted(true); }}>
-          <div className="grid-2">
-            <Field label={t.f.name}><input className="input" required /></Field>
-            <Field label={t.f.company}><input className="input" required /></Field>
-            <Field label={t.f.email}><input className="input" type="email" required /></Field>
-            <Field label={t.f.phone}><input className="input" /></Field>
-            <Field label={t.f.country}>
-              <select className="select" required>
-                <option value="">—</option>
-                {countries.map(c => <option key={c}>{c}</option>)}
-              </select>
-            </Field>
-            <Field label={t.f.interest}>
-              <div className="checks">
-                {t.cats.map(c => (
-                  <label key={c} className="check">
-                    <input type="checkbox" /> <span>{c}</span>
-                  </label>
-                ))}
-              </div>
-            </Field>
-          </div>
-          <Field label={t.f.msg}>
-            <textarea className="input" rows="4"></textarea>
-          </Field>
-          <label className="check check--consent">
-            <input type="checkbox" required /> <span>{t.kvkk}</span>
-          </label>
-          <button type="submit" className="btn btn--primary btn--lg magnetic">
-            {t.f.submit} →
-          </button>
-        </form>
+        <div className="contact__direct" data-anim="fade-up" data-anim-delay="100">
+          <span className="meta">{t.direct}</span>
+          <ul>
+            {t.dir.map((d, i) => (
+              <li key={i}>
+                <i data-lucide={d.i}></i>
+                {d.href
+                  ? <a href={d.href} target={d.href.startsWith('http') ? '_blank' : undefined} rel={d.href.startsWith('http') ? 'noopener' : undefined}>{d.l}</a>
+                  : d.l}
+              </li>
+            ))}
+          </ul>
+        </div>
       </div>
     </section>
-  );
-}
-
-function Field({ label, children }) {
-  return (
-    <label className="field">
-      <span className="field__lbl">{label}</span>
-      {children}
-    </label>
   );
 }
 
