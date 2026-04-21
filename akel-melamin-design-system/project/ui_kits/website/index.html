@@ -975,10 +975,36 @@ body::before {
   letter-spacing: -0.025em;
 }
 .hero__body {
-  font-size: 19px; line-height: 1.55; color: var(--slate);
-  max-width: 56ch; margin: 0 0 32px; text-wrap: pretty;
+  font-size: 19px; line-height: 1.6; color: rgba(17,17,16,0.74);
+  max-width: 52ch; margin: 0 0 28px; text-wrap: pretty;
 }
 .hero__cta { display: flex; gap: 20px; align-items: center; margin-bottom: 0; flex-wrap: wrap; }
+.hero__proof {
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px; max-width: 900px;
+  margin-top: 28px;
+}
+.hero-proof {
+  padding: 14px 16px;
+  border: 1px solid rgba(17,17,16,0.08);
+  background: rgba(247,246,243,0.9);
+  border-radius: 4px;
+  box-shadow: var(--shadow-1);
+}
+.hero-proof__k {
+  display: block;
+  font-family: var(--font-mono); font-size: 10px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--stone);
+  margin-bottom: 8px;
+}
+.hero-proof__v {
+  display: block;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 16px; line-height: 1.25;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+}
 
 /* Contained banner photo — matches categories / section max-width */
 .hero__visual {
@@ -1216,6 +1242,24 @@ body::before {
 .catalog-band__note { color: var(--slate); }
 
 /* ---------- PRODUCT GRID ---------- */
+.products-toolbar {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) 220px auto;
+  gap: 14px 18px;
+  align-items: end;
+  margin-bottom: 24px;
+}
+.products-toolbar__field { display: flex; flex-direction: column; gap: 8px; }
+.products-toolbar__meta {
+  display: flex; justify-content: flex-end; align-items: center;
+  min-height: 46px;
+}
+.products-toolbar__meta .meta { color: var(--graphite); }
+.products-toolbar__input,
+.products-toolbar__select {
+  background: rgba(247,246,243,0.86);
+  border-color: rgba(17,17,16,0.12);
+}
 .filter-row { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: var(--space-6); }
 .chip {
   display: inline-flex; align-items: center; gap: 6px;
@@ -1236,6 +1280,10 @@ body::before {
   transition: transform var(--dur-med) var(--ease-out);
 }
 .product-card:hover { transform: translateY(-2px); }
+.product-card:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 6px;
+}
 .product-card:hover .product-card__ph { box-shadow: var(--shadow-3); }
 .product-card__ph {
   aspect-ratio: 4/3; background: #ffffff;
@@ -1243,11 +1291,21 @@ body::before {
   box-shadow: var(--shadow-1); transition: box-shadow var(--dur-med);
   position: relative; overflow: hidden;
 }
-.product-card__body { padding: 14px 4px 0; display: flex; flex-direction: column; gap: 4px; }
+.product-card__body { padding: 14px 4px 0; display: flex; flex-direction: column; gap: 6px; }
 .product-card__meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .product-card__eyebrow { font-family: var(--font-display); font-weight: 600; font-size: 10px; letter-spacing: 0.14em; color: var(--red); }
-.product-card__name { font-family: var(--font-display); font-weight: 700; font-size: 16px; letter-spacing: -0.01em; color: var(--ink); line-height: 1.25; }
-.product-card__spec { font-family: var(--font-mono); font-size: 11px; color: var(--slate); font-variant-numeric: tabular-nums; letter-spacing: 0.02em; margin-top: 4px; }
+.product-card__name {
+  font-family: var(--font-display); font-weight: 700; font-size: 16px;
+  letter-spacing: -0.01em; color: var(--ink); line-height: 1.25;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.product-card__spec {
+  font-family: var(--font-mono); font-size: 11px;
+  color: rgba(17,17,16,0.56);
+  font-variant-numeric: tabular-nums; letter-spacing: 0.02em;
+  margin-top: 2px;
+}
 
 .product-card__photo {
   width: 100%; height: 100%; object-fit: cover;
@@ -1330,7 +1388,7 @@ body::before {
 /* ---------- PRODUCT DETAIL ---------- */
 .pd { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; margin-top: 24px; }
 .pd__hero {
-  aspect-ratio: 4 / 3; background: var(--paper);
+  aspect-ratio: 1 / 1; min-height: 520px; background: var(--paper);
   border-radius: 4px; display: grid; place-items: center;
   position: relative; overflow: hidden;
 }
@@ -1369,10 +1427,64 @@ body::before {
   width: 100%; height: 100%; object-fit: contain;
   padding: 6%;
 }
+.pd__summary {
+  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px; margin-top: 12px;
+  background: var(--border); border: 1px solid var(--border);
+}
+.pd__summary-item {
+  padding: 16px 14px;
+  background: rgba(247,246,243,0.94);
+  display: flex; flex-direction: column; gap: 8px;
+}
+.pd__summary-item .meta { color: var(--stone); }
+.pd__summary-item strong {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 15px; line-height: 1.3;
+  color: var(--ink);
+  letter-spacing: -0.012em;
+}
 .swatch--btn { padding: 0; cursor: pointer; }
 .swatch--btn.is-on { outline: 1.5px solid var(--ink); outline-offset: 3px; }
 .pd__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.025em; color: var(--ink); line-height: 1.05; margin: 10px 0 14px; text-wrap: balance; }
-.pd__spec { color: var(--slate); margin: 0 0 28px; font-size: 16px; }
+.pd__spec { color: rgba(17,17,16,0.68); margin: 0 0 24px; font-size: 16px; line-height: 1.65; }
+.pd__info { align-self: start; position: sticky; top: 104px; }
+.pd__cta-card {
+  padding: 22px;
+  margin-bottom: 24px;
+  border: 1px solid rgba(17,17,16,0.1);
+  background: linear-gradient(180deg, rgba(247,246,243,0.98) 0%, rgba(242,239,233,0.98) 100%);
+  box-shadow: var(--shadow-2);
+  border-radius: 4px;
+}
+.pd__cta-title {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  letter-spacing: -0.02em; color: var(--ink);
+  line-height: 1.12; margin: 8px 0 10px;
+}
+.pd__cta-body {
+  font-size: 14px; line-height: 1.65;
+  color: rgba(17,17,16,0.68);
+  margin: 0 0 16px;
+}
+.pd__cta-actions {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  margin-bottom: 16px;
+}
+.pd__cta-actions .btn { width: 100%; justify-content: center; }
+.pd__cta-direct {
+  display: flex; flex-direction: column; gap: 10px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(17,17,16,0.08);
+}
+.pd__cta-link {
+  display: inline-flex; align-items: center; gap: 10px;
+  color: var(--graphite); text-decoration: none;
+  font-size: 14px; font-weight: 600;
+}
+.pd__cta-link:hover { color: var(--red); }
+.pd__cta-link svg { width: 16px; height: 16px; stroke-width: 1.75; }
 .pd__colors { display: flex; gap: 16px; align-items: center; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 28px; }
 .pd__swatches { display: flex; gap: 8px; }
 .swatch { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border); display: inline-block; cursor: pointer; }
@@ -1380,11 +1492,11 @@ body::before {
 .spec-block > .meta { display: block; margin-bottom: 10px; }
 .spec-table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
 .spec-table td { padding: 10px 0; border-bottom: 1px solid var(--border); }
-.spec-table td.k { color: var(--slate); width: 52%; }
-.spec-table td.v { color: var(--graphite); font-family: var(--font-mono); text-align: right; }
+.spec-table td.k { color: rgba(17,17,16,0.72); width: 52%; }
+.spec-table td.v { color: var(--ink); font-family: var(--font-mono); text-align: right; }
 .pd__mat > .meta { display: block; margin-bottom: 10px; }
 .pd__matlist { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
-.pd__matlist li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--graphite); }
+.pd__matlist li { display: flex; align-items: center; gap: 10px; font-size: 14px; color: rgba(17,17,16,0.74); }
 .pd__matlist svg { width: 16px; height: 16px; color: var(--red); stroke-width: 2; }
 
 /* ---------- ABOUT ---------- */
@@ -1553,7 +1665,7 @@ body::before {
   display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px;
 }
 .site-footer__brand img { width: 160px; filter: brightness(0) invert(1); margin-bottom: 20px; }
-.site-footer__tag { color: rgba(247,246,243,0.55); max-width: 32ch; font-size: 14px; line-height: 1.5; margin: 0; }
+.site-footer__tag { color: rgba(247,246,243,0.74); max-width: 32ch; font-size: 14px; line-height: 1.6; margin: 0; }
 .site-footer__social {
   margin-top: 18px;
   display: flex; flex-direction: column; gap: 10px;
@@ -1568,7 +1680,7 @@ body::before {
 }
 .site-footer__social a:hover { color: var(--red); }
 .site-footer__social svg { width: 18px; height: 18px; stroke-width: 1.75; }
-.site-footer__col .meta { color: rgba(247,246,243,0.55); }
+.site-footer__col .meta { color: rgba(247,246,243,0.7); }
 .site-footer__col ul { list-style: none; margin: 16px 0 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
 .site-footer__col a { color: var(--paper); text-decoration: none; font-size: 14px; }
 .site-footer__col a:hover { color: var(--red); }
@@ -1607,6 +1719,7 @@ body::before {
   .hero__body { font-size: 16.5px; max-width: none; }
   .hero__cta { gap: 12px; }
   .hero__cta .btn { width: auto; }
+  .hero__proof { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .hero__visual { height: clamp(260px, 44vh, 440px); padding: 0 var(--page-gutter); margin-bottom: var(--space-6); }
   .hero__visual::before { inset: 0 var(--page-gutter); }
   .hero__photo-stack { inset: 0 var(--page-gutter); }
@@ -1643,6 +1756,8 @@ body::before {
   .catalog-band__right .btn { width: 100%; justify-content: center; }
 
   /* Product grid — 2 col */
+  .products-toolbar { grid-template-columns: 1fr 220px; }
+  .products-toolbar__meta { grid-column: 1 / -1; justify-content: flex-start; min-height: auto; }
   .product-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 16px; }
   .product-card__name { font-size: 15px; }
   .filter-row { gap: 6px; overflow-x: auto; flex-wrap: nowrap; padding-bottom: 6px; margin: 0 calc(-1 * var(--page-gutter)) 24px; padding-left: var(--page-gutter); padding-right: var(--page-gutter); scrollbar-width: none; }
@@ -1651,7 +1766,11 @@ body::before {
 
   /* Product detail */
   .pd { grid-template-columns: 1fr; gap: 32px; }
+  .pd__info { position: static; }
   .pd__title { font-size: clamp(1.5rem, 6vw, 2rem); }
+  .pd__hero { min-height: 0; }
+  .pd__summary { grid-template-columns: 1fr 1fr 1fr; }
+  .pd__cta-actions { grid-template-columns: 1fr; }
 
   /* About */
   .about__facts { grid-template-columns: repeat(2, 1fr); }
@@ -1697,6 +1816,9 @@ body::before {
 @media (max-width: 720px) {
   .hero__title { font-size: clamp(2.5rem, 12vw, 4.5rem); }
   .hero__body { font-size: 15.5px; }
+  .hero__proof { grid-template-columns: 1fr 1fr; gap: 8px; }
+  .hero-proof { padding: 12px; }
+  .hero-proof__v { font-size: 14px; }
   .hero__visual { height: clamp(220px, 38vh, 360px); }
   .stats-strip__big { font-size: 1.75rem; }
   .stats-strip__small { font-size: 10px; }
@@ -1715,6 +1837,7 @@ body::before {
   .hero__body { margin-bottom: 24px; }
   .hero__cta { flex-direction: column; align-items: stretch; width: 100%; }
   .hero__cta .btn { width: 100%; justify-content: center; }
+  .hero__proof { grid-template-columns: 1fr 1fr; gap: 8px; }
   .hero__visual { height: 240px; }
   .hero__visual-crop { display: none; }
 
@@ -1724,9 +1847,17 @@ body::before {
 
   .cat-grid { grid-template-columns: 1fr; }
   .cat-grid .cat-card { grid-column: auto !important; }
-  .product-grid { grid-template-columns: 1fr; gap: 24px; }
+  .products-toolbar { grid-template-columns: 1fr; gap: 12px; }
+  .products-toolbar__meta { justify-content: flex-start; }
+  .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 12px; }
+  .product-card__body { padding: 10px 2px 0; gap: 4px; }
+  .product-card__eyebrow { font-size: 9px; letter-spacing: 0.1em; }
+  .product-card__name { font-size: 14px; line-height: 1.22; }
+  .product-card__spec { font-size: 10px; line-height: 1.45; }
+  .product-card__code { top: 10px; right: 10px; font-size: 9.5px; padding: 3px 7px; }
   .about__market-grid { grid-template-columns: 1fr; }
   .about__facts { grid-template-columns: 1fr 1fr; }
+  .pd__summary { grid-template-columns: 1fr; }
 
   .site-footer__top { grid-template-columns: 1fr; gap: 28px; }
   .site-footer__brand { grid-column: span 1; }
@@ -2260,6 +2391,19 @@ function Hero({ lang, navigate }) {
       caption: 'Gözde · White set · professional service',
     },
   }[lang];
+  const proof = lang === 'tr'
+    ? [
+        { k: 'Üretim mirası', v: '35 yıl deneyim' },
+        { k: 'Ürün aralığı', v: '13 ürün serisi' },
+        { k: 'Sertifikalar', v: 'ISO 9001 · ISO 22000' },
+        { k: 'B2B odak', v: 'Otel · restoran · ihracat' },
+      ]
+    : [
+        { k: 'Production heritage', v: '35 years of experience' },
+        { k: 'Product range', v: '13 product series' },
+        { k: 'Certifications', v: 'ISO 9001 · ISO 22000' },
+        { k: 'B2B focus', v: 'Hotels · restaurants · export' },
+      ];
 
   React.useEffect(() => {
     const el = document.querySelector('.hero[data-anim="hero"]');
@@ -2314,6 +2458,14 @@ function Hero({ lang, navigate }) {
           <button type="button" className="btn btn--link" onClick={() => navigate('about')}>
             {copy.secondary} →
           </button>
+        </div>
+        <div className="hero__proof" data-anim="fade-up" data-anim-delay="120">
+          {proof.map((item) => (
+            <div key={item.k} className="hero-proof">
+              <span className="hero-proof__k">{item.k}</span>
+              <span className="hero-proof__v">{item.v}</span>
+            </div>
+          ))}
         </div>
       </div>
       <div className="hero__visual" role="region" aria-label={lang === 'tr' ? 'Ürün galerisi' : 'Product gallery'}>
@@ -2622,12 +2774,15 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
   const [active, setActive] = React.useState(initialCat || 'all');
   const [data, setData] = React.useState(null);
   const [err, setErr] = React.useState(null);
+  const [query, setQuery] = React.useState('');
+  const [sort, setSort] = React.useState('catalog');
   const [limit, setLimit] = React.useState(PAGE);
-  React.useEffect(() => { setLimit(PAGE); }, [active]);
+  const deferredQuery = React.useDeferredValue(query);
+  React.useEffect(() => { setLimit(PAGE); }, [active, deferredQuery, sort]);
   // Keep chip state in sync with URL changes driven from outside (e.g. the
   // user clicks a category card on the homepage while we're already on the
   // products page — rare but covers popstate edge cases).
-  React.useEffect(() => { if (initialCat && initialCat !== active) setActive(initialCat); }, [initialCat]);
+  React.useEffect(() => { setActive(initialCat || 'all'); }, [initialCat]);
   const setActiveAndURL = (k) => {
     setActive(k);
     if (onCatChange) onCatChange(k === 'all' ? null : k);
@@ -2644,8 +2799,48 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
   }, []);
 
   const t = lang === 'tr'
-    ? { title: 'Tüm ürünler', count: (n) => `${n} ürün`, empty: 'Henüz ürün eklenmedi.', loading: 'Yükleniyor…', all: 'Tümü', errorLabel: 'Ürünler yüklenemedi:', loadMore: 'Daha fazla yükle' }
-    : { title: 'All products', count: (n) => `${n} products`, empty: 'No products yet.', loading: 'Loading…', all: 'All', errorLabel: 'Could not load products:', loadMore: 'Load more' };
+    ? {
+        title: 'Tüm ürünler',
+        count: (n) => `${n} ürün`,
+        empty: 'Henüz ürün eklenmedi.',
+        emptySearch: 'Aramanla eşleşen ürün bulunamadı.',
+        loading: 'Yükleniyor…',
+        all: 'Tümü',
+        errorLabel: 'Ürünler yüklenemedi:',
+        loadMore: 'Daha fazla yükle',
+        searchLabel: 'Ürün veya SKU ara',
+        searchPlaceholder: 'Örn. 529, kare tabak, diplomat',
+        sortLabel: 'Sıralama',
+        meta: (q, n) => q ? `"${q}" için ${n} ürün` : `${n} ürün gösteriliyor`,
+        view: 'İncele',
+        sortOptions: [
+          { k: 'catalog', l: 'Katalog sırası' },
+          { k: 'sku', l: 'SKU' },
+          { k: 'size-asc', l: 'Boyut: küçükten büyüğe' },
+          { k: 'size-desc', l: 'Boyut: büyükten küçüğe' },
+        ],
+      }
+    : {
+        title: 'All products',
+        count: (n) => `${n} products`,
+        empty: 'No products yet.',
+        emptySearch: 'No products match your search.',
+        loading: 'Loading…',
+        all: 'All',
+        errorLabel: 'Could not load products:',
+        loadMore: 'Load more',
+        searchLabel: 'Search by product or SKU',
+        searchPlaceholder: 'For example 529, square tray, diplomat',
+        sortLabel: 'Sort by',
+        meta: (q, n) => q ? `${n} products for "${q}"` : `${n} products shown`,
+        view: 'View',
+        sortOptions: [
+          { k: 'catalog', l: 'Catalog order' },
+          { k: 'sku', l: 'SKU' },
+          { k: 'size-asc', l: 'Size: small to large' },
+          { k: 'size-desc', l: 'Size: large to small' },
+        ],
+      };
 
   if (err) {
     return (
@@ -2700,6 +2895,19 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
   ];
 
   const shown = active === 'all' ? visible : visible.filter(p => p.kategori === active);
+  const normalizedQuery = deferredQuery.trim().toLocaleLowerCase('tr-TR');
+  const searched = shown.filter((p) => {
+    if (!normalizedQuery) return true;
+    const haystack = [
+      p.sku,
+      p.ad_tr,
+      p.ad_en,
+      p.aciklama_tr,
+      p.aciklama_en,
+      p.kategori,
+    ].filter(Boolean).join(' ').toLocaleLowerCase('tr-TR');
+    return haystack.includes(normalizedQuery);
+  });
 
   // Group color/finish variants (402 beyaz + 402S siyah + 402K kırmızı) into a
   // single card. Keyed by category + SKU stripped of trailing variant letters
@@ -2711,14 +2919,22 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
     return `${p.kategori}::${stripped}`;
   }
   const groupMap = new Map();
-  for (const p of shown) {
+  for (const p of searched) {
     const k = baseKey(p);
     if (!groupMap.has(k)) groupMap.set(k, []);
     groupMap.get(k).push(p);
   }
+  function sortMetric(p) {
+    return sizeOf(p) || Number.MAX_SAFE_INTEGER;
+  }
   const groups = [...groupMap.values()].map(g => {
     const sorted = g.slice().sort((a, b) => (VARIANT_RANK[a.renk] ?? 9) - (VARIANT_RANK[b.renk] ?? 9));
     return { primary: sorted[0], variants: sorted };
+  }).sort((a, b) => {
+    if (sort === 'sku') return String(a.primary.sku || '').localeCompare(String(b.primary.sku || ''), 'tr');
+    if (sort === 'size-asc') return sortMetric(a.primary) - sortMetric(b.primary) || String(a.primary.sku || '').localeCompare(String(b.primary.sku || ''), 'tr');
+    if (sort === 'size-desc') return sortMetric(b.primary) - sortMetric(a.primary) || String(a.primary.sku || '').localeCompare(String(b.primary.sku || ''), 'tr');
+    return 0;
   });
 
   // Build a per-product spec line out of sized fields
@@ -2760,6 +2976,34 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
         <span className="meta">{t.count(groups.length)}</span>
       </div>
 
+      <div className="products-toolbar" data-anim="fade-up">
+        <label className="products-toolbar__field">
+          <span className="field__lbl">{t.searchLabel}</span>
+          <input
+            className="input products-toolbar__input"
+            type="search"
+            placeholder={t.searchPlaceholder}
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </label>
+        <label className="products-toolbar__field">
+          <span className="field__lbl">{t.sortLabel}</span>
+          <select
+            className="select products-toolbar__select"
+            value={sort}
+            onChange={(e) => setSort(e.target.value)}
+          >
+            {t.sortOptions.map((opt) => (
+              <option key={opt.k} value={opt.k}>{opt.l}</option>
+            ))}
+          </select>
+        </label>
+        <div className="products-toolbar__meta">
+          <span className="meta">{t.meta(deferredQuery.trim(), groups.length)}</span>
+        </div>
+      </div>
+
       <div className="filter-row" data-anim="fade-up">
         {filters.map(f => (
           <button type="button"
@@ -2771,7 +3015,7 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
       </div>
 
       {groups.length === 0 ? (
-        <p className="lead" style={{padding: '48px 0'}}>{t.empty}</p>
+        <p className="lead" style={{padding: '48px 0'}}>{normalizedQuery ? t.emptySearch : t.empty}</p>
       ) : (
         <div className="product-grid" data-anim-stagger>
           {groups.slice(0, limit).map(({ primary: p, variants }, i) => {
@@ -2786,6 +3030,12 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
                 className="product-card tilt"
                 data-anim="stagger-item"
                 onClick={() => openProduct(p)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    openProduct(p);
+                  }
+                }}
                 role="button"
                 tabIndex="0"
               >
@@ -2813,7 +3063,7 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
                     <span className="product-card__placeholder-sku">{p.sku}</span>
                     <span className="product-card__placeholder-note">{lang === 'tr' ? 'Görsel yakında' : 'Photo soon'}</span>
                   </div>
-                  {spec && <span className="product-card__spec-reveal">{spec} · {lang === 'tr' ? 'İncele' : 'View'} →</span>}
+                  {spec && <span className="product-card__spec-reveal">{spec} · {t.view} →</span>}
                   {p.etiket && <span className="product-card__badge">{p.etiket}</span>}
                   {p.sku && <span className="product-card__code">#{p.sku}</span>}
                 </div>
@@ -2857,7 +3107,7 @@ window.ProductGrid = ProductGrid;
 
 /* ====== ProductDetail.jsx ====== */
 // ProductDetail.jsx — B2B-oriented single product view, real photos when available
-function ProductDetail({ lang, product, onBack }) {
+function ProductDetail({ lang, product, onBack, navigate }) {
   const t = lang === 'tr'
     ? {
         back: '← Ürünlere dön',
@@ -2868,6 +3118,16 @@ function ProductDetail({ lang, product, onBack }) {
         images: 'Stüdyo referans görseli',
         color: 'Renk', useArea: 'Kullanım alanı', logo: 'Özel logolu',
         yes: 'Evet', no: 'Hayır',
+        ctaEyebrow: 'Teklif & numune',
+        ctaTitle: 'Bu ürünü teklif dosyana hızlıca ekleyelim.',
+        ctaBody: (sku) => `${sku ? sku + ' SKU' : 'Bu ürün'} için teklif, numune ve koli bilgilerini paylaşalım. Gerekirse yakın ölçüleri ve özel logolu uygunluğu da birlikte netleştiririz.`,
+        ctaPrimary: 'Teklif / numune iste',
+        ctaSecondary: 'Katalog PDF',
+        callNow: 'Telefon ile ulaş',
+        showroom: 'Showroom',
+        carton: 'Kolileme',
+        pieces: 'adet / koli',
+        onRequest: 'Talep üzerine',
       }
     : {
         back: '← Back to products',
@@ -2878,6 +3138,16 @@ function ProductDetail({ lang, product, onBack }) {
         images: 'Studio reference image',
         color: 'Color', useArea: 'Use case', logo: 'Custom logo',
         yes: 'Yes', no: 'No',
+        ctaEyebrow: 'Quote & samples',
+        ctaTitle: 'Add this product to your quote flow.',
+        ctaBody: (sku) => `We can share pricing, sample details and carton information for ${sku ? 'SKU ' + sku : 'this product'}. We can also align on nearby sizes and custom-logo suitability if needed.`,
+        ctaPrimary: 'Request quote / sample',
+        ctaSecondary: 'Catalog PDF',
+        callNow: 'Call now',
+        showroom: 'Showroom',
+        carton: 'Carton pack',
+        pieces: 'pcs / carton',
+        onRequest: 'On request',
       };
 
   // Build spec rows from structured fields
@@ -2913,6 +3183,20 @@ function ProductDetail({ lang, product, onBack }) {
   if (product.kullanim_alani) pack.push([t.useArea, product.kullanim_alani]);
 
   const photoSrc = product.foto_dosya_adi ? `./img/${product.foto_dosya_adi}.webp` : null;
+  const productName = lang === 'tr' ? product.ad_tr : (product.ad_en || product.ad_tr);
+  const productDesc = (lang === 'tr' ? product.aciklama_tr : product.aciklama_en) || '';
+  const compactUse = (product.kullanim_alani || '')
+    .split(',')
+    .map(s => s.trim())
+    .filter(Boolean)
+    .slice(0, 3)
+    .join(' · ');
+  const summary = [
+    { k: 'SKU', v: product.sku || '—' },
+    { k: t.carton, v: product.koli_adet ? `${product.koli_adet} ${t.pieces}` : t.onRequest },
+    { k: t.useArea, v: compactUse || (lang === 'tr' ? 'Profesyonel servis' : 'Professional service') },
+  ];
+  const mailHref = `mailto:info@akelmelamin.com?subject=${encodeURIComponent(`Akel Melamin · ${productName}${product.sku ? ` (${product.sku})` : ''}`)}`;
 
   return (
     <section className="section" data-anim="section">
@@ -2939,14 +3223,41 @@ function ProductDetail({ lang, product, onBack }) {
             </div>
             <span className="pd__caption meta">{t.images}</span>
           </div>
+          <div className="pd__summary">
+            {summary.map((item) => (
+              <div key={item.k} className="pd__summary-item">
+                <span className="meta">{item.k}</span>
+                <strong>{item.v}</strong>
+              </div>
+            ))}
+          </div>
         </div>
 
         <div className="pd__info" data-anim="fade-up" data-anim-delay="80">
           <span className="eyebrow">{(product.kategori || '').toUpperCase()}</span>
-          <h1 className="pd__title">{lang === 'tr' ? product.ad_tr : (product.ad_en || product.ad_tr)}</h1>
-          {(lang === 'tr' ? product.aciklama_tr : product.aciklama_en) && (
-            <p className="pd__spec lead">{lang === 'tr' ? product.aciklama_tr : product.aciklama_en}</p>
+          <h1 className="pd__title">{productName}</h1>
+          {productDesc && (
+            <p className="pd__spec lead">{productDesc}</p>
           )}
+
+          <div className="pd__cta-card">
+            <span className="meta">{t.ctaEyebrow}</span>
+            <h2 className="pd__cta-title">{t.ctaTitle}</h2>
+            <p className="pd__cta-body">{t.ctaBody(product.sku)}</p>
+            <div className="pd__cta-actions">
+              <button type="button" className="btn btn--primary magnetic" onClick={() => navigate('contact')}>
+                {t.ctaPrimary}
+              </button>
+              <button type="button" className="btn btn--ghost" onClick={() => navigate('catalog')}>
+                {t.ctaSecondary}
+              </button>
+            </div>
+            <div className="pd__cta-direct">
+              <a className="pd__cta-link" href="tel:+905074253446"><i data-lucide="phone"></i> {t.callNow}: +90 507 425 34 46</a>
+              <a className="pd__cta-link" href={mailHref}><i data-lucide="mail"></i> info@akelmelamin.com</a>
+              <a className="pd__cta-link" href="https://maps.google.com/?q=İSTOÇ+10.Ada+No:9/11+Bağcılar+İstanbul" target="_blank" rel="noopener"><i data-lucide="map-pin"></i> {t.showroom}: İSTOÇ 10. Ada No:9/11</a>
+            </div>
+          </div>
 
           <SpecBlock title={t.specs} rows={rows} />
           <SpecBlock title={t.pack} rows={pack} />
@@ -3644,7 +3955,7 @@ function App() {
         <CatalogBand lang={lang} navigate={navigate} />
       </>}
       {path === 'products' && <ProductGrid lang={lang} navigate={navigate} openProduct={openProduct} initialCat={catHint} onCatChange={replaceCat} />}
-      {path === 'product' && product && <ProductDetail lang={lang} product={product} onBack={() => navigate('products')} />}
+      {path === 'product' && product && <ProductDetail lang={lang} product={product} onBack={() => navigate('products')} navigate={navigate} />}
       {path === 'product' && !product && <section className="section"><p className="lead">{lang === 'tr' ? 'Yükleniyor…' : 'Loading…'}</p></section>}
       {path === 'about' && <About lang={lang} navigate={navigate} />}
       {path === 'contact' && <Contact lang={lang} />}
