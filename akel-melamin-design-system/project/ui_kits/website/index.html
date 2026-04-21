@@ -2867,25 +2867,23 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
   // Only active products
   const visible = data.products.filter(p => (p.aktif || 'evet') !== 'hayir');
 
-  // For families that share a photo (Yuvarlak Tabak 17/19/21/.../28 cm all
-  // come off the same studio shot), scale each card's photo so a 28 cm plate
-  // fills the frame and a 17 cm plate renders noticeably smaller. Size is
-  // the largest dimension of the product — cap_mm for round, max(en,boy)
-  // otherwise. Scaled against the family max in the same (kategori, ad_tr).
-  const sizeOf = (p) => p.cap_mm || Math.max(p.en_mm || 0, p.boy_mm || 0);
-  const familyMax = {};
+  // Scale each card's photo relative to the biggest item IN ITS CATEGORY so
+  // a 5 cm shaker reads smaller than the 11 cm saucer next to it, not the
+  // same size. Size is the largest physical dimension: cap_mm for round,
+  // max(en,boy,yukseklik) otherwise (shakers are taller than wide).
+  const sizeOf = (p) => p.cap_mm || Math.max(p.en_mm || 0, p.boy_mm || 0, p.yukseklik_mm || 0);
+  const categoryMax = {};
   for (const p of visible) {
-    const key = (p.kategori || '') + '|' + (p.ad_tr || '');
+    const kat = p.kategori || '';
     const sz = sizeOf(p);
-    if (sz) familyMax[key] = Math.max(familyMax[key] || 0, sz);
+    if (sz) categoryMax[kat] = Math.max(categoryMax[kat] || 0, sz);
   }
   const sizeScale = (p) => {
-    const key = (p.kategori || '') + '|' + (p.ad_tr || '');
-    const max = familyMax[key];
+    const max = categoryMax[p.kategori || ''];
     const sz = sizeOf(p);
     if (!max || !sz || max === sz) return 1;
-    // Floor at 0.58 so the smallest plate still has presence.
-    return Math.max(0.58, sz / max);
+    // Floor at 0.42 so the smallest item keeps presence without tiny dot.
+    return Math.max(0.42, sz / max);
   };
 
   // Filter chips: derive from categories actually present in data
