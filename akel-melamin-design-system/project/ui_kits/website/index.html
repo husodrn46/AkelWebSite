@@ -1372,7 +1372,6 @@ body::before {
 .pd__colors { display: flex; gap: 16px; align-items: center; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 28px; }
 .pd__swatches { display: flex; gap: 8px; }
 .swatch { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border); display: inline-block; cursor: pointer; }
-.pd__cta { margin-bottom: 40px; }
 .spec-block { margin-bottom: 28px; }
 .spec-block > .meta { display: block; margin-bottom: 10px; }
 .spec-table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
@@ -2765,7 +2764,6 @@ function ProductDetail({ lang, product, onBack }) {
   const t = lang === 'tr'
     ? {
         back: '← Ürünlere dön',
-        request: 'Teklif iste',
         specs: 'Teknik özellikler',
         pack: 'Ambalaj ve lojistik',
         materials: 'Malzeme ve sertifikalar',
@@ -2776,7 +2774,6 @@ function ProductDetail({ lang, product, onBack }) {
       }
     : {
         back: '← Back to products',
-        request: 'Request quote',
         specs: 'Technical specs',
         pack: 'Packaging & logistics',
         materials: 'Material & certifications',
@@ -2851,10 +2848,6 @@ function ProductDetail({ lang, product, onBack }) {
           {(lang === 'tr' ? product.aciklama_tr : product.aciklama_en) && (
             <p className="pd__spec lead">{lang === 'tr' ? product.aciklama_tr : product.aciklama_en}</p>
           )}
-
-          <div className="pd__cta">
-            <button type="button" className="btn btn--primary btn--lg magnetic" onClick={onBack}>{t.request} →</button>
-          </div>
 
           <SpecBlock title={t.specs} rows={rows} />
           <SpecBlock title={t.pack} rows={pack} />
