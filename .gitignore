@@ -53,3 +53,8 @@ screenshot*.png
 # Large originals that have been optimized into img/
 AKEL*.jpg
 AKEL*.JPG
+
+# User-local catalog PDFs (latest version lives in catalog/ dir)
+Ürün Kataloğu*
+*.pdf
+!akel-melamin-design-system/project/ui_kits/website/catalog/*.pdf
