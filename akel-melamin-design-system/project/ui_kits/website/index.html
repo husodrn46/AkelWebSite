@@ -2143,6 +2143,7 @@ html,body{margin:0;background:var(--paper,#F7F6F3);}#root{min-height:100vh;}
   // Gentle parallax for the hero photo stack — shifts slightly upward as the
   // viewport scrolls past. Subtle (max ±50 px), desktop only, honours rm.
   function setupHeroParallax(root) {
+    return;
     if (PREFERS_REDUCED || IS_NARROW) return;
     const el = root.querySelector('.hero__photo-stack');
     if (!el) return;

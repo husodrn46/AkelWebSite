@@ -13,6 +13,7 @@
 
 import fs from "node:fs/promises";
 import path from "node:path";
+import crypto from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { build } from "esbuild";
 
@@ -78,14 +79,14 @@ function extractInlineJSX(html) {
   return { code: last[1], matchStart: last.index, matchEnd: last.index + last[0].length };
 }
 
-function rewriteHtml(html, jsxSpan) {
+function rewriteHtml(html, jsxSpan, appFile) {
   // Replace the inline Babel script with a production script tag.
   // Also swap React dev builds → production UMD builds.
   // Also drop the Babel standalone script (no longer needed).
   const before = html.slice(0, jsxSpan.matchStart);
   const after = html.slice(jsxSpan.matchEnd);
 
-  let out = before + `<script src="./app.js" defer></script>` + after;
+  let out = before + `<script src="./${appFile}" defer></script>` + after;
 
   // Swap React dev UMDs → prod UMDs
   out = out
@@ -157,10 +158,11 @@ async function main() {
   console.log(`    · ${span.code.length.toLocaleString()} chars`);
 
   console.log("▸ bundle   esbuild → app.js  (jsx → js, minified)");
+  const tmpOut = path.join(DIST, "app.js");
   await build({
     entryPoints: [jsxTmp],
     bundle: false,           // single file, no imports to resolve
-    outfile: path.join(DIST, "app.js"),
+    outfile: tmpOut,
     loader: { ".jsx": "jsx" },
     jsx: "transform",
     jsxFactory: "React.createElement",
@@ -172,8 +174,14 @@ async function main() {
   });
   await fs.rm(jsxTmp);
 
+  // Content-hash the bundle so cache-busting is automatic on every deploy.
+  const bundleBuf = await fs.readFile(tmpOut);
+  const hash = crypto.createHash("sha256").update(bundleBuf).digest("hex").slice(0, 10);
+  const appFile = `app.${hash}.js`;
+  await fs.rename(tmpOut, path.join(DIST, appFile));
+
   console.log("▸ write    dist/index.html");
-  const newHtml = rewriteHtml(html, span);
+  const newHtml = rewriteHtml(html, span, appFile);
   await fs.writeFile(path.join(DIST, "index.html"), newHtml, "utf-8");
 
   console.log("▸ write    _headers, _redirects");
@@ -181,8 +189,8 @@ async function main() {
   await fs.writeFile(path.join(DIST, "_redirects"), REDIRECTS);
 
   console.log("▸ done     →  dist/");
-  const stat = await fs.stat(path.join(DIST, "app.js"));
-  console.log(`   app.js    ${(stat.size/1024).toFixed(1)} KB (minified)`);
+  const stat = await fs.stat(path.join(DIST, appFile));
+  console.log(`   ${appFile}    ${(stat.size/1024).toFixed(1)} KB (minified)`);
   const h = await fs.stat(path.join(DIST, "index.html"));
   console.log(`   index.html ${(h.size/1024).toFixed(1)} KB`);
 }
