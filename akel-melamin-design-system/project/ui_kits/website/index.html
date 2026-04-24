@@ -37,6 +37,69 @@
 <meta name="twitter:title" content="Akel Melamin — Her Sofrada Kaliteye Yer Açın">
 <meta name="twitter:description" content="Türk melamin sofra eşyası üreticisi. 13 ürün serisi · ISO 9001 · ISO 22000.">
 <meta name="twitter:image" content="https://akelmelamin.com/img/akel-hero-1.jpg">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": "https://akelmelamin.com/#organization",
+      "name": "Akel Melamin",
+      "legalName": "Akel Melamin Plastik San.Tic.Ltd.Şti.",
+      "url": "https://akelmelamin.com/",
+      "logo": "https://akelmelamin.com/img/akel-logo-cropped.png",
+      "foundingDate": "2014",
+      "sameAs": ["https://instagram.com/akelmelamin"],
+      "contactPoint": [
+        {
+          "@type": "ContactPoint",
+          "telephone": "+90-507-425-34-46",
+          "contactType": "sales",
+          "areaServed": "TR",
+          "availableLanguage": ["tr", "en"]
+        }
+      ]
+    },
+    {
+      "@type": "LocalBusiness",
+      "@id": "https://akelmelamin.com/#showroom",
+      "name": "Akel Melamin Showroom",
+      "url": "https://akelmelamin.com/",
+      "image": "https://akelmelamin.com/img/akel-hero-1.jpg",
+      "telephone": "+90-507-425-34-46",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "İSTOÇ 10. Ada No:9/11",
+        "addressLocality": "Bağcılar",
+        "addressRegion": "İstanbul",
+        "addressCountry": "TR"
+      },
+      "openingHoursSpecification": [
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+          "opens": "08:00",
+          "closes": "17:30"
+        },
+        {
+          "@type": "OpeningHoursSpecification",
+          "dayOfWeek": "Saturday",
+          "opens": "08:00",
+          "closes": "14:30"
+        }
+      ]
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://akelmelamin.com/#website",
+      "url": "https://akelmelamin.com/",
+      "name": "Akel Melamin",
+      "publisher": { "@id": "https://akelmelamin.com/#organization" },
+      "inLanguage": ["tr", "en"]
+    }
+  ]
+}
+</script>
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <style>
 /* ============================================================
@@ -487,15 +550,21 @@ body::before {
   opacity: 1; transform: scale(1);
 }
 .hero__photo-nav {
-  position: absolute; bottom: 16px; right: 16px; display: flex; gap: 6px;
+  position: absolute; bottom: 8px; right: 8px; display: flex; gap: 0;
   z-index: 3;
 }
 .hero__photo-nav button {
-  width: 22px; height: 4px; padding: 12px 4px; background-clip: content-box;
-  background: rgba(42,42,40,0.25);
-  border: 0; cursor: pointer; transition: background 200ms, width 300ms;
+  width: 44px; height: 44px; padding: 0;
+  display: grid; place-items: center;
+  background: transparent; border: 0; cursor: pointer;
 }
-.hero__photo-nav button.is-on { background: var(--red); width: 36px; }
+.hero__photo-nav button::before {
+  content: "";
+  width: 22px; height: 4px; display: block;
+  background: rgba(42,42,40,0.25);
+  transition: background 200ms, width 300ms;
+}
+.hero__photo-nav button.is-on::before { background: var(--red); width: 36px; }
 
 /* Infinite marquee ticker band — runs between sections */
 .marquee {
@@ -538,7 +607,7 @@ body::before {
 .split-text { display: inline-block; }
 .split-text .letter {
   display: inline-block;
-  opacity: 0; transform: translateY(28px) rotate(6deg);
+  opacity: 1; transform: translateY(14px) rotate(3deg);
   transition: opacity 600ms var(--ease-out), transform 700ms var(--ease-out);
 }
 .split-text.is-in .letter {
@@ -894,10 +963,10 @@ body { overflow-x: hidden; }
 /* Route change: fade the whole <main> in. Key={path} on main forces a
    remount so this keyframe replays every navigation. */
 .page-fade {
-  animation: page-fade-in 260ms var(--ease-out) both;
+  animation: page-fade-in 180ms var(--ease-out) both;
 }
 @keyframes page-fade-in {
-  from { opacity: 0; transform: translateY(6px); }
+  from { opacity: 1; transform: translateY(3px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -907,18 +976,18 @@ body { overflow-x: hidden; }
 /* Initial hidden state applied by JS (`.anim-init`). Kept off by default
    so the page still works with JS disabled. */
 .anim-init {
-  opacity: 0;
-  transform: translateY(18px);
+  opacity: 0.55;
+  transform: translateY(10px);
   transition:
-    opacity 700ms var(--ease-out),
-    transform 800ms var(--ease-out);
+    opacity 420ms var(--ease-out),
+    transform 520ms var(--ease-out);
   will-change: opacity, transform;
 }
 .anim-init[data-anim="hero-photo"] {
-  transform: translateY(28px) scale(1.04);
+  transform: translateY(14px) scale(1.025);
   transition:
-    opacity 900ms var(--ease-out),
-    transform 1100ms var(--ease-out);
+    opacity 520ms var(--ease-out),
+    transform 700ms var(--ease-out);
 }
 .anim-in {
   opacity: 1 !important;
@@ -1042,16 +1111,16 @@ body { overflow-x: hidden; }
    orchestrated page load with staggered reveals beats scattered
    micro-interactions"). CSS-only, respects reduce-motion. */
 @keyframes hero-rise {
-  from { opacity: 0; transform: translateY(18px); }
+  from { opacity: 1; transform: translateY(12px); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes hero-mask-up {
-  from { opacity: 0; transform: translateY(100%); }
+  from { opacity: 1; transform: translateY(44%); }
   to   { opacity: 1; transform: translateY(0); }
 }
 @keyframes hero-photo-in {
-  from { opacity: 0; transform: scale(1.06); filter: blur(6px); }
-  to   { opacity: 1; transform: scale(1);    filter: blur(0); }
+  from { opacity: 1; transform: scale(1.025); filter: blur(2px); }
+  to   { opacity: 1; transform: scale(1);     filter: blur(0); }
 }
 @keyframes hero-line-draw {
   from { transform: scaleY(0); }
@@ -1060,7 +1129,7 @@ body { overflow-x: hidden; }
 
 .hero[data-anim="hero"] > .hero__text,
 .hero[data-anim="hero"] > .hero__visual,
-.hero[data-anim="hero"] > .section-num { opacity: 0; }
+.hero[data-anim="hero"] > .section-num { opacity: 1; }
 
 .hero[data-anim="hero"].is-ready .hero__text .eyebrow {
   animation: hero-rise 700ms var(--ease-out) 80ms both;
@@ -1072,23 +1141,23 @@ body { overflow-x: hidden; }
 }
 .hero[data-anim="hero"].is-ready .hero__title .hero__title-line {
   display: inline-block;
-  animation: hero-mask-up 900ms var(--ease-out) both;
+  animation: hero-mask-up 680ms var(--ease-out) both;
 }
-.hero[data-anim="hero"].is-ready .hero__title .hero__title-line:nth-child(1) { animation-delay: 220ms; }
-.hero[data-anim="hero"].is-ready .hero__title .hero__title-line:nth-child(2) { animation-delay: 420ms; }
+.hero[data-anim="hero"].is-ready .hero__title .hero__title-line:nth-child(1) { animation-delay: 120ms; }
+.hero[data-anim="hero"].is-ready .hero__title .hero__title-line:nth-child(2) { animation-delay: 240ms; }
 .hero[data-anim="hero"].is-ready .hero__body {
-  animation: hero-rise 800ms var(--ease-out) 620ms both;
+  animation: hero-rise 560ms var(--ease-out) 360ms both;
 }
 .hero[data-anim="hero"].is-ready .hero__cta {
-  animation: hero-rise 800ms var(--ease-out) 780ms both;
+  animation: hero-rise 560ms var(--ease-out) 460ms both;
 }
 .hero[data-anim="hero"].is-ready .hero__visual {
   opacity: 1;
-  animation: hero-photo-in 1100ms var(--ease-out) 320ms both;
+  animation: hero-photo-in 720ms var(--ease-out) 220ms both;
 }
 .hero[data-anim="hero"].is-ready .section-num {
   opacity: 1;
-  animation: hero-line-draw 700ms var(--ease-out) 960ms both;
+  animation: hero-line-draw 520ms var(--ease-out) 620ms both;
   transform-origin: top center;
 }
 
@@ -1100,7 +1169,7 @@ body { overflow-x: hidden; }
 /* Safety net: if .is-ready never lands (e.g., React mount delay) we still want
    the hero visible after a second. Visibility only, not animation. */
 .hero[data-anim="hero"]:not(.is-ready) > * {
-  animation: hero-safety 400ms var(--ease-out) 1200ms forwards;
+  animation: hero-safety 260ms var(--ease-out) 650ms forwards;
 }
 @keyframes hero-safety { to { opacity: 1; } }
 
@@ -1943,7 +2012,7 @@ body { overflow-x: hidden; }
   /* Touch targets — min 44×44 for buttons/links */
   .btn { min-height: 42px; }
   .btn--sm { min-height: 38px; }
-  .lang-switch button { min-height: 44px; min-width: 32px; padding: 6px 8px; }
+  .lang-switch button { min-height: 44px; min-width: 44px; padding: 6px 8px; }
   .site-header__nav a { padding: 10px 0; }
 }
 
@@ -2026,7 +2095,7 @@ html,body{margin:0;background:var(--paper,#F7F6F3);}#root{min-height:100vh;}
   function markReveals(root) {
     // NOTE: Hero is orchestrated via CSS keyframes + .is-ready class (see hero[data-anim="hero"]).
     // We intentionally skip hero selectors here so scroll-reveal does not fight the load choreography.
-    const sel = '[data-anim="fade-up"], [data-anim-stagger] [data-anim="stagger-item"], [data-anim="stats-strip"], [data-anim="section"]';
+    const sel = '[data-anim="fade-up"], [data-anim-stagger] [data-anim="stagger-item"], [data-anim="stats-strip"]';
     root.querySelectorAll(sel).forEach(el => el.classList.add('anim-init'));
   }
 
@@ -2135,32 +2204,6 @@ html,body{margin:0;background:var(--paper,#F7F6F3);}#root{min-height:100vh;}
     });
   }
 
-  // Gentle parallax for the hero photo stack — shifts slightly upward as the
-  // viewport scrolls past. Subtle (max ±50 px), desktop only, honours rm.
-  function setupHeroParallax(root) {
-    return;
-    if (PREFERS_REDUCED || IS_NARROW) return;
-    const el = root.querySelector('.hero__photo-stack');
-    if (!el) return;
-    if (el.__paraBound) return;
-    el.__paraBound = true;
-    let rafId = null;
-    function loop() {
-      const r = el.getBoundingClientRect();
-      if (r.bottom > 0 && r.top < window.innerHeight) {
-        // r.top is 0 when hero is at the top of viewport; goes negative as
-        // we scroll past. Shift direction matches scroll (visual lags).
-        const shift = Math.max(-50, Math.min(50, r.top * -0.14));
-        el.style.setProperty('--parallax-y', shift + 'px');
-      }
-      rafId = null;
-    }
-    window.addEventListener('scroll', () => {
-      if (rafId == null) rafId = requestAnimationFrame(loop);
-    }, { passive: true });
-    loop();
-  }
-
   // Custom cursor — terracotta disk + trailing ring. Skips touch + reduce-motion.
   function setupCursor() {
     if (PREFERS_REDUCED) return;
@@ -2229,11 +2272,13 @@ html,body{margin:0;background:var(--paper,#F7F6F3);}#root{min-height:100vh;}
       el.__splitDone = true;
       const text = el.textContent;
       el.textContent = '';
+      el.setAttribute('aria-label', text);
       el.classList.add('split-text');
       [...text].forEach((ch, i) => {
         const s = document.createElement('span');
         s.className = 'letter';
         s.setAttribute('data-char', ch);
+        s.setAttribute('aria-hidden', 'true');
         s.style.transitionDelay = (i * 22) + 'ms';
         s.textContent = ch === ' ' ? '\u00A0' : ch;
         el.appendChild(s);
@@ -2342,7 +2387,6 @@ html,body{margin:0;background:var(--paper,#F7F6F3);}#root{min-height:100vh;}
           setupReveals(root);
           setupCountUps(root);
           setupMagnetic(root);
-          setupHeroParallax(root);
           setupSplitText(root);
           setupTilt(root);
         });
@@ -3697,7 +3741,7 @@ function Contact({ lang }) {
     { i: 'factory',   l: lang === 'tr' ? 'Üretim · İkitelli OSB / İstanbul' : 'Production · İkitelli OSB / Istanbul', href: null },
     { i: 'clock',     l: lang === 'tr' ? 'Pzt – Cuma · 08:00 – 17:30   ·   Cumartesi · 08:00 – 14:30' : 'Mon – Fri · 08:00 – 17:30   ·   Sat · 08:00 – 14:30', href: null },
     { i: 'globe',     l: 'akelmelamin.com', href: 'https://akelmelamin.com' },
-    { i: 'instagram', l: '@akelmelamin',   href: 'https://instagram.com/akelmelamin' },
+    { i: 'at-sign',   l: '@akelmelamin',   href: 'https://instagram.com/akelmelamin' },
   ];
   const mapQuery = encodeURIComponent('Akel Melamin, İSTOÇ 10. Ada No:9/11, Bağcılar, İstanbul');
   const mapEmbed = `https://www.google.com/maps?q=${mapQuery}&output=embed`;

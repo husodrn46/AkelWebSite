@@ -5,10 +5,10 @@
 // 2) Extracts the inline <script type="text/babel">...</script> JSX block
 // 3) Compiles it to plain JS with esbuild (JSX → JS, minified, production)
 // 4) Emits dist/ with:
-//      - index.html (swap Babel CDN → React production UMD + app.js)
-//      - app.js (compiled bundle)
+//      - index.html (swap Babel CDN → React production UMD + hashed app bundle)
+//      - app.<hash>.js (compiled bundle)
 //      - all static assets (img/, data/, catalog/, preview/, slides/)
-//      - _headers, _redirects
+//      - robots.txt, sitemap.xml, _headers, _redirects
 // 5) dist/ is what Cloudflare Pages publishes.
 
 import fs from "node:fs/promises";
@@ -146,6 +146,14 @@ async function main() {
     );
     console.log(`    · colors_and_type.css`);
   } catch {}
+
+  // Root SEO files
+  for (const f of ["robots.txt", "sitemap.xml"]) {
+    try {
+      await fs.copyFile(path.join(SRC_WEBSITE, f), path.join(DIST, f));
+      console.log(`    · ${f}`);
+    } catch {}
+  }
 
   console.log("▸ read   index.html");
   const htmlPath = path.join(SRC_WEBSITE, "index.html");
