@@ -4140,7 +4140,11 @@ function ProductDetail({ lang, product, onBack, navigate }) {
   // Gallery: product studio shot + one lifestyle imaj keyed on category.
   // The lifestyle file won't exist for every category — onError on the <img>
   // hides its thumb, so the user never sees a broken frame.
-  const lifestyleSrc = product.kategori ? `./img/lifestyle-${product.kategori}.webp` : null;
+  const productSearchName = `${product.ad_tr || ''} ${product.ad_en || ''}`.toLocaleLowerCase('tr-TR');
+  const shouldHideGenericLifestyle =
+    product.kategori === 'masaustu' &&
+    (productSearchName.includes('çay tabağı') || productSearchName.includes('tea saucer') || productSearchName.includes('tea plate'));
+  const lifestyleSrc = !shouldHideGenericLifestyle && product.kategori ? `./img/lifestyle-${product.kategori}.webp` : null;
   const gallery = [
     { src: photoSrc, kind: 'product', caption: t.images },
     ...(lifestyleSrc ? [{ src: lifestyleSrc, kind: 'lifestyle', caption: lang === 'tr' ? 'Kullanımda' : 'In use' }] : []),
