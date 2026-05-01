@@ -1599,6 +1599,58 @@ body { overflow-x: hidden; }
   margin-top: 8px;
   background: var(--red);
 }
+.product-care--compact {
+  margin: 18px 0 28px;
+  padding: 18px 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--border);
+}
+.product-care--compact .product-care__head {
+  align-items: center;
+  margin-bottom: 14px;
+}
+.product-care--compact .product-care__title {
+  font-size: clamp(1.15rem, 2vw, 1.55rem);
+  margin-top: 4px;
+}
+.product-care--compact .product-care__body {
+  max-width: 44ch;
+  font-size: 14px;
+}
+.product-care__highlights {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 1px;
+  border: 1px solid var(--border);
+  background: var(--border);
+}
+.product-care__highlights li {
+  min-height: 76px;
+  padding: 14px 12px;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  background: rgba(247,246,243,0.96);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 13.5px;
+  line-height: 1.18;
+  color: var(--ink);
+}
+.product-care__check {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 17px;
+  display: inline-grid;
+  place-items: center;
+  color: var(--red);
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 15px;
+}
 .product-care--detail {
   margin: 0 0 28px;
   padding: 0;
@@ -2237,6 +2289,7 @@ body { overflow-x: hidden; }
   .product-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 16px; }
   .product-care__head { flex-direction: column; align-items: flex-start; gap: 12px; }
   .product-care__grid { grid-template-columns: 1fr; }
+  .product-care__highlights { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .product-card__name { font-size: 15px; }
   .filter-row { gap: 6px; flex-wrap: wrap; }
   .chip { flex-shrink: 0; }
@@ -2321,6 +2374,7 @@ body { overflow-x: hidden; }
   .products-toolbar { grid-template-columns: 1fr; gap: 12px; }
   .products-toolbar__meta { justify-content: flex-start; }
   .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 12px; }
+  .product-care__highlights { grid-template-columns: 1fr; }
   .product-card__body { padding: 10px 2px 0; gap: 4px; }
   .product-card__eyebrow { font-size: 9px; letter-spacing: 0.1em; }
   .product-card__name { font-size: 14px; line-height: 1.22; }
@@ -3397,6 +3451,7 @@ const PRODUCT_CARE_COPY = {
     body: 'Katalogdaki bakım notlarını ürün sayfasında da görünür kıldık; satın alma ve kullanım kararına en yakın yerde duruyor.',
     featuresTitle: 'Ürün özellikleri',
     careTitle: 'Kullanımda dikkat edilmesi gerekenler',
+    highlights: ['Gıda temasına uygun', '-20°C / +100°C', 'Bulaşık makinesinde yıkanabilir', 'Koku ve tat tutmaz', 'Özel logo üretimi'],
     features: [
       'Kırılmaya ve darbelere karşı dayanıklı yapısı sayesinde uzun ömürlü kullanım sunar.',
       'Hijyenik ve pürüzsüz yüzeyi ile profesyonel sunumlarda porselen şıklığına yakın bir görünüm sağlar.',
@@ -3421,6 +3476,7 @@ const PRODUCT_CARE_COPY = {
     body: 'Catalog care notes are now placed close to the product decision, where buyers can quickly check usage limits.',
     featuresTitle: 'Product features',
     careTitle: 'Care & usage instructions',
+    highlights: ['Safe for food contact', '-20°C / +100°C', 'Dishwasher safe', 'Odour and taste neutral', 'Custom logo printing'],
     features: [
       'Impact and breakage resistant for long-lasting use.',
       'Hygienic and smooth surface provides a porcelain-like appearance in professional presentations.',
@@ -3443,6 +3499,24 @@ const PRODUCT_CARE_COPY = {
 
 function ProductCareInfo({ lang, variant = 'band' }) {
   const t = PRODUCT_CARE_COPY[lang] || PRODUCT_CARE_COPY.tr;
+  if (variant === 'compact') {
+    return (
+      <section className="product-care product-care--compact" data-anim="fade-up" aria-label={t.title}>
+        <div className="product-care__head">
+          <div>
+            <span className="eyebrow">{t.eyebrow}</span>
+            <h2 className="product-care__title">{t.title}</h2>
+          </div>
+          <p className="product-care__body">{t.body}</p>
+        </div>
+        <ul className="product-care__highlights">
+          {t.highlights.map((item) => (
+            <li key={item}><span className="product-care__check" aria-hidden="true">✓</span> {item}</li>
+          ))}
+        </ul>
+      </section>
+    );
+  }
   return (
     <section className={`product-care product-care--${variant}`} data-anim="fade-up" aria-label={t.title}>
       <div className="product-care__head">
@@ -3719,6 +3793,8 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
         ))}
       </div>
 
+      <ProductCareInfo lang={lang} variant="compact" />
+
       {groups.length === 0 ? (
         <p className="lead" style={{padding: '48px 0'}}>{normalizedQuery ? t.emptySearch : t.empty}</p>
       ) : (
@@ -3802,8 +3878,6 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
           </button>
         </div>
       )}
-
-      <ProductCareInfo lang={lang} />
     </section>
   );
 }
@@ -4411,74 +4485,9 @@ function loadScriptOnce(src) {
   });
 }
 
-function playPageFlipSound() {
-  try {
-    const AudioContextCtor = window.AudioContext || window.webkitAudioContext;
-    if (!AudioContextCtor) return;
-    const ctx = window.__akelFlipAudioContext || (window.__akelFlipAudioContext = new AudioContextCtor());
-    const start = () => {
-      const now = ctx.currentTime;
-      const master = ctx.createGain();
-      master.gain.setValueAtTime(0.72, now);
-      master.connect(ctx.destination);
-
-      const makeRustle = (offset, duration, peak, highpass, lowpass) => {
-        const length = Math.floor(ctx.sampleRate * duration);
-        const buffer = ctx.createBuffer(1, length, ctx.sampleRate);
-        const data = buffer.getChannelData(0);
-        let smoothed = 0;
-        for (let i = 0; i < length; i++) {
-          const p = i / length;
-          const attack = Math.min(1, p / 0.14);
-          const release = Math.pow(1 - p, 1.65);
-          const ripple = 0.76 + Math.sin(p * Math.PI * 7) * 0.16;
-          smoothed = smoothed * 0.62 + (Math.random() * 2 - 1) * 0.38;
-          data[i] = smoothed * attack * release * ripple;
-        }
-
-        const src = ctx.createBufferSource();
-        const hp = ctx.createBiquadFilter();
-        const lp = ctx.createBiquadFilter();
-        const gain = ctx.createGain();
-        src.buffer = buffer;
-        hp.type = 'highpass';
-        hp.frequency.setValueAtTime(highpass, now + offset);
-        lp.type = 'lowpass';
-        lp.frequency.setValueAtTime(lowpass, now + offset);
-        gain.gain.setValueAtTime(0.0001, now + offset);
-        gain.gain.exponentialRampToValueAtTime(peak, now + offset + 0.055);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + offset + duration);
-        src.connect(hp).connect(lp).connect(gain).connect(master);
-        src.start(now + offset);
-        src.stop(now + offset + duration);
-      };
-
-      makeRustle(0, 0.48, 0.34, 240, 4200);
-      makeRustle(0.16, 0.34, 0.18, 340, 5600);
-
-      const sweep = ctx.createOscillator();
-      const sweepGain = ctx.createGain();
-      sweep.type = 'triangle';
-      sweep.frequency.setValueAtTime(980, now + 0.08);
-      sweep.frequency.exponentialRampToValueAtTime(220, now + 0.34);
-      sweepGain.gain.setValueAtTime(0.0001, now);
-      sweepGain.gain.exponentialRampToValueAtTime(0.032, now + 0.1);
-      sweepGain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
-      sweep.connect(sweepGain).connect(master);
-
-      sweep.start(now + 0.08);
-      sweep.stop(now + 0.4);
-    };
-    if (ctx.state === 'suspended') ctx.resume().then(start).catch(() => {});
-    else start();
-  } catch (_) {}
-}
-
 function CatalogFlipbook({ lang, pdfUrl }) {
   const containerRef = React.useRef(null);
   const flipRef = React.useRef(null);
-  const lastSoundAtRef = React.useRef(0);
-  const controlledFlipUntilRef = React.useRef(0);
   const [status, setStatus] = React.useState('loading'); // 'loading' | 'ready' | 'error'
   const [progress, setProgress] = React.useState({ done: 0, total: 0 });
   const [page, setPage] = React.useState(1);
@@ -4493,26 +4502,15 @@ function CatalogFlipbook({ lang, pdfUrl }) {
         error: 'Preview failed to load — you can download the catalog directly.',
         download: 'Download', openTab: 'Open in new tab', page: 'Page' };
 
-  const playFlipSoundOnce = React.useCallback(() => {
-    const now = performance.now();
-    if (now - lastSoundAtRef.current < 320) return;
-    lastSoundAtRef.current = now;
-    playPageFlipSound();
-  }, []);
-
   const flipPrev = React.useCallback(() => {
     if (!flipRef.current) return;
-    controlledFlipUntilRef.current = performance.now() + 900;
-    playFlipSoundOnce();
     flipRef.current.flipPrev();
-  }, [playFlipSoundOnce]);
+  }, []);
 
   const flipNext = React.useCallback(() => {
     if (!flipRef.current) return;
-    controlledFlipUntilRef.current = performance.now() + 900;
-    playFlipSoundOnce();
     flipRef.current.flipNext();
-  }, [playFlipSoundOnce]);
+  }, []);
 
   React.useEffect(() => {
     let cancelled = false;
@@ -4579,10 +4577,7 @@ function CatalogFlipbook({ lang, pdfUrl }) {
         });
         book.loadFromHTML(container.querySelectorAll('.flipbook__page'));
         flipRef.current = book;
-        book.on('flip', (e) => {
-          setPage(Number(e.data) + 1);
-          if (performance.now() > controlledFlipUntilRef.current) playFlipSoundOnce();
-        });
+        book.on('flip', (e) => setPage(Number(e.data) + 1));
         setStatus('ready');
       } catch (err) {
         if (!cancelled) { console.error('[flipbook]', err); setStatus('error'); }
@@ -4593,7 +4588,7 @@ function CatalogFlipbook({ lang, pdfUrl }) {
       cancelled = true;
       try { flipRef.current && flipRef.current.destroy && flipRef.current.destroy(); } catch (_) {}
     };
-  }, [pdfUrl, playFlipSoundOnce]);
+  }, [pdfUrl]);
 
   // Keyboard shortcuts: ←/→ arrows flip pages while the flipbook is in view
   React.useEffect(() => {
