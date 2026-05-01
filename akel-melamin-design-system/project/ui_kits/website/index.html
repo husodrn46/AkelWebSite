@@ -1527,6 +1527,102 @@ body { overflow-x: hidden; }
 
 .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px 24px; }
 .product-grid__more { display: flex; justify-content: center; margin-top: 40px; }
+.product-care {
+  margin: var(--space-6) 0 var(--space-7);
+  padding: 28px 0;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--border);
+}
+.product-care__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 28px;
+  margin-bottom: 22px;
+}
+.product-care__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+  letter-spacing: -0.025em;
+  line-height: 1.08;
+  color: var(--ink);
+  margin: 8px 0 0;
+}
+.product-care__body {
+  color: rgba(17,17,16,0.66);
+  line-height: 1.55;
+  max-width: 42ch;
+  margin: 0;
+}
+.product-care__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 1px;
+  border: 1px solid var(--border);
+  background: var(--border);
+}
+.product-care__block {
+  padding: 24px;
+  background: rgba(247,246,243,0.96);
+}
+.product-care__block--care { background: var(--bone); }
+.product-care__block-title {
+  display: block;
+  margin-bottom: 16px;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--ink);
+  letter-spacing: -0.012em;
+}
+.product-care__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.product-care__list li {
+  display: grid;
+  grid-template-columns: 10px 1fr;
+  gap: 10px;
+  align-items: start;
+  font-size: 14px;
+  line-height: 1.48;
+  color: rgba(17,17,16,0.72);
+}
+.product-care__list li::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  margin-top: 8px;
+  background: var(--red);
+}
+.product-care--detail {
+  margin: 0 0 28px;
+  padding: 0;
+  border: 0;
+}
+.product-care--detail .product-care__head { display: none; }
+.product-care--detail .product-care__grid {
+  grid-template-columns: 1fr;
+  gap: 0;
+  border: 0;
+  background: transparent;
+}
+.product-care--detail .product-care__block {
+  padding: 18px 0 0;
+  background: transparent;
+  border-top: 1px solid var(--border);
+}
+.product-care--detail .product-care__block + .product-care__block { margin-top: 18px; }
+.product-care--detail .product-care__block-title {
+  font-size: 15px;
+  margin-bottom: 10px;
+}
+.product-care--detail .product-care__list { gap: 8px; }
+.product-care--detail .product-care__list li { font-size: 13.5px; }
 .product-card {
   background: none; border: 0; padding: 0; text-align: left; cursor: pointer;
   display: flex; flex-direction: column;
@@ -2139,6 +2235,8 @@ body { overflow-x: hidden; }
   .products-toolbar { grid-template-columns: 1fr 220px; }
   .products-toolbar__meta { grid-column: 1 / -1; justify-content: flex-start; min-height: auto; }
   .product-grid { grid-template-columns: repeat(2, 1fr); gap: 24px 16px; }
+  .product-care__head { flex-direction: column; align-items: flex-start; gap: 12px; }
+  .product-care__grid { grid-template-columns: 1fr; }
   .product-card__name { font-size: 15px; }
   .filter-row { gap: 6px; flex-wrap: wrap; }
   .chip { flex-shrink: 0; }
@@ -3291,6 +3389,90 @@ window.ProductionBand = ProductionBand;
 window.CatalogBand = CatalogBand;
 
 
+/* ====== ProductCareInfo.jsx ====== */
+const PRODUCT_CARE_COPY = {
+  tr: {
+    eyebrow: 'Ürün bilgisi',
+    title: 'Ürün özellikleri ve kullanım',
+    body: 'Katalogdaki bakım notlarını ürün sayfasında da görünür kıldık; satın alma ve kullanım kararına en yakın yerde duruyor.',
+    featuresTitle: 'Ürün özellikleri',
+    careTitle: 'Kullanımda dikkat edilmesi gerekenler',
+    features: [
+      'Kırılmaya ve darbelere karşı dayanıklı yapısı sayesinde uzun ömürlü kullanım sunar.',
+      'Hijyenik ve pürüzsüz yüzeyi ile profesyonel sunumlarda porselen şıklığına yakın bir görünüm sağlar.',
+      'Gıda ile temasa uygundur.',
+      '-20°C ile +100°C arası sıcaklıklarda güvenle kullanılabilir.',
+      'Bulaşık makinesinde yıkanabilir.',
+      'Koku ve tat tutmaz, kolay temizlenir.',
+      'Restoran, otel, kafe ve ev kullanımı için uygundur.',
+      'Talebe bağlı olarak özel logolu üretim yapılabilir.',
+    ],
+    care: [
+      'Mikrodalga fırın, fırın ve doğrudan ateş üzerinde kullanmayınız.',
+      'Izgara ve ocak üzerinde ürünün içinde yemek ısıtmayınız.',
+      'Ürünün yüzeyini çizebilecek bıçak ve kesici aletlerle temas ettirmeyiniz.',
+      'Ağır kimyasal temizlik ürünleri kullanmayınız.',
+      'Temizlik için yumuşak sünger ve standart bulaşık deterjanları tercih ediniz.',
+    ],
+  },
+  en: {
+    eyebrow: 'Product information',
+    title: 'Product features and care',
+    body: 'Catalog care notes are now placed close to the product decision, where buyers can quickly check usage limits.',
+    featuresTitle: 'Product features',
+    careTitle: 'Care & usage instructions',
+    features: [
+      'Impact and breakage resistant for long-lasting use.',
+      'Hygienic and smooth surface provides a porcelain-like appearance in professional presentations.',
+      'Safe for food contact.',
+      'Suitable for use between -20°C and +100°C (-4°F to +212°F).',
+      'Dishwasher safe.',
+      'Odour and taste neutral, easy to clean.',
+      'Suitable for restaurants, hotels, cafes and home use.',
+      'Custom logo printing available upon request.',
+    ],
+    care: [
+      'Do not use in microwave ovens, conventional ovens or over direct heat.',
+      'Do not heat food on grills or open flames using the product.',
+      'Avoid contact with sharp knives or cutting tools that may scratch the surface.',
+      'Do not use harsh chemical cleaning agents.',
+      'Clean with a soft sponge and standard dishwashing detergents.',
+    ],
+  },
+};
+
+function ProductCareInfo({ lang, variant = 'band' }) {
+  const t = PRODUCT_CARE_COPY[lang] || PRODUCT_CARE_COPY.tr;
+  return (
+    <section className={`product-care product-care--${variant}`} data-anim="fade-up" aria-label={t.title}>
+      <div className="product-care__head">
+        <div>
+          <span className="eyebrow">{t.eyebrow}</span>
+          <h2 className="product-care__title">{t.title}</h2>
+        </div>
+        <p className="product-care__body">{t.body}</p>
+      </div>
+      <div className="product-care__grid">
+        <div className="product-care__block">
+          <span className="product-care__block-title">{t.featuresTitle}</span>
+          <ul className="product-care__list">
+            {t.features.map((item) => <li key={item}>{item}</li>)}
+          </ul>
+        </div>
+        <div className="product-care__block product-care__block--care">
+          <span className="product-care__block-title">{t.careTitle}</span>
+          <ul className="product-care__list">
+            {t.care.map((item) => <li key={item}>{item}</li>)}
+          </ul>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+window.ProductCareInfo = ProductCareInfo;
+
+
 /* ====== ProductGrid.jsx ====== */
 // ProductGrid.jsx — category listing with real Gözde/Kavi lines + variant swatch
 function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
@@ -3620,6 +3802,8 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
           </button>
         </div>
       )}
+
+      <ProductCareInfo lang={lang} />
     </section>
   );
 }
@@ -3636,7 +3820,6 @@ function ProductDetail({ lang, product, onBack, navigate }) {
         specs: 'Teknik özellikler',
         pack: 'Ambalaj ve lojistik',
         materials: 'Malzeme ve sertifikalar',
-        matList: ['Melaminden üretilmiştir', 'ISO 22000:2018 gıda güvenliği', 'Intertek test raporlu', 'Bulaşık makinesi uyumlu', '−20°C / +100°C kullanım'],
         images: 'Stüdyo referans görseli',
         color: 'Renk', useArea: 'Kullanım alanı', logo: 'Özel logolu',
         yes: 'Evet', no: 'Hayır',
@@ -3650,13 +3833,13 @@ function ProductDetail({ lang, product, onBack, navigate }) {
         carton: 'Kolileme',
         pieces: 'adet / koli',
         onRequest: 'Talep üzerine',
+        matList: ['Melaminden üretilmiştir', 'ISO 9001:2015 kalite yönetimi', 'ISO 22000:2018 gıda güvenliği', 'Intertek test raporlu', 'FQC kalite kontrol'],
       }
     : {
         back: '← Back to products',
         specs: 'Technical specs',
         pack: 'Packaging & logistics',
         materials: 'Material & certifications',
-        matList: ['Made from melamine', 'ISO 22000:2018 food safety', 'Intertek-tested', 'Dishwasher-safe', 'Suitable for use from −20°C to +100°C'],
         images: 'Studio reference image',
         color: 'Color', useArea: 'Use case', logo: 'Custom logo',
         yes: 'Yes', no: 'No',
@@ -3670,6 +3853,7 @@ function ProductDetail({ lang, product, onBack, navigate }) {
         carton: 'Carton pack',
         pieces: 'pcs / carton',
         onRequest: 'On request',
+        matList: ['Made from melamine', 'ISO 9001:2015 quality management', 'ISO 22000:2018 food safety', 'Intertek-tested', 'FQC quality control'],
       };
 
   // Build spec rows from structured fields
@@ -3843,6 +4027,7 @@ function ProductDetail({ lang, product, onBack, navigate }) {
 
           <SpecBlock title={t.specs} rows={rows} />
           <SpecBlock title={t.pack} rows={pack} />
+          <ProductCareInfo lang={lang} variant="detail" />
           <div className="pd__mat">
             <span className="meta">{t.materials}</span>
             <ul className="pd__matlist">
@@ -4233,41 +4418,56 @@ function playPageFlipSound() {
     const ctx = window.__akelFlipAudioContext || (window.__akelFlipAudioContext = new AudioContextCtor());
     const start = () => {
       const now = ctx.currentTime;
-      const duration = 0.18;
-      const length = Math.floor(ctx.sampleRate * duration);
-      const buffer = ctx.createBuffer(1, length, ctx.sampleRate);
-      const data = buffer.getChannelData(0);
-      for (let i = 0; i < length; i++) {
-        const p = i / length;
-        const envelope = Math.pow(1 - p, 2.2) * Math.min(1, p * 18);
-        data[i] = (Math.random() * 2 - 1) * envelope;
-      }
+      const master = ctx.createGain();
+      master.gain.setValueAtTime(0.72, now);
+      master.connect(ctx.destination);
 
-      const noise = ctx.createBufferSource();
-      const noiseFilter = ctx.createBiquadFilter();
-      const noiseGain = ctx.createGain();
-      noise.buffer = buffer;
-      noiseFilter.type = 'highpass';
-      noiseFilter.frequency.setValueAtTime(520, now);
-      noiseGain.gain.setValueAtTime(0.0001, now);
-      noiseGain.gain.exponentialRampToValueAtTime(0.42, now + 0.018);
-      noiseGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
-      noise.connect(noiseFilter).connect(noiseGain).connect(ctx.destination);
+      const makeRustle = (offset, duration, peak, highpass, lowpass) => {
+        const length = Math.floor(ctx.sampleRate * duration);
+        const buffer = ctx.createBuffer(1, length, ctx.sampleRate);
+        const data = buffer.getChannelData(0);
+        let smoothed = 0;
+        for (let i = 0; i < length; i++) {
+          const p = i / length;
+          const attack = Math.min(1, p / 0.14);
+          const release = Math.pow(1 - p, 1.65);
+          const ripple = 0.76 + Math.sin(p * Math.PI * 7) * 0.16;
+          smoothed = smoothed * 0.62 + (Math.random() * 2 - 1) * 0.38;
+          data[i] = smoothed * attack * release * ripple;
+        }
+
+        const src = ctx.createBufferSource();
+        const hp = ctx.createBiquadFilter();
+        const lp = ctx.createBiquadFilter();
+        const gain = ctx.createGain();
+        src.buffer = buffer;
+        hp.type = 'highpass';
+        hp.frequency.setValueAtTime(highpass, now + offset);
+        lp.type = 'lowpass';
+        lp.frequency.setValueAtTime(lowpass, now + offset);
+        gain.gain.setValueAtTime(0.0001, now + offset);
+        gain.gain.exponentialRampToValueAtTime(peak, now + offset + 0.055);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + offset + duration);
+        src.connect(hp).connect(lp).connect(gain).connect(master);
+        src.start(now + offset);
+        src.stop(now + offset + duration);
+      };
+
+      makeRustle(0, 0.48, 0.34, 240, 4200);
+      makeRustle(0.16, 0.34, 0.18, 340, 5600);
 
       const sweep = ctx.createOscillator();
       const sweepGain = ctx.createGain();
       sweep.type = 'triangle';
-      sweep.frequency.setValueAtTime(1800, now);
-      sweep.frequency.exponentialRampToValueAtTime(260, now + 0.13);
+      sweep.frequency.setValueAtTime(980, now + 0.08);
+      sweep.frequency.exponentialRampToValueAtTime(220, now + 0.34);
       sweepGain.gain.setValueAtTime(0.0001, now);
-      sweepGain.gain.exponentialRampToValueAtTime(0.08, now + 0.012);
-      sweepGain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
-      sweep.connect(sweepGain).connect(ctx.destination);
+      sweepGain.gain.exponentialRampToValueAtTime(0.032, now + 0.1);
+      sweepGain.gain.exponentialRampToValueAtTime(0.001, now + 0.38);
+      sweep.connect(sweepGain).connect(master);
 
-      noise.start(now);
-      noise.stop(now + duration);
-      sweep.start(now);
-      sweep.stop(now + 0.15);
+      sweep.start(now + 0.08);
+      sweep.stop(now + 0.4);
     };
     if (ctx.state === 'suspended') ctx.resume().then(start).catch(() => {});
     else start();
@@ -4295,7 +4495,7 @@ function CatalogFlipbook({ lang, pdfUrl }) {
 
   const playFlipSoundOnce = React.useCallback(() => {
     const now = performance.now();
-    if (now - lastSoundAtRef.current < 120) return;
+    if (now - lastSoundAtRef.current < 320) return;
     lastSoundAtRef.current = now;
     playPageFlipSound();
   }, []);
