@@ -2065,8 +2065,60 @@ body { overflow-x: hidden; }
 }
 
 /* ---------- CATALOG PAGE ---------- */
-.catalog-page { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; margin-bottom: var(--space-9); }
-.catalog-page__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: -0.035em; color: var(--ink); line-height: 1; margin: 16px 0 20px; text-wrap: balance; }
+.catalog-page {
+  display: grid;
+  grid-template-columns: minmax(0, 0.95fr) minmax(300px, 0.8fr);
+  gap: clamp(36px, 5vw, 72px);
+  align-items: start;
+  margin-bottom: var(--space-9);
+}
+.catalog-page__hero {
+  max-width: 680px;
+  padding-top: 8px;
+}
+.catalog-page__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.25rem, 4.6vw, 3.75rem);
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 0.98;
+  margin: 16px 0 18px;
+  text-wrap: balance;
+  word-break: normal;
+  overflow-wrap: normal;
+  hyphens: none;
+}
+.catalog-page__lead {
+  max-width: 58ch;
+  margin: 0;
+  color: rgba(17,17,16,0.68);
+}
+.catalog-page__facts {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1px;
+  max-width: 560px;
+  margin: 24px 0;
+  border: 1px solid var(--border);
+  background: var(--border);
+}
+.catalog-page__fact {
+  min-height: 72px;
+  padding: 14px 16px;
+  background: rgba(247,246,243,0.96);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+.catalog-page__fact strong {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 18px;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+}
 .catalog-gate { display: flex; flex-direction: column; gap: 16px; margin-top: 24px; max-width: 420px; }
 .catalog-gate__row { display: flex; gap: 16px; align-items: center; }
 .catalog-downloaded { display: flex; align-items: center; gap: 10px; color: var(--success); font-weight: 600; margin-top: 24px; }
@@ -2316,7 +2368,8 @@ body { overflow-x: hidden; }
 
   /* Catalog */
   .catalog-page { grid-template-columns: 1fr; gap: 32px; }
-  .catalog-page__title { font-size: clamp(2rem, 8vw, 3rem); }
+  .catalog-page__hero { max-width: none; padding-top: 0; }
+  .catalog-page__title { font-size: clamp(2rem, 8vw, 2.85rem); max-width: 12em; }
   .catalog-cover { padding: 24px; }
   .catalog-cover__year { font-size: 56px; }
   .catalog-gate__row { flex-direction: column; align-items: stretch; gap: 10px; }
@@ -2368,6 +2421,16 @@ body { overflow-x: hidden; }
 
   .cat-grid { grid-template-columns: 1fr; }
   .cat-grid .cat-card { grid-column: auto !important; }
+  .catalog-page__title {
+    font-size: clamp(2rem, 8.2vw, 2.35rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    max-width: none;
+  }
+  .catalog-page__lead { font-size: 15.5px; line-height: 1.55; }
+  .catalog-page__facts { grid-template-columns: 1fr; margin: 18px 0; }
+  .catalog-page__fact { min-height: 58px; padding: 12px 14px; }
+  .catalog-page__action .btn { width: 100%; justify-content: center; }
   .reference-logo-grid,
   .references-page__grid { grid-template-columns: 1fr; }
   .reference-logo { min-height: 84px; }
@@ -4369,6 +4432,11 @@ function CatalogPage({ lang }) {
     ? { eyebrow: 'Katalog',
         title: 'Melamin Servis Ekipmanları 2026.',
         lead: 'Kare Seri · Elegant · International · Açık Büfe · Eco · Tepsiler · Çocuk Tabakları · Özel Logolu — 12 ürün serisi, 56 sayfa, çift dilli (TR/EN).',
+        facts: [
+          ['PDF', '6,3 MB'],
+          ['Sayfa', '56'],
+          ['Dil', 'TR / EN'],
+        ],
         submit: 'Kataloğu indir',
         downloaded: 'İndiriliyor...',
         what: 'Katalogda neler var',
@@ -4385,6 +4453,11 @@ function CatalogPage({ lang }) {
     : { eyebrow: 'Catalog',
         title: 'Melamine Service Equipment 2026',
         lead: 'Square Series, Elegant Series, International Series, Buffet Service, Eco Series, Trays, Kids\' Plates and Custom Logo Products — 12 product series, 56 pages, bilingual (TR/EN).',
+        facts: [
+          ['PDF', '6.3 MB'],
+          ['Pages', '56'],
+          ['Language', 'TR / EN'],
+        ],
         submit: 'Download catalog',
         downloaded: 'Downloading...',
         what: 'What\'s in the catalog',
@@ -4415,8 +4488,17 @@ function CatalogPage({ lang }) {
       <div className="catalog-page">
         <div className="catalog-page__hero" data-anim="fade-up">
           <span className="eyebrow">{t.eyebrow}</span>
-          <h1 className="catalog-page__title"><span data-split-text>{t.title}</span></h1>
-          <p className="lead">{t.lead}</p>
+          <h1 className="catalog-page__title">{t.title}</h1>
+          <p className="lead catalog-page__lead">{t.lead}</p>
+
+          <div className="catalog-page__facts" aria-label={lang === 'tr' ? 'Katalog bilgileri' : 'Catalog details'}>
+            {t.facts.map(([k, v]) => (
+              <div className="catalog-page__fact" key={k}>
+                <span className="meta">{k}</span>
+                <strong>{v}</strong>
+              </div>
+            ))}
+          </div>
 
           <div className="catalog-page__action">
             <button type="button" className="btn btn--primary btn--lg magnetic" onClick={trigger}>
