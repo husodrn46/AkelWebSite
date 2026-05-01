@@ -1606,16 +1606,11 @@ body { overflow-x: hidden; }
   border-bottom: 1px solid var(--border);
 }
 .product-care--compact .product-care__head {
-  align-items: center;
   margin-bottom: 14px;
 }
 .product-care--compact .product-care__title {
   font-size: clamp(1.15rem, 2vw, 1.55rem);
   margin-top: 4px;
-}
-.product-care--compact .product-care__body {
-  max-width: 44ch;
-  font-size: 14px;
 }
 .product-care__highlights {
   list-style: none;
@@ -3511,7 +3506,7 @@ const PRODUCT_CARE_COPY = {
   tr: {
     eyebrow: 'Ürün bilgisi',
     title: 'Ürün özellikleri ve kullanım',
-    body: 'Katalogdaki bakım notlarını ürün sayfasında da görünür kıldık; satın alma ve kullanım kararına en yakın yerde duruyor.',
+    body: 'Profesyonel servis için dayanıklı, hijyenik ve kolay temizlenen melamin ürünler.',
     featuresTitle: 'Ürün özellikleri',
     careTitle: 'Kullanımda dikkat edilmesi gerekenler',
     highlights: ['Gıda temasına uygun', '-20°C / +100°C', 'Bulaşık makinesinde yıkanabilir', 'Koku ve tat tutmaz', 'Özel logo üretimi'],
@@ -3536,7 +3531,7 @@ const PRODUCT_CARE_COPY = {
   en: {
     eyebrow: 'Product information',
     title: 'Product features and care',
-    body: 'Catalog care notes are now placed close to the product decision, where buyers can quickly check usage limits.',
+    body: 'Durable, hygienic and easy-to-clean melamine products for professional service.',
     featuresTitle: 'Product features',
     careTitle: 'Care & usage instructions',
     highlights: ['Safe for food contact', '-20°C / +100°C', 'Dishwasher safe', 'Odour and taste neutral', 'Custom logo printing'],
@@ -3570,7 +3565,6 @@ function ProductCareInfo({ lang, variant = 'band' }) {
             <span className="eyebrow">{t.eyebrow}</span>
             <h2 className="product-care__title">{t.title}</h2>
           </div>
-          <p className="product-care__body">{t.body}</p>
         </div>
         <ul className="product-care__highlights">
           {t.highlights.map((item) => (
