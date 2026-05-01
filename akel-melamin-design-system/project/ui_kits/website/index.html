@@ -1215,14 +1215,46 @@ body { overflow-x: hidden; }
   color: inherit; text-decoration: none;
 }
 .cat-card:hover { transform: translateY(-2px); }
-.cat-card:hover .cat-card__ph { box-shadow: var(--shadow-3); }
+.cat-card:hover .cat-card__ph {
+  border-color: rgba(17,17,16,0.36);
+  box-shadow:
+    inset 0 0 0 8px rgba(255,255,255,0.74),
+    var(--shadow-3);
+}
 .cat-card__ph {
-  aspect-ratio: 4/3; background: var(--paper);
+  aspect-ratio: 4/3; background: #fff;
+  border: 1px solid rgba(17,17,16,0.2);
   border-radius: 4px; overflow: hidden;
   display: grid; place-items: center;
-  box-shadow: var(--shadow-1);
-  transition: box-shadow var(--dur-med) var(--ease-out);
+  box-shadow:
+    inset 0 0 0 8px rgba(255,255,255,0.7),
+    var(--shadow-1);
+  transition: box-shadow var(--dur-med) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
   position: relative;
+}
+.cat-card__ph::before,
+.cat-card__ph::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+}
+.cat-card__ph::before {
+  inset: 9px;
+  background:
+    linear-gradient(var(--ink), var(--ink)) left top / 40px 1px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) left top / 1px 40px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) right bottom / 40px 1px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) right bottom / 1px 40px no-repeat;
+  opacity: 0.64;
+}
+.cat-card__ph::after {
+  inset: 12px;
+  background:
+    linear-gradient(var(--red), var(--red)) left top / 28px 3px no-repeat,
+    linear-gradient(var(--red), var(--red)) left top / 3px 28px no-repeat,
+    linear-gradient(var(--red), var(--red)) right bottom / 28px 3px no-repeat,
+    linear-gradient(var(--red), var(--red)) right bottom / 3px 28px no-repeat;
 }
 .cat-card__foot {
   padding: 14px 2px 0; display: flex; justify-content: space-between; align-items: baseline;
@@ -1246,6 +1278,7 @@ body { overflow-x: hidden; }
 
 .cat-card__photo {
   width: 100%; height: 100%; object-fit: cover;
+  position: relative; z-index: 2;
   transition: transform var(--dur-slow) var(--ease-out);
 }
 .cat-card:hover .cat-card__photo { transform: scale(1.03); }
@@ -3354,13 +3387,13 @@ function Categories({ lang, navigate }) {
       { key: 'international',label: 'International Seri',  count: 'Yuvarlak klasik',        shape: 'round',  photo: 'international-125' },
       { key: 'elegant',      label: 'Elegant Seri',        count: 'Taş dokulu',             shape: 'trays',  photo: 'elegant-347' },
       { key: 'acikbufe',     label: 'Açık Büfe · Servis',  count: 'Sunum & catering',       shape: 'serve',  photo: 'acikbufe-402' },
-      { key: 'tepsiler',     label: 'Tepsiler',            count: 'Mermer · baskılı',       shape: 'trays',  photo: 'tepsiler-350' },
+      { key: 'tepsiler',     label: 'Tepsiler',            count: 'Mermer · baskılı',       shape: 'trays',  photo: 'tepsiler-204' },
       { key: 'eco',          label: 'Eco Seri',            count: 'Ekonomik günlük',        shape: 'plates', photo: 'eco-019' },
       { key: 'diplomat',     label: 'Diplomat Kayık Seri', count: 'Uzun servis',            shape: 'serve',  photo: 'diplomat-093' },
       { key: 'gunluk',       label: 'Günlük Desenli Seri', count: 'Desen baskı',            shape: 'bowls',  photo: 'gunluk-327d' },
       { key: 'masaustu',     label: 'Masaüstü Aksesuarları', count: 'Tuzluk · şekerlik',    shape: 'serve',  photo: 'masaustu-400' },
       { key: 'kids',         label: 'Çocuk Tabakları',     count: 'Bölmeli & eğlenceli',    shape: 'kids',   photo: 'kids-150d' },
-      { key: 'bolmeli',      label: 'Bölmeli Tabaklar',    count: 'Porsiyon kontrolü',      shape: 'plates', photo: 'bolmeli-150' },
+      { key: 'bolmeli',      label: 'Bölmeli Tabaklar',    count: 'Porsiyon kontrolü',      shape: 'plates', photo: 'bolmeli-423' },
       { key: 'logolu',       label: 'Özel Logolu Ürünler', count: 'Baskılı · kurumsal',     shape: 'deco' },
     ],
     en: [
@@ -3369,13 +3402,13 @@ function Categories({ lang, navigate }) {
       { key: 'international',label: 'International Series',     count: 'Classic round',         shape: 'round',  photo: 'international-125' },
       { key: 'elegant',      label: 'Elegant Series',           count: 'Stone-textured',        shape: 'trays',  photo: 'elegant-347' },
       { key: 'acikbufe',     label: 'Buffet · Serving',         count: 'Buffet service',        shape: 'serve',  photo: 'acikbufe-402' },
-      { key: 'tepsiler',     label: 'Trays',                    count: 'Marble · patterned',    shape: 'trays',  photo: 'tepsiler-350' },
+      { key: 'tepsiler',     label: 'Trays',                    count: 'Marble · patterned',    shape: 'trays',  photo: 'tepsiler-204' },
       { key: 'eco',          label: 'Eco Series',               count: 'Everyday use',          shape: 'plates', photo: 'eco-019' },
       { key: 'diplomat',     label: 'Diplomat Oval Serving Range', count: 'Oval serving',       shape: 'serve',  photo: 'diplomat-093' },
       { key: 'gunluk',       label: 'Everyday Pattern Series',  count: 'Patterned finish',      shape: 'bowls',  photo: 'gunluk-327d' },
       { key: 'masaustu',     label: 'Tabletop Accessories',     count: 'Salt cellar · sugar bowl · cruet',  shape: 'serve',  photo: 'masaustu-400' },
       { key: 'kids',         label: 'Kids\' Plates',            count: 'Compartment · playful', shape: 'kids',   photo: 'kids-150d' },
-      { key: 'bolmeli',      label: 'Compartment Plates',       count: 'Portion control',       shape: 'plates', photo: 'bolmeli-150' },
+      { key: 'bolmeli',      label: 'Compartment Plates',       count: 'Portion control',       shape: 'plates', photo: 'bolmeli-423' },
       { key: 'logolu',       label: 'Custom Logo Products',     count: 'Printed · branded',     shape: 'deco' },
     ],
   }[lang];
