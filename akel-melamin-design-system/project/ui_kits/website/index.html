@@ -1298,6 +1298,122 @@ body { overflow-x: hidden; }
   .editorial__body { font-size: 13.5px; }
 }
 
+/* ---------- REFERENCES ---------- */
+.references-preview {
+  max-width: var(--page-max);
+  margin: var(--space-8) auto 0;
+  padding: 0 var(--page-gutter);
+}
+.references-preview__panel {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.25fr);
+  gap: 48px;
+  align-items: center;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--border);
+  padding: 36px 0;
+}
+.references-preview__title,
+.references-page__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: -0.026em;
+  line-height: 1.05;
+  color: var(--ink);
+  text-wrap: balance;
+}
+.references-preview__title {
+  font-size: clamp(1.75rem, 3vw, 2.6rem);
+  margin: 10px 0 14px;
+}
+.references-preview__body {
+  color: rgba(17,17,16,0.68);
+  font-size: 16px;
+  line-height: 1.6;
+  margin: 0 0 20px;
+  max-width: 52ch;
+}
+.reference-logo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+.reference-logo {
+  position: relative;
+  min-height: 96px;
+  padding: 18px 16px;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background:
+    linear-gradient(135deg, rgba(205,24,30,0.08) 0 28%, transparent 28%),
+    var(--paper-soft);
+  color: var(--graphite);
+}
+.reference-logo::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--red);
+}
+.reference-logo::after {
+  content: "";
+  position: absolute;
+  inset: 8px;
+  border: 1px solid rgba(17,17,16,0.08);
+  pointer-events: none;
+}
+.reference-logo img {
+  max-width: 78%;
+  max-height: 52px;
+  object-fit: contain;
+  filter: grayscale(1);
+}
+.reference-logo__slot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  text-align: center;
+}
+.reference-logo__mark {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 24px;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.reference-logo__label {
+  font-family: var(--font-mono);
+  font-size: 9px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--slate);
+}
+.references-page__title {
+  font-size: clamp(2.4rem, 6vw, 5.2rem);
+  margin: 14px 0 18px;
+  max-width: 11ch;
+}
+.references-page__lead {
+  max-width: 68ch;
+}
+.references-page__grid {
+  margin-top: var(--space-7);
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 12px;
+}
+.references-page__note {
+  margin-top: var(--space-6);
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  color: var(--slate);
+  max-width: 72ch;
+}
+
 /* ---------- BANDS ---------- */
 .band {
   background: var(--ink); color: var(--paper);
@@ -1421,12 +1537,39 @@ body { overflow-x: hidden; }
   outline: 2px solid var(--red);
   outline-offset: 6px;
 }
-.product-card:hover .product-card__ph { box-shadow: var(--shadow-3); }
+.product-card:hover .product-card__ph {
+  box-shadow:
+    inset 0 0 0 6px #fff,
+    inset 0 0 0 7px rgba(205,24,30,0.88),
+    var(--shadow-3);
+}
 .product-card__ph {
-  aspect-ratio: 4/3; background: #ffffff;
+  aspect-ratio: 4/3;
+  background: linear-gradient(180deg, #fff 0%, var(--paper-soft) 100%);
+  border: 1px solid var(--ink);
   border-radius: 4px; display: grid; place-items: center;
-  box-shadow: var(--shadow-1); transition: box-shadow var(--dur-med);
+  box-shadow:
+    inset 0 0 0 6px #fff,
+    inset 0 0 0 7px rgba(205,24,30,0.72),
+    var(--shadow-1);
+  transition: transform 380ms var(--ease-out), box-shadow var(--dur-med), border-color var(--dur-fast);
   position: relative; overflow: hidden;
+}
+.product-card__ph::before,
+.product-card__ph::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+}
+.product-card__ph::before {
+  inset: 9px;
+  border: 1px solid rgba(17,17,16,0.14);
+}
+.product-card__ph::after {
+  left: 9px; top: 9px;
+  width: 44px; height: 3px;
+  background: var(--red);
 }
 .product-card__body { padding: 14px 4px 0; display: flex; flex-direction: column; gap: 6px; }
 .product-card__meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
@@ -1493,7 +1636,7 @@ body { overflow-x: hidden; }
   font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase;
   padding: 5px 10px; background: var(--ink); color: var(--paper);
   border-radius: 2px;
-  z-index: 3;
+  z-index: 4;
 }
 /* SKU chip on the card photo — catalog-style, top-right. Paper bg with a
    hint of blur so it stays legible on both light plates and photographic
@@ -1506,7 +1649,7 @@ body { overflow-x: hidden; }
   letter-spacing: 0.04em;
   font-variant-numeric: tabular-nums;
   backdrop-filter: blur(4px);
-  z-index: 3;
+  z-index: 4;
 }
 .variant-dot:hover { transform: scale(1.15); }
 .variant-dot.is-on { outline: 1.5px solid var(--ink); outline-offset: 2px; }
@@ -1526,17 +1669,40 @@ body { overflow-x: hidden; }
 /* ---------- PRODUCT DETAIL ---------- */
 .pd { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; margin-top: 24px; }
 .pd__hero {
-  aspect-ratio: 1 / 1; min-height: 520px; background: var(--paper);
+  aspect-ratio: 1 / 1; min-height: 520px;
+  background: linear-gradient(180deg, #fff 0%, var(--paper-soft) 100%);
+  border: 1px solid var(--ink);
   border-radius: 4px; display: grid; place-items: center;
+  box-shadow:
+    inset 0 0 0 8px #fff,
+    inset 0 0 0 9px rgba(205,24,30,0.72),
+    var(--shadow-1);
   position: relative; overflow: hidden;
 }
-.pd__caption { position: absolute; bottom: 16px; left: 20px; color: var(--slate); }
+.pd__hero::before,
+.pd__hero::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+}
+.pd__hero::before {
+  inset: 12px;
+  border: 1px solid rgba(17,17,16,0.14);
+  z-index: 1;
+}
+.pd__hero::after {
+  left: 12px; top: 12px;
+  width: 58px; height: 4px;
+  background: var(--red);
+  z-index: 3;
+}
+.pd__caption { position: absolute; bottom: 16px; left: 20px; color: var(--slate); z-index: 4; }
 .pd__photo { position: relative; z-index: 2; }
 .pd__placeholder {
   position: absolute; inset: 0;
   display: grid; place-items: center; gap: 10px;
   grid-auto-rows: min-content; align-content: center;
-  padding: 24px; text-align: center; z-index: 1;
+  padding: 24px; text-align: center; z-index: 2;
 }
 .pd__placeholder-sku {
   font-family: var(--font-mono); font-size: 22px;
@@ -1951,6 +2117,10 @@ body { overflow-x: hidden; }
   .section__head { flex-direction: column; align-items: flex-start; gap: 16px; margin-bottom: var(--space-6); }
   .section__title { font-size: clamp(1.75rem, 7vw, 2.5rem); max-width: none; }
 
+  /* References */
+  .references-preview__panel { grid-template-columns: 1fr; gap: 24px; }
+  .references-page__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
   /* Categories — 2 columns on tablet */
   .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
   .cat-grid .cat-card { grid-column: auto !important; }
@@ -2022,6 +2192,8 @@ body { overflow-x: hidden; }
   .hero__visual { height: clamp(220px, 38vh, 360px); }
   .stats-strip__big { font-size: 1.75rem; }
   .stats-strip__small { font-size: 10px; }
+  .reference-logo-grid,
+  .references-page__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .cat-card__label { font-size: 15px; }
   .product-card__ph { aspect-ratio: 1/1; }
   .about__facts { grid-template-columns: 1fr 1fr; }
@@ -2045,6 +2217,9 @@ body { overflow-x: hidden; }
 
   .cat-grid { grid-template-columns: 1fr; }
   .cat-grid .cat-card { grid-column: auto !important; }
+  .reference-logo-grid,
+  .references-page__grid { grid-template-columns: 1fr; }
+  .reference-logo { min-height: 84px; }
   .products-toolbar { grid-template-columns: 1fr; gap: 12px; }
   .products-toolbar__meta { justify-content: flex-start; }
   .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 12px; }
@@ -2074,7 +2249,13 @@ body { overflow-x: hidden; }
 @media (hover: none) {
   .cat-card:hover { transform: none; }
   .product-card:hover { transform: none; }
-  .product-card:hover .product-card__ph { transform: none; box-shadow: var(--shadow-1); }
+  .product-card:hover .product-card__ph {
+    transform: none;
+    box-shadow:
+      inset 0 0 0 6px #fff,
+      inset 0 0 0 7px rgba(205,24,30,0.72),
+      var(--shadow-1);
+  }
   .tilt { transform: none !important; }
   .btn--primary::before { display: none; }
 }
@@ -2420,12 +2601,14 @@ function Header({ lang, setLang, currentPath, navigate }) {
     tr: [
       { label: 'Ürünler', path: 'products' },
       { label: 'Katalog', path: 'catalog' },
+      { label: 'Referanslar', path: 'references' },
       { label: 'Hakkımızda', path: 'about' },
       { label: 'İletişim', path: 'contact' },
     ],
     en: [
       { label: 'Products', path: 'products' },
       { label: 'Catalog', path: 'catalog' },
+      { label: 'References', path: 'references' },
       { label: 'About', path: 'about' },
       { label: 'Contact', path: 'contact' },
     ],
@@ -2811,6 +2994,107 @@ function EditorialSpread({ lang }) {
   );
 }
 window.EditorialSpread = EditorialSpread;
+
+
+/* ====== References.jsx ====== */
+const REFERENCE_LOGOS = Array.from({ length: 12 }, (_, index) => {
+  const no = String(index + 1).padStart(2, '0');
+  return { id: `reference-${no}`, no, logo: null, name: '' };
+});
+
+function ReferenceLogo({ item, lang }) {
+  const label = item.name || (lang === 'tr' ? `Referans ${item.no}` : `Reference ${item.no}`);
+  const aria = item.name || (lang === 'tr' ? `Referans logo alanı ${item.no}` : `Reference logo slot ${item.no}`);
+  return (
+    <div className="reference-logo" aria-label={aria} data-anim="stagger-item">
+      {item.logo ? (
+        <img src={item.logo} alt={label} loading="lazy" decoding="async" />
+      ) : (
+        <span className="reference-logo__slot" aria-hidden="true">
+          <span className="reference-logo__mark">Logo</span>
+          <span className="reference-logo__label">{label}</span>
+        </span>
+      )}
+    </div>
+  );
+}
+
+function ReferencesPreview({ lang, navigate }) {
+  const t = lang === 'tr'
+    ? {
+        eyebrow: 'Referanslar',
+        title: 'Markaların sofrada güvendiği üretim.',
+        body: 'Otel, restoran, catering ve kurumsal projelerde kullanılan Akel Melamin ürünleri için referans alanını hazırladık.',
+        cta: 'Tüm referanslar',
+      }
+    : {
+        eyebrow: 'References',
+        title: 'Production trusted at the table.',
+        body: 'A prepared reference area for Akel Melamin products used across hotel, restaurant, catering and corporate projects.',
+        cta: 'All references',
+      };
+  return (
+    <section className="references-preview" data-anim="section" aria-labelledby="references-preview-title">
+      <div className="references-preview__panel">
+        <div>
+          <span className="eyebrow" data-anim="fade-up">{t.eyebrow}</span>
+          <h2 id="references-preview-title" className="references-preview__title" data-anim="fade-up">
+            {t.title}
+          </h2>
+          <p className="references-preview__body" data-anim="fade-up" data-anim-delay="80">{t.body}</p>
+          <a
+            className="btn btn--link"
+            href={pathToURL('references')}
+            onClick={(e) => { e.preventDefault(); navigate('references'); }}
+            data-anim="fade-up"
+            data-anim-delay="140"
+          >
+            {t.cta} →
+          </a>
+        </div>
+        <div className="reference-logo-grid" data-anim-stagger>
+          {REFERENCE_LOGOS.slice(0, 6).map((item) => (
+            <ReferenceLogo key={item.id} item={item} lang={lang} />
+          ))}
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function ReferencesPage({ lang }) {
+  const t = lang === 'tr'
+    ? {
+        eyebrow: 'Referanslar',
+        title: 'Referanslar',
+        lead: 'Akel Melamin ürünlerinin yer aldığı kurumsal projeler, işletmeler ve iş birlikleri için ayrılmış logo vitrini.',
+        note: 'Firma logoları geldiğinde bu alan izinli gerçek görsellerle güncellenecek.',
+      }
+    : {
+        eyebrow: 'References',
+        title: 'References',
+        lead: 'A logo showcase prepared for corporate projects, venues and collaborations that use Akel Melamin products.',
+        note: 'Once logo files are provided, these slots will be updated with approved real images.',
+      };
+  return (
+    <section className="section" data-anim="section" aria-labelledby="references-page-title">
+      <span className="eyebrow" data-anim="fade-up">{t.eyebrow}</span>
+      <h1 id="references-page-title" className="references-page__title" data-anim="fade-up">
+        <span data-split-text>{t.title}</span>
+      </h1>
+      <p className="lead references-page__lead" data-anim="fade-up" data-anim-delay="120">{t.lead}</p>
+      <div className="references-page__grid" data-anim-stagger>
+        {REFERENCE_LOGOS.map((item) => (
+          <ReferenceLogo key={item.id} item={item} lang={lang} />
+        ))}
+      </div>
+      <p className="references-page__note" data-anim="fade-up">{t.note}</p>
+    </section>
+  );
+}
+
+window.ReferencesPreview = ReferencesPreview;
+window.ReferencesPage = ReferencesPage;
 
 
 /* ====== Categories.jsx ====== */
@@ -3942,9 +4226,59 @@ function loadScriptOnce(src) {
   });
 }
 
+function playPageFlipSound() {
+  try {
+    const AudioContextCtor = window.AudioContext || window.webkitAudioContext;
+    if (!AudioContextCtor) return;
+    const ctx = window.__akelFlipAudioContext || (window.__akelFlipAudioContext = new AudioContextCtor());
+    const start = () => {
+      const now = ctx.currentTime;
+      const duration = 0.18;
+      const length = Math.floor(ctx.sampleRate * duration);
+      const buffer = ctx.createBuffer(1, length, ctx.sampleRate);
+      const data = buffer.getChannelData(0);
+      for (let i = 0; i < length; i++) {
+        const p = i / length;
+        const envelope = Math.pow(1 - p, 2.2) * Math.min(1, p * 18);
+        data[i] = (Math.random() * 2 - 1) * envelope;
+      }
+
+      const noise = ctx.createBufferSource();
+      const noiseFilter = ctx.createBiquadFilter();
+      const noiseGain = ctx.createGain();
+      noise.buffer = buffer;
+      noiseFilter.type = 'highpass';
+      noiseFilter.frequency.setValueAtTime(520, now);
+      noiseGain.gain.setValueAtTime(0.0001, now);
+      noiseGain.gain.exponentialRampToValueAtTime(0.42, now + 0.018);
+      noiseGain.gain.exponentialRampToValueAtTime(0.001, now + duration);
+      noise.connect(noiseFilter).connect(noiseGain).connect(ctx.destination);
+
+      const sweep = ctx.createOscillator();
+      const sweepGain = ctx.createGain();
+      sweep.type = 'triangle';
+      sweep.frequency.setValueAtTime(1800, now);
+      sweep.frequency.exponentialRampToValueAtTime(260, now + 0.13);
+      sweepGain.gain.setValueAtTime(0.0001, now);
+      sweepGain.gain.exponentialRampToValueAtTime(0.08, now + 0.012);
+      sweepGain.gain.exponentialRampToValueAtTime(0.001, now + 0.14);
+      sweep.connect(sweepGain).connect(ctx.destination);
+
+      noise.start(now);
+      noise.stop(now + duration);
+      sweep.start(now);
+      sweep.stop(now + 0.15);
+    };
+    if (ctx.state === 'suspended') ctx.resume().then(start).catch(() => {});
+    else start();
+  } catch (_) {}
+}
+
 function CatalogFlipbook({ lang, pdfUrl }) {
   const containerRef = React.useRef(null);
   const flipRef = React.useRef(null);
+  const lastSoundAtRef = React.useRef(0);
+  const controlledFlipUntilRef = React.useRef(0);
   const [status, setStatus] = React.useState('loading'); // 'loading' | 'ready' | 'error'
   const [progress, setProgress] = React.useState({ done: 0, total: 0 });
   const [page, setPage] = React.useState(1);
@@ -3958,6 +4292,27 @@ function CatalogFlipbook({ lang, pdfUrl }) {
         loading: 'Preparing catalog', prev: 'Prev', next: 'Next',
         error: 'Preview failed to load — you can download the catalog directly.',
         download: 'Download', openTab: 'Open in new tab', page: 'Page' };
+
+  const playFlipSoundOnce = React.useCallback(() => {
+    const now = performance.now();
+    if (now - lastSoundAtRef.current < 120) return;
+    lastSoundAtRef.current = now;
+    playPageFlipSound();
+  }, []);
+
+  const flipPrev = React.useCallback(() => {
+    if (!flipRef.current) return;
+    controlledFlipUntilRef.current = performance.now() + 900;
+    playFlipSoundOnce();
+    flipRef.current.flipPrev();
+  }, [playFlipSoundOnce]);
+
+  const flipNext = React.useCallback(() => {
+    if (!flipRef.current) return;
+    controlledFlipUntilRef.current = performance.now() + 900;
+    playFlipSoundOnce();
+    flipRef.current.flipNext();
+  }, [playFlipSoundOnce]);
 
   React.useEffect(() => {
     let cancelled = false;
@@ -4024,7 +4379,10 @@ function CatalogFlipbook({ lang, pdfUrl }) {
         });
         book.loadFromHTML(container.querySelectorAll('.flipbook__page'));
         flipRef.current = book;
-        book.on('flip', (e) => setPage(Number(e.data) + 1));
+        book.on('flip', (e) => {
+          setPage(Number(e.data) + 1);
+          if (performance.now() > controlledFlipUntilRef.current) playFlipSoundOnce();
+        });
         setStatus('ready');
       } catch (err) {
         if (!cancelled) { console.error('[flipbook]', err); setStatus('error'); }
@@ -4035,19 +4393,18 @@ function CatalogFlipbook({ lang, pdfUrl }) {
       cancelled = true;
       try { flipRef.current && flipRef.current.destroy && flipRef.current.destroy(); } catch (_) {}
     };
-  }, [pdfUrl]);
+  }, [pdfUrl, playFlipSoundOnce]);
 
   // Keyboard shortcuts: ←/→ arrows flip pages while the flipbook is in view
   React.useEffect(() => {
     if (status !== 'ready') return;
     const onKey = (e) => {
-      if (!flipRef.current) return;
-      if (e.key === 'ArrowLeft') flipRef.current.flipPrev();
-      else if (e.key === 'ArrowRight') flipRef.current.flipNext();
+      if (e.key === 'ArrowLeft') flipPrev();
+      else if (e.key === 'ArrowRight') flipNext();
     };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [status]);
+  }, [status, flipPrev, flipNext]);
 
   return (
     <div className="flipbook" data-anim="fade-up">
@@ -4085,12 +4442,12 @@ function CatalogFlipbook({ lang, pdfUrl }) {
       {status === 'ready' && (
         <div className="flipbook__controls">
           <button type="button" className="flipbook__btn" aria-label={t.prev}
-            onClick={() => flipRef.current && flipRef.current.flipPrev()}>‹</button>
+            onClick={flipPrev}>‹</button>
           <span className="flipbook__pos">
             {t.page} <strong>{page}</strong> / {totalPages}
           </span>
           <button type="button" className="flipbook__btn" aria-label={t.next}
-            onClick={() => flipRef.current && flipRef.current.flipNext()}>›</button>
+            onClick={flipNext}>›</button>
         </div>
       )}
     </div>
@@ -4116,7 +4473,7 @@ function Footer({ lang, navigate }) {
               ['Özel Logolu Ürünler','products'],
           ] },
           { h: 'Şirket', links: [
-              ['Hakkımızda','about'],['Üretim & Kalite','about'],['Sertifikalarımız','about'],['İletişim','contact'],
+              ['Hakkımızda','about'],['Referanslar','references'],['Üretim & Kalite','about'],['Sertifikalarımız','about'],['İletişim','contact'],
           ] },
           { h: 'İletişim', links: [
               ['Katalog PDF · 2026','catalog','internal'],
@@ -4140,7 +4497,7 @@ function Footer({ lang, navigate }) {
               ['Custom Logo Products','products'],
           ] },
           { h: 'Company', links: [
-              ['About','about'],['Manufacturing & Quality','about'],['Certifications','about'],['Contact','contact'],
+              ['About','about'],['References','references'],['Manufacturing & Quality','about'],['Certifications','about'],['Contact','contact'],
           ] },
           { h: 'Contact', links: [
               ['Catalog PDF · 2026','catalog','internal'],
@@ -4219,6 +4576,7 @@ window.Footer = Footer;
 //   /                → home
 //   /urunler         → products
 //   /urunler/<slug>  → product detail (slug = foto_dosya_adi or lowercased SKU)
+//   /referanslar     → references
 //   /hakkimizda      → about
 //   /iletisim        → contact
 //   /katalog         → catalog
@@ -4229,11 +4587,12 @@ window.Footer = Footer;
 const ROUTES = {
   home:     '/',
   products: '/urunler',
+  references: '/referanslar',
   about:    '/hakkimizda',
   contact:  '/iletisim',
   catalog:  '/katalog',
 };
-const URL_TO_PATH = { '/': 'home', '/urunler': 'products', '/hakkimizda': 'about', '/iletisim': 'contact', '/katalog': 'catalog' };
+const URL_TO_PATH = { '/': 'home', '/urunler': 'products', '/referanslar': 'references', '/hakkimizda': 'about', '/iletisim': 'contact', '/katalog': 'catalog' };
 const BASE = (() => {
   // Dev server serves from /ui_kits/website/; strip that prefix.
   const p = window.location.pathname;
@@ -4330,12 +4689,14 @@ function App() {
         <Hero lang={lang} navigate={navigate} />
         <StatsRow lang={lang} />
         <Categories lang={lang} navigate={navigate} />
+        <ReferencesPreview lang={lang} navigate={navigate} />
         <EditorialSpread lang={lang} />
         <CatalogBand lang={lang} navigate={navigate} />
       </>}
       {path === 'products' && <ProductGrid lang={lang} navigate={navigate} openProduct={openProduct} initialCat={catHint} onCatChange={replaceCat} />}
       {path === 'product' && product && <ProductDetail lang={lang} product={product} onBack={() => navigate('products')} navigate={navigate} />}
       {path === 'product' && !product && <section className="section"><p className="lead">{lang === 'tr' ? 'Yükleniyor…' : 'Loading…'}</p></section>}
+      {path === 'references' && <ReferencesPage lang={lang} />}
       {path === 'about' && <About lang={lang} navigate={navigate} />}
       {path === 'contact' && <Contact lang={lang} />}
       {path === 'catalog' && <CatalogPage lang={lang} navigate={navigate} />}
