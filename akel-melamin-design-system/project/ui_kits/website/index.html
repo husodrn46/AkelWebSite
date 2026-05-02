@@ -3862,6 +3862,7 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
             const sz = sizeTag(p);
             const name = sz ? `${baseName} · ${sz}` : baseName;
             const dotFor = (v) => v.renk === 'siyah' ? 'black' : v.renk === 'beyaz' ? 'white' : 'custom';
+            const cardPhotoBase = p.sade_foto_dosya_adi || p.foto_dosya_adi;
             return (
               <div
                 key={p.foto_dosya_adi || p.sku}
@@ -3878,10 +3879,10 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
                 tabIndex="0"
               >
                 <div className={`product-card__ph product-card__ph--${i % 4}`} style={{'--sz-scale': sizeScale(p)}} aria-hidden="true">
-                  {p.foto_dosya_adi && (
+                  {cardPhotoBase && (
                     <img
                       className="product-card__photo"
-                      src={`./img/${p.foto_dosya_adi}.webp`}
+                      src={`./img/${cardPhotoBase}.webp`}
                       alt={name}
                       loading={i < 6 ? 'eager' : 'lazy'}
                       fetchpriority={i < 3 ? 'high' : 'auto'}
@@ -3892,7 +3893,7 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
                       onError={(e) => {
                         if (!e.target.__triedPng) {
                           e.target.__triedPng = true;
-                          e.target.src = `./img/${p.foto_dosya_adi}.png`;
+                          e.target.src = `./img/${cardPhotoBase}.png`;
                         } else { e.target.style.display = 'none'; }
                       }}
                     />
