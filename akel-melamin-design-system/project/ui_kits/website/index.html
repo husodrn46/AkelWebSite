@@ -676,16 +676,15 @@ body::before {
   50%      { transform: translateY(6px) rotate(-30deg); }
 }
 
-/* Category card hover — photo zoom + lift rotate */
+/* Category card hover — matches product diagonal lift */
 .cat-card { perspective: 1000px; }
-.cat-card:hover { transform: translateY(-4px); }
-.cat-card__ph { transition: transform 420ms var(--ease-out), box-shadow 320ms var(--ease-out); }
-.cat-card:hover .cat-card__ph { transform: rotate(-0.8deg) scale(1.01); }
+.cat-card__ph { transition: transform 380ms var(--ease-out), box-shadow 320ms var(--ease-out); }
+.cat-card:hover .cat-card__ph { transform: translate(-7px, -7px) rotate(-0.35deg); }
 
-/* Product card hover — price-style reveal from bottom */
+/* Product card hover — diagonal lift toward the brand corner */
 .product-card { position: relative; overflow: visible; }
 .product-card__ph { transform: translateZ(0); transition: transform 380ms var(--ease-out), box-shadow 320ms var(--ease-out); }
-.product-card:hover .product-card__ph { transform: translateY(-6px) rotate(0.4deg); }
+.product-card:hover .product-card__ph { transform: translate(-7px, -7px) rotate(-0.35deg); }
 
 /* Stats big-number — rolodex-style number flicker on count */
 .stats-strip__big {
@@ -1213,19 +1212,78 @@ body { overflow-x: hidden; }
   background: none; border: 0; padding: 0; text-align: left; cursor: pointer;
   transition: transform var(--dur-med) var(--ease-out);
   color: inherit; text-decoration: none;
+  position: relative; overflow: visible;
 }
-.cat-card:hover { transform: translateY(-2px); }
-.cat-card:hover .cat-card__ph { box-shadow: var(--shadow-3); }
+.cat-card::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px solid rgba(205,24,30,0.22);
+  border-radius: 4px;
+  background:
+    linear-gradient(135deg, rgba(205,24,30,0.10), rgba(17,17,16,0.025));
+  box-shadow: 0 18px 30px rgba(17,17,16,0.07);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(3px, 3px);
+  transition: opacity var(--dur-med) var(--ease-out), transform 380ms var(--ease-out);
+  z-index: 0;
+}
+.cat-card:hover { transform: translate(-2px, -2px); }
+.cat-card:hover::before {
+  opacity: 1;
+  transform: translate(11px, 11px);
+}
+.cat-card:focus-visible {
+  outline: 2px solid var(--red);
+  outline-offset: 6px;
+}
+.cat-card:hover .cat-card__ph {
+  border-color: rgba(17,17,16,0.36);
+  box-shadow:
+    inset 0 0 0 8px rgba(255,255,255,0.74),
+    var(--shadow-3);
+}
 .cat-card__ph {
-  aspect-ratio: 4/3; background: var(--paper);
+  aspect-ratio: 4/3; background: #fff;
+  border: 1px solid rgba(17,17,16,0.2);
   border-radius: 4px; overflow: hidden;
   display: grid; place-items: center;
-  box-shadow: var(--shadow-1);
-  transition: box-shadow var(--dur-med) var(--ease-out);
-  position: relative;
+  box-shadow:
+    inset 0 0 0 8px rgba(255,255,255,0.7),
+    var(--shadow-1);
+  transition: transform 380ms var(--ease-out), box-shadow var(--dur-med) var(--ease-out), border-color var(--dur-fast) var(--ease-out);
+  position: relative; z-index: 1;
+}
+.cat-card__ph::before,
+.cat-card__ph::after {
+  content: "";
+  position: absolute;
+  pointer-events: none;
+  z-index: 3;
+}
+.cat-card__ph::before {
+  inset: 9px;
+  background:
+    linear-gradient(var(--ink), var(--ink)) left top / 40px 1px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) left top / 1px 40px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) right bottom / 40px 1px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) right bottom / 1px 40px no-repeat;
+  opacity: 0.64;
+}
+.cat-card__ph::after {
+  inset: 12px;
+  background:
+    linear-gradient(var(--red), var(--red)) left top / 28px 3px no-repeat,
+    linear-gradient(var(--red), var(--red)) left top / 3px 28px no-repeat,
+    linear-gradient(var(--red), var(--red)) right bottom / 28px 3px no-repeat,
+    linear-gradient(var(--red), var(--red)) right bottom / 3px 28px no-repeat;
 }
 .cat-card__foot {
   padding: 14px 2px 0; display: flex; justify-content: space-between; align-items: baseline;
+  position: relative; z-index: 1;
 }
 .cat-card__label {
   font-family: var(--font-display); font-weight: 700; font-size: 18px;
@@ -1246,6 +1304,7 @@ body { overflow-x: hidden; }
 
 .cat-card__photo {
   width: 100%; height: 100%; object-fit: cover;
+  position: relative; z-index: 2;
   transition: transform var(--dur-slow) var(--ease-out);
 }
 .cat-card:hover .cat-card__photo { transform: scale(1.03); }
@@ -1675,28 +1734,48 @@ body { overflow-x: hidden; }
   display: flex; flex-direction: column;
   transition: transform var(--dur-med) var(--ease-out);
 }
-.product-card:hover { transform: translateY(-2px); }
+.product-card::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border: 1px solid rgba(205,24,30,0.22);
+  border-radius: 4px;
+  background:
+    linear-gradient(135deg, rgba(205,24,30,0.10), rgba(17,17,16,0.025));
+  box-shadow: 0 18px 30px rgba(17,17,16,0.07);
+  opacity: 0;
+  pointer-events: none;
+  transform: translate(3px, 3px);
+  transition: opacity var(--dur-med) var(--ease-out), transform 380ms var(--ease-out);
+  z-index: 0;
+}
+.product-card:hover { transform: translate(-2px, -2px); }
+.product-card:hover::before {
+  opacity: 1;
+  transform: translate(11px, 11px);
+}
 .product-card:focus-visible {
   outline: 2px solid var(--red);
   outline-offset: 6px;
 }
 .product-card:hover .product-card__ph {
   box-shadow:
-    inset 0 0 0 6px #fff,
-    inset 0 0 0 7px rgba(205,24,30,0.88),
+    inset 0 0 0 8px rgba(255,255,255,0.76),
     var(--shadow-3);
+  border-color: rgba(17,17,16,0.42);
 }
 .product-card__ph {
   aspect-ratio: 4/3;
-  background: linear-gradient(180deg, #fff 0%, var(--paper-soft) 100%);
-  border: 1px solid var(--ink);
+  background: #fff;
+  border: 1px solid rgba(17,17,16,0.22);
   border-radius: 4px; display: grid; place-items: center;
   box-shadow:
-    inset 0 0 0 6px #fff,
-    inset 0 0 0 7px rgba(205,24,30,0.72),
+    inset 0 0 0 8px rgba(255,255,255,0.72),
     var(--shadow-1);
   transition: transform 380ms var(--ease-out), box-shadow var(--dur-med), border-color var(--dur-fast);
-  position: relative; overflow: hidden;
+  position: relative; overflow: hidden; z-index: 1;
 }
 .product-card__ph::before,
 .product-card__ph::after {
@@ -1707,14 +1786,22 @@ body { overflow-x: hidden; }
 }
 .product-card__ph::before {
   inset: 9px;
-  border: 1px solid rgba(17,17,16,0.14);
+  background:
+    linear-gradient(var(--ink), var(--ink)) left top / 48px 1px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) left top / 1px 48px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) right bottom / 48px 1px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) right bottom / 1px 48px no-repeat;
+  opacity: 0.72;
 }
 .product-card__ph::after {
-  left: 9px; top: 9px;
-  width: 44px; height: 3px;
-  background: var(--red);
+  inset: 12px;
+  background:
+    linear-gradient(var(--red), var(--red)) left top / 34px 3px no-repeat,
+    linear-gradient(var(--red), var(--red)) left top / 3px 34px no-repeat,
+    linear-gradient(var(--red), var(--red)) right bottom / 34px 3px no-repeat,
+    linear-gradient(var(--red), var(--red)) right bottom / 3px 34px no-repeat;
 }
-.product-card__body { padding: 14px 4px 0; display: flex; flex-direction: column; gap: 6px; }
+.product-card__body { position: relative; z-index: 1; padding: 14px 4px 0; display: flex; flex-direction: column; gap: 6px; }
 .product-card__meta { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
 .product-card__eyebrow { font-family: var(--font-display); font-weight: 600; font-size: 10px; letter-spacing: 0.14em; color: var(--red); }
 .product-card__name {
@@ -1813,12 +1900,11 @@ body { overflow-x: hidden; }
 .pd { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; margin-top: 24px; }
 .pd__hero {
   aspect-ratio: var(--pd-frame-aspect, 1 / 1); min-height: 520px;
-  background: linear-gradient(180deg, #fff 0%, var(--paper-soft) 100%);
-  border: 1px solid var(--ink);
+  background: #fff;
+  border: 1px solid rgba(17,17,16,0.22);
   border-radius: 4px; display: grid; place-items: center;
   box-shadow:
-    inset 0 0 0 8px #fff,
-    inset 0 0 0 9px rgba(205,24,30,0.72),
+    inset 0 0 0 10px rgba(255,255,255,0.72),
     var(--shadow-1);
   position: relative; overflow: hidden;
 }
@@ -1830,14 +1916,22 @@ body { overflow-x: hidden; }
 }
 .pd__hero::before {
   inset: 12px;
-  border: 1px solid rgba(17,17,16,0.14);
-  z-index: 1;
+  background:
+    linear-gradient(var(--ink), var(--ink)) left top / 64px 1px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) left top / 1px 64px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) right bottom / 64px 1px no-repeat,
+    linear-gradient(var(--ink), var(--ink)) right bottom / 1px 64px no-repeat;
+  opacity: 0.72;
+  z-index: 3;
 }
 .pd__hero::after {
-  left: 12px; top: 12px;
-  width: 58px; height: 4px;
-  background: var(--red);
-  z-index: 3;
+  inset: 16px;
+  background:
+    linear-gradient(var(--red), var(--red)) left top / 46px 4px no-repeat,
+    linear-gradient(var(--red), var(--red)) left top / 4px 46px no-repeat,
+    linear-gradient(var(--red), var(--red)) right bottom / 46px 4px no-repeat,
+    linear-gradient(var(--red), var(--red)) right bottom / 4px 46px no-repeat;
+  z-index: 4;
 }
 .pd__caption { position: absolute; bottom: 16px; left: 20px; color: var(--slate); z-index: 4; }
 .pd__photo { position: relative; z-index: 2; }
@@ -2463,13 +2557,21 @@ body { overflow-x: hidden; }
 
 /* Disable hover-only animations on touch devices regardless of width */
 @media (hover: none) {
+  .cat-card::before { display: none; }
   .cat-card:hover { transform: none; }
+  .cat-card:hover .cat-card__ph {
+    transform: none;
+    border-color: rgba(17,17,16,0.2);
+    box-shadow:
+      inset 0 0 0 8px rgba(255,255,255,0.7),
+      var(--shadow-1);
+  }
+  .product-card::before { display: none; }
   .product-card:hover { transform: none; }
   .product-card:hover .product-card__ph {
     transform: none;
     box-shadow:
-      inset 0 0 0 6px #fff,
-      inset 0 0 0 7px rgba(205,24,30,0.72),
+      inset 0 0 0 8px rgba(255,255,255,0.72),
       var(--shadow-1);
   }
   .tilt { transform: none !important; }
@@ -3325,13 +3427,13 @@ function Categories({ lang, navigate }) {
       { key: 'international',label: 'International Seri',  count: 'Yuvarlak klasik',        shape: 'round',  photo: 'international-125' },
       { key: 'elegant',      label: 'Elegant Seri',        count: 'Taş dokulu',             shape: 'trays',  photo: 'elegant-347' },
       { key: 'acikbufe',     label: 'Açık Büfe · Servis',  count: 'Sunum & catering',       shape: 'serve',  photo: 'acikbufe-402' },
-      { key: 'tepsiler',     label: 'Tepsiler',            count: 'Mermer · baskılı',       shape: 'trays',  photo: 'tepsiler-350' },
+      { key: 'tepsiler',     label: 'Tepsiler',            count: 'Mermer · baskılı',       shape: 'trays',  photo: 'tepsiler-204' },
       { key: 'eco',          label: 'Eco Seri',            count: 'Ekonomik günlük',        shape: 'plates', photo: 'eco-019' },
       { key: 'diplomat',     label: 'Diplomat Kayık Seri', count: 'Uzun servis',            shape: 'serve',  photo: 'diplomat-093' },
       { key: 'gunluk',       label: 'Günlük Desenli Seri', count: 'Desen baskı',            shape: 'bowls',  photo: 'gunluk-327d' },
       { key: 'masaustu',     label: 'Masaüstü Aksesuarları', count: 'Tuzluk · şekerlik',    shape: 'serve',  photo: 'masaustu-400' },
       { key: 'kids',         label: 'Çocuk Tabakları',     count: 'Bölmeli & eğlenceli',    shape: 'kids',   photo: 'kids-150d' },
-      { key: 'bolmeli',      label: 'Bölmeli Tabaklar',    count: 'Porsiyon kontrolü',      shape: 'plates', photo: 'bolmeli-150' },
+      { key: 'bolmeli',      label: 'Bölmeli Tabaklar',    count: 'Porsiyon kontrolü',      shape: 'plates', photo: 'bolmeli-423' },
       { key: 'logolu',       label: 'Özel Logolu Ürünler', count: 'Baskılı · kurumsal',     shape: 'deco' },
     ],
     en: [
@@ -3340,13 +3442,13 @@ function Categories({ lang, navigate }) {
       { key: 'international',label: 'International Series',     count: 'Classic round',         shape: 'round',  photo: 'international-125' },
       { key: 'elegant',      label: 'Elegant Series',           count: 'Stone-textured',        shape: 'trays',  photo: 'elegant-347' },
       { key: 'acikbufe',     label: 'Buffet · Serving',         count: 'Buffet service',        shape: 'serve',  photo: 'acikbufe-402' },
-      { key: 'tepsiler',     label: 'Trays',                    count: 'Marble · patterned',    shape: 'trays',  photo: 'tepsiler-350' },
+      { key: 'tepsiler',     label: 'Trays',                    count: 'Marble · patterned',    shape: 'trays',  photo: 'tepsiler-204' },
       { key: 'eco',          label: 'Eco Series',               count: 'Everyday use',          shape: 'plates', photo: 'eco-019' },
       { key: 'diplomat',     label: 'Diplomat Oval Serving Range', count: 'Oval serving',       shape: 'serve',  photo: 'diplomat-093' },
       { key: 'gunluk',       label: 'Everyday Pattern Series',  count: 'Patterned finish',      shape: 'bowls',  photo: 'gunluk-327d' },
       { key: 'masaustu',     label: 'Tabletop Accessories',     count: 'Salt cellar · sugar bowl · cruet',  shape: 'serve',  photo: 'masaustu-400' },
       { key: 'kids',         label: 'Kids\' Plates',            count: 'Compartment · playful', shape: 'kids',   photo: 'kids-150d' },
-      { key: 'bolmeli',      label: 'Compartment Plates',       count: 'Portion control',       shape: 'plates', photo: 'bolmeli-150' },
+      { key: 'bolmeli',      label: 'Compartment Plates',       count: 'Portion control',       shape: 'plates', photo: 'bolmeli-423' },
       { key: 'logolu',       label: 'Custom Logo Products',     count: 'Printed · branded',     shape: 'deco' },
     ],
   }[lang];
