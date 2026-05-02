@@ -1812,7 +1812,7 @@ body { overflow-x: hidden; }
 /* ---------- PRODUCT DETAIL ---------- */
 .pd { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; margin-top: 24px; }
 .pd__hero {
-  aspect-ratio: 1 / 1; min-height: 520px;
+  aspect-ratio: var(--pd-frame-aspect, 1 / 1); min-height: 520px;
   background: linear-gradient(180deg, #fff 0%, var(--paper-soft) 100%);
   border: 1px solid var(--ink);
   border-radius: 4px; display: grid; place-items: center;
@@ -1875,8 +1875,8 @@ body { overflow-x: hidden; }
   padding: 6%;
   transition: opacity 240ms var(--ease-out);
 }
-.pd__hero--imaj {
-  aspect-ratio: 3 / 2;
+.pd__hero--imaj,
+.pd__hero--plain {
   min-height: 0;
 }
 .pd__photo--imaj {
@@ -4034,6 +4034,9 @@ function ProductDetail({ lang, product, onBack, navigate }) {
   React.useEffect(() => { setGalleryIdx(0); }, [product.sku]);
   const activeImage = gallery[galleryIdx] || gallery[0];
   const activeIsImaj = activeImage?.kind === 'imaj';
+  const [frameAspect, setFrameAspect] = React.useState(null);
+  React.useEffect(() => { setFrameAspect(null); }, [activeImage?.src]);
+  const fallbackAspect = activeIsImaj ? '3 / 2' : '1 / 1';
   const galleryLabel = (kind) => {
     if (kind === 'imaj') return t.images;
     return t.plainImage;
@@ -4047,6 +4050,7 @@ function ProductDetail({ lang, product, onBack, navigate }) {
         <div className="pd__gallery" data-anim="fade-up">
           <div
             className={`pd__hero pd__hero--${activeImage?.kind || 'product'}`}
+            style={{'--pd-frame-aspect': frameAspect || fallbackAspect}}
             aria-hidden="true"
             onTouchStart={(e) => { e.currentTarget.__tx = e.touches[0].clientX; }}
             onTouchEnd={(e) => {
@@ -4065,7 +4069,13 @@ function ProductDetail({ lang, product, onBack, navigate }) {
                 width={activeIsImaj ? '1400' : '800'}
                 height={activeIsImaj ? '1000' : '800'}
                 decoding="async"
-                onLoad={(e) => e.target.closest('.pd__hero').classList.add('is-photo-loaded')}
+                onLoad={(e) => {
+                  const img = e.currentTarget;
+                  if (img.naturalWidth && img.naturalHeight) {
+                    setFrameAspect(`${img.naturalWidth} / ${img.naturalHeight}`);
+                  }
+                  img.closest('.pd__hero').classList.add('is-photo-loaded');
+                }}
                 onError={(e) => {
                   if (activeImage.kind === 'imaj' && product.foto_dosya_adi && !e.target.__triedPng) {
                     e.target.__triedPng = true;
