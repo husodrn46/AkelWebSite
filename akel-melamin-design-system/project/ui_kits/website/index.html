@@ -1880,8 +1880,10 @@ body { overflow-x: hidden; }
   min-height: 0;
 }
 .pd__photo--imaj {
+  width: calc(100% - clamp(48px, 7vw, 96px));
+  height: calc(100% - clamp(48px, 7vw, 96px));
   object-fit: contain;
-  padding: 12px;
+  padding: 0;
 }
 .pd__nav {
   position: absolute; bottom: 16px; right: 16px;
