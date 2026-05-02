@@ -1071,20 +1071,40 @@ body { overflow-x: hidden; }
   content: "";
   position: absolute;
   inset: 0 var(--page-gutter);
-  border: 1px solid var(--border);
+  border: 1px solid rgba(17,17,16,0.42);
   border-radius: 4px;
-  background: var(--paper);
-  box-shadow: var(--shadow-2);
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.9), rgba(247,246,243,0.72)),
+    var(--paper);
+  box-shadow:
+    inset 0 0 0 8px rgba(255,255,255,0.72),
+    inset 0 0 0 9px rgba(17,17,16,0.08),
+    var(--shadow-2);
   pointer-events: none;
   z-index: 0;
+}
+.hero__visual::after {
+  content: "";
+  position: absolute;
+  inset: 12px calc(var(--page-gutter) + 12px);
+  border: 1px solid rgba(17,17,16,0.14);
+  border-radius: 2px;
+  background:
+    linear-gradient(var(--red), var(--red)) left top / 70px 3px no-repeat,
+    linear-gradient(var(--red), var(--red)) left top / 3px 42px no-repeat,
+    linear-gradient(var(--red), var(--red)) right bottom / 70px 3px no-repeat,
+    linear-gradient(var(--red), var(--red)) right bottom / 3px 42px no-repeat,
+    linear-gradient(rgba(17,17,16,0.32), rgba(17,17,16,0.32)) right top / 42px 1px no-repeat,
+    linear-gradient(rgba(17,17,16,0.32), rgba(17,17,16,0.32)) right top / 1px 42px no-repeat;
+  pointer-events: none;
+  z-index: 4;
 }
 .hero__visual > * { position: relative; z-index: 1; }
 .hero__photo-stack {
   position: absolute;
-  left: var(--page-gutter);
-  right: var(--page-gutter);
-  inset: 0 var(--page-gutter);
-  border-radius: 4px;
+  inset: 12px calc(var(--page-gutter) + 12px);
+  border-radius: 2px;
+  box-shadow: inset 0 0 0 1px rgba(17,17,16,0.08);
 }
 @media (max-width: 720px) { .hero__visual { height: clamp(320px, 50vh, 520px); } }
 .hero__photo {
@@ -1095,14 +1115,16 @@ body { overflow-x: hidden; }
   object-position: center 52%;
 }
 .hero__visual-crop {
-  position: absolute; top: 20px; left: calc(var(--page-gutter) + 20px);
+  position: absolute; top: 28px; left: calc(var(--page-gutter) + 28px);
   font-family: var(--font-mono); font-size: 10.5px;
   letter-spacing: 0.18em; color: var(--slate);
   padding: 6px 10px; background: rgba(247,246,243,0.88);
   border-radius: 2px; backdrop-filter: blur(6px);
+  z-index: 5;
 }
 .hero__photo-nav {
-  bottom: 20px; right: calc(var(--page-gutter) + 20px);
+  bottom: 28px; right: calc(var(--page-gutter) + 28px);
+  z-index: 5;
 }
 
 /* ORCHESTRATED HERO REVEAL — one choreographed page load
@@ -2393,10 +2415,11 @@ body { overflow-x: hidden; }
   .hero__cta .btn { width: auto; }
   .hero__visual { height: clamp(260px, 44vh, 440px); padding: 0 var(--page-gutter); margin-bottom: var(--space-6); }
   .hero__visual::before { inset: 0 var(--page-gutter); }
-  .hero__photo-stack { inset: 0 var(--page-gutter); }
+  .hero__visual::after { inset: 10px calc(var(--page-gutter) + 10px); }
+  .hero__photo-stack { inset: 10px calc(var(--page-gutter) + 10px); }
   .hero__ring { display: none; }
-  .hero__visual-crop { top: 12px; left: calc(var(--page-gutter) + 12px); font-size: 9.5px; padding: 4px 8px; }
-  .hero__photo-nav { bottom: 12px; right: calc(var(--page-gutter) + 12px); }
+  .hero__visual-crop { top: 22px; left: calc(var(--page-gutter) + 22px); font-size: 9.5px; padding: 4px 8px; }
+  .hero__photo-nav { bottom: 22px; right: calc(var(--page-gutter) + 22px); }
   .deco-reg { display: none; }
 
   /* Stats — 2 column with horizontal dividers */
@@ -3123,19 +3146,35 @@ function Hero({ lang, navigate }) {
 
   const photos = [
     {
-      src: './img/akel-hero-1.webp',
+      src: './img/imaj-akel0225.webp',
+      displayLabel: lang === 'tr' ? 'Akel Melamin - Kare seri sofra sunumu' : 'Akel Melamin - Square series table setting',
+      displayTag:   lang === 'tr' ? 'KARE SERI - SOFRA'                     : 'SQUARE - TABLE',
       label: lang === 'tr' ? 'Akel Melamin · Restoran Sofra Serisi' : 'Akel Melamin · Restaurant Tabletop',
       tag:   lang === 'tr' ? 'SOFRA · SERVİS'                        : 'TABLE · SERVICE',
     },
     {
-      src: './img/akel-hero-2.webp',
+      src: './img/imaj-akel0514.webp',
+      displayLabel: lang === 'tr' ? 'Akel Melamin - Renkli servis sunumu' : 'Akel Melamin - Color service presentation',
+      displayTag:   lang === 'tr' ? 'RENKLI - SERVIS'                    : 'COLOR - SERVICE',
       label: lang === 'tr' ? 'Akel Melamin · Yemek Servisi'    : 'Akel Melamin · Dining Service',
       tag:   lang === 'tr' ? 'YEMEK · SUNUM'                   : 'DINING · PRESENTATION',
     },
     {
-      src: './img/akel-hero-3.webp',
+      src: './img/imaj-akel0543.webp',
+      displayLabel: lang === 'tr' ? 'Akel Melamin - Siyah kare seri' : 'Akel Melamin - Black square series',
+      displayTag:   lang === 'tr' ? 'SIYAH - KARE'                   : 'BLACK - SQUARE',
       label: lang === 'tr' ? 'Akel Melamin · Kase Serisi' : 'Akel Melamin · Bowl Series',
       tag:   lang === 'tr' ? 'KASE · KOLEKSİYON'          : 'BOWL · COLLECTION',
+    },
+    {
+      src: './img/imaj-akel0481.webp',
+      label: lang === 'tr' ? 'Akel Melamin · Desenli servis koleksiyonu' : 'Akel Melamin · Patterned service collection',
+      tag:   lang === 'tr' ? 'DESENLI · SUNUM'                          : 'PATTERN · SERVICE',
+    },
+    {
+      src: './img/imaj-akel0492.webp',
+      label: lang === 'tr' ? 'Akel Melamin · Modern renkli sunum' : 'Akel Melamin · Modern color presentation',
+      tag:   lang === 'tr' ? 'MODERN · SUNUM'                     : 'MODERN · PRESENTATION',
     },
   ];
   const [active, setActive] = React.useState(0);
@@ -3187,7 +3226,7 @@ function Hero({ lang, navigate }) {
               key={p.src}
               className={i === active ? 'is-active' : ''}
               src={p.src}
-              alt={p.label}
+              alt={p.displayLabel || p.label}
               width="1600"
               height="1600"
               loading={i === 0 ? 'eager' : 'lazy'}
@@ -3195,7 +3234,7 @@ function Hero({ lang, navigate }) {
             />
           ))}
         </div>
-        <span className="hero__visual-crop">{photos[active].tag}</span>
+        <span className="hero__visual-crop">{photos[active].displayTag || photos[active].tag}</span>
         <div className="hero__photo-nav" role="tablist" aria-label={lang === 'tr' ? 'Ürün galerisi' : 'Product gallery'}>
           {photos.map((p, i) => (
             <button
@@ -3203,7 +3242,7 @@ function Hero({ lang, navigate }) {
               type="button"
               role="tab"
               aria-selected={i === active}
-              aria-label={`${lang === 'tr' ? 'Fotoğraf' : 'Photo'} ${i + 1}: ${p.label}`}
+              aria-label={`${lang === 'tr' ? 'Fotoğraf' : 'Photo'} ${i + 1}: ${p.displayLabel || p.label}`}
               className={i === active ? 'is-on' : ''}
               onClick={() => setActive(i)}
             />
