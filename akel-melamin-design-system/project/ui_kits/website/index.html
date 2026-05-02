@@ -1731,13 +1731,13 @@ body { overflow-x: hidden; }
 }
 
 .product-card__photo {
-  width: 100%; height: 100%; object-fit: contain;
-  padding: 4%;
-  transform: scale(var(--sz-scale, 1));
+  width: 84%; height: 84%; object-fit: contain;
+  padding: 0;
+  transform: none;
   transition: transform var(--dur-slow) var(--ease-out);
   position: relative; z-index: 2;
 }
-.product-card:hover .product-card__photo { transform: scale(calc(var(--sz-scale, 1) * 1.04)); }
+.product-card:hover .product-card__photo { transform: scale(1.025); }
 
 /* Photo-missing placeholder — SKU label on tinted ph bg. Visible by default;
    hidden once onLoad tags the container with .is-photo-loaded. */
@@ -1875,9 +1875,13 @@ body { overflow-x: hidden; }
   padding: 6%;
   transition: opacity 240ms var(--ease-out);
 }
-.pd__photo--lifestyle {
-  object-fit: cover;
-  padding: 0;
+.pd__hero--imaj {
+  aspect-ratio: 4 / 3;
+  min-height: 0;
+}
+.pd__photo--imaj {
+  object-fit: contain;
+  padding: 12px;
 }
 .pd__nav {
   position: absolute; bottom: 16px; right: 16px;
@@ -3703,26 +3707,6 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
   // Only active products
   const visible = data.products.filter(p => (p.aktif || 'evet') !== 'hayir');
 
-  // Scale each card's photo relative to the biggest item IN ITS CATEGORY so
-  // a 5 cm shaker reads smaller than the 11 cm saucer next to it, not the
-  // same size. Size is the largest physical dimension: cap_mm for round,
-  // max(en,boy,yukseklik) otherwise (shakers are taller than wide).
-  const sizeOf = (p) => p.cap_mm || Math.max(p.en_mm || 0, p.boy_mm || 0, p.yukseklik_mm || 0);
-  const categoryMax = {};
-  for (const p of visible) {
-    const kat = p.kategori || '';
-    const sz = sizeOf(p);
-    if (sz) categoryMax[kat] = Math.max(categoryMax[kat] || 0, sz);
-  }
-  const sizeScale = (p) => {
-    const max = categoryMax[p.kategori || ''];
-    const sz = sizeOf(p);
-    if (!max || !sz) return 0.85;
-    // Ceiling 0.88 keeps even the biggest item (e.g. 222 Katlı Sunumluk
-    // at 28 cm) from flooding the card; floor 0.55 keeps shakers readable.
-    return Math.min(0.88, Math.max(0.55, (sz / max) * 0.88));
-  };
-
   // Filter chips: derive from categories actually present in data
   const usedCats = new Set(visible.map(p => p.kategori));
   const filters = [
@@ -3878,7 +3862,7 @@ function ProductGrid({ lang, navigate, openProduct, initialCat, onCatChange }) {
                 role="button"
                 tabIndex="0"
               >
-                <div className={`product-card__ph product-card__ph--${i % 4}`} style={{'--sz-scale': sizeScale(p)}} aria-hidden="true">
+                <div className={`product-card__ph product-card__ph--${i % 4}`} aria-hidden="true">
                   {cardPhotoBase && (
                     <img
                       className="product-card__photo"
@@ -4047,7 +4031,7 @@ function ProductDetail({ lang, product, onBack, navigate }) {
   const [galleryIdx, setGalleryIdx] = React.useState(0);
   React.useEffect(() => { setGalleryIdx(0); }, [product.sku]);
   const activeImage = gallery[galleryIdx] || gallery[0];
-  const activeIsCover = activeImage?.kind === 'imaj';
+  const activeIsImaj = activeImage?.kind === 'imaj';
   const galleryLabel = (kind) => {
     if (kind === 'imaj') return t.images;
     return t.plainImage;
@@ -4073,11 +4057,11 @@ function ProductDetail({ lang, product, onBack, navigate }) {
           >
             {activeImage && (
               <img
-                className={`pd__photo ${activeIsCover ? 'pd__photo--lifestyle' : ''}`}
+                className={`pd__photo ${activeIsImaj ? 'pd__photo--imaj' : ''}`}
                 src={activeImage.src}
                 alt={activeImage.kind === 'plain' ? galleryLabel(activeImage.kind) : productName}
-                width={activeIsCover ? '1400' : '800'}
-                height={activeIsCover ? '1000' : '800'}
+                width={activeIsImaj ? '1400' : '800'}
+                height={activeIsImaj ? '1000' : '800'}
                 decoding="async"
                 onLoad={(e) => e.target.closest('.pd__hero').classList.add('is-photo-loaded')}
                 onError={(e) => {
