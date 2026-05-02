@@ -62,6 +62,13 @@ AKEL*.JPG
 # Local-only assets (screenshots, zips)
 output/
 *.zip
+health-report/
+edge-temp-matcher/
+matcher-desktop*.png
+product-image-matcher/screenshots/
+product-image-matcher/site-image-backup/
+product-image-matcher/server-*.log
+akel-melamin-design-system/project/ui_kits/website/img/imaj-*.webp
 
 # Local Claude handoff notes (internal)
 .claude-notes/

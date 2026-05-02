@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Akel imaj eslestirme</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wdth,wght@12..96,85,400;12..96,85,600;12..96,85,700;12..96,95,800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./styles.css?v=2">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <span class="brand-mark">AKL</span>
+        <div>
+          <p class="eyebrow">Imaj eslestirme</p>
+          <h1>Urun ile gorseli eslestir</h1>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <span class="status-pill" id="changeCount">0 degisiklik</span>
+        <button class="icon-button" id="exportJson" type="button" disabled title="JSON indir">
+          <i data-lucide="braces"></i>
+          <span>JSON</span>
+        </button>
+        <button class="icon-button" id="exportCsv" type="button" disabled title="CSV indir">
+          <i data-lucide="table"></i>
+          <span>CSV</span>
+        </button>
+        <button class="icon-button icon-button--ghost" id="resetDraft" type="button" disabled title="Taslagi temizle">
+          <i data-lucide="rotate-ccw"></i>
+          <span>Sifirla</span>
+        </button>
+      </div>
+    </header>
+
+    <main class="workspace">
+      <aside class="rail" aria-label="Seriler ve urunler">
+        <section class="rail-section rail-section--series">
+          <div class="section-head">
+            <p class="eyebrow">Seriler</p>
+            <span id="seriesMeta" class="meta">Yukleniyor</span>
+          </div>
+          <div class="series-list" id="seriesList"></div>
+        </section>
+
+        <section class="rail-section rail-section--products">
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Urunler</p>
+              <h2 id="activeSeriesName">Tum urunler</h2>
+            </div>
+            <span id="productMeta" class="meta"></span>
+          </div>
+          <label class="search-field">
+            <i data-lucide="search"></i>
+            <input id="productSearch" type="search" autocomplete="off" placeholder="SKU veya urun ara">
+          </label>
+          <div class="product-list" id="productList"></div>
+        </section>
+      </aside>
+
+      <section class="stage" aria-label="Gorsel secimi">
+        <div class="selection-strip" id="selectionStrip">
+          <div class="empty-selection">
+            <i data-lucide="mouse-pointer-2"></i>
+            <span>Once soldan bir urun sec.</span>
+          </div>
+        </div>
+
+        <div class="image-toolbar">
+          <div>
+            <p class="eyebrow">Imajlar</p>
+            <h2 id="imageTitle">Gorsel havuzu</h2>
+          </div>
+          <div class="toolbar-controls">
+            <div class="segmented" role="group" aria-label="Gorsel kapsami">
+              <button type="button" data-image-mode="series" class="is-active">Seri</button>
+              <button type="button" data-image-mode="all">Tumu</button>
+            </div>
+            <label class="search-field search-field--compact">
+              <i data-lucide="search"></i>
+              <input id="imageSearch" type="search" autocomplete="off" placeholder="Gorsel ara">
+            </label>
+          </div>
+        </div>
+
+        <div class="image-grid" id="imageGrid"></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script src="./data.js"></script>
+  <script src="./source-images.js"></script>
+  <script src="./app.js"></script>
+  <script src="https://unpkg.com/lucide@latest" defer></script>
+</body>
+</html>

@@ -207,6 +207,9 @@ def main():
                 f"Satır {r} ({row['sku']}): foto dosyası bulunamadı → "
                 f"{photo_name}.jpg|png|webp  ({IMG_DIR})"
             )
+        plain_photo_name = f"sade-{photo_name}"
+        if (IMG_DIR / f"{plain_photo_name}.webp").exists():
+            row["sade_foto_dosya_adi"] = plain_photo_name
 
         # --- Type coercions ---
         for num_key in (

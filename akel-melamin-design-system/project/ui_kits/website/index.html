@@ -3951,7 +3951,9 @@ function ProductDetail({ lang, product, onBack, navigate }) {
         specs: 'Teknik özellikler',
         pack: 'Ambalaj ve lojistik',
         materials: 'Malzeme ve sertifikalar',
-        images: 'Stüdyo referans görseli',
+        images: 'İmaj görseli',
+        plainImage: 'Sade ürün görseli',
+        inUse: 'Kullanımda',
         color: 'Renk', useArea: 'Kullanım alanı', logo: 'Özel logolu',
         yes: 'Evet', no: 'Hayır',
         ctaEyebrow: 'Teklif & numune',
@@ -3971,7 +3973,9 @@ function ProductDetail({ lang, product, onBack, navigate }) {
         specs: 'Technical specs',
         pack: 'Packaging & logistics',
         materials: 'Material & certifications',
-        images: 'Studio reference image',
+        images: 'Image photo',
+        plainImage: 'Plain product photo',
+        inUse: 'In use',
         color: 'Color', useArea: 'Use case', logo: 'Custom logo',
         yes: 'Yes', no: 'No',
         ctaEyebrow: 'Quote & samples',
@@ -4020,6 +4024,7 @@ function ProductDetail({ lang, product, onBack, navigate }) {
   if (product.kullanim_alani) pack.push([t.useArea, product.kullanim_alani]);
 
   const photoSrc = product.foto_dosya_adi ? `./img/${product.foto_dosya_adi}.webp` : null;
+  const plainSrc = product.sade_foto_dosya_adi ? `./img/${product.sade_foto_dosya_adi}.webp` : null;
   const productName = lang === 'tr' ? product.ad_tr : (product.ad_en || product.ad_tr);
   const productDesc = (lang === 'tr' ? product.aciklama_tr : product.aciklama_en) || '';
   const compactUse = (product.kullanim_alani || '')
@@ -4035,18 +4040,26 @@ function ProductDetail({ lang, product, onBack, navigate }) {
   ];
   const mailHref = `mailto:info@akelmelamin.com?subject=${encodeURIComponent(`Akel Melamin · ${productName}${product.sku ? ` (${product.sku})` : ''}`)}`;
 
-  // Gallery: product studio shot + one lifestyle imaj keyed on category.
+  // Gallery: selected imaj shot, original plain product shot, and one
+  // lifestyle image keyed on category when available.
   // The lifestyle file won't exist for every category — onError on the <img>
   // hides its thumb, so the user never sees a broken frame.
   const lifestyleSrc = product.kategori ? `./img/lifestyle-${product.kategori}.webp` : null;
   const gallery = [
-    { src: photoSrc, kind: 'product', caption: t.images },
-    ...(lifestyleSrc ? [{ src: lifestyleSrc, kind: 'lifestyle', caption: lang === 'tr' ? 'Kullanımda' : 'In use' }] : []),
+    { src: photoSrc, kind: 'imaj', caption: t.images },
+    ...(plainSrc ? [{ src: plainSrc, kind: 'plain', caption: t.plainImage }] : []),
+    ...(lifestyleSrc ? [{ src: lifestyleSrc, kind: 'lifestyle', caption: t.inUse }] : []),
   ].filter(g => g.src);
   const [galleryIdx, setGalleryIdx] = React.useState(0);
   React.useEffect(() => { setGalleryIdx(0); }, [product.sku]);
   const [lifestyleOk, setLifestyleOk] = React.useState(true);
   const activeImage = gallery[galleryIdx] || gallery[0];
+  const activeIsCover = activeImage?.kind === 'imaj' || activeImage?.kind === 'lifestyle';
+  const galleryLabel = (kind) => {
+    if (kind === 'imaj') return t.images;
+    if (kind === 'plain') return t.plainImage;
+    return t.inUse;
+  };
 
   return (
     <section className="section" data-anim="section">
@@ -4066,25 +4079,27 @@ function ProductDetail({ lang, product, onBack, navigate }) {
               setGalleryIdx(i => (i + (dx < 0 ? 1 : gallery.length - 1)) % gallery.length);
             }}
           >
-            {activeImage?.kind === 'lifestyle' && lifestyleOk && (
-              <img className="pd__photo pd__photo--lifestyle"
-                   src={activeImage.src}
-                   alt=""
-                   width="1400" height="1000" decoding="async"
-                   onLoad={(e) => e.target.closest('.pd__hero').classList.add('is-photo-loaded')}
-                   onError={() => { setLifestyleOk(false); setGalleryIdx(0); }} />
-            )}
-            {activeImage?.kind === 'product' && photoSrc && (
-              <img className="pd__photo" src={photoSrc}
-                   alt={lang === 'tr' ? product.ad_tr : (product.ad_en || product.ad_tr)}
-                   width="800" height="800" decoding="async"
-                   onLoad={(e) => e.target.closest('.pd__hero').classList.add('is-photo-loaded')}
-                   onError={(e) => {
-                     if (!e.target.__triedPng) {
-                       e.target.__triedPng = true;
-                       e.target.src = `./img/${product.foto_dosya_adi}.png`;
-                     } else { e.target.style.display = 'none'; }
-                   }} />
+            {activeImage && (activeImage.kind !== 'lifestyle' || lifestyleOk) && (
+              <img
+                className={`pd__photo ${activeIsCover ? 'pd__photo--lifestyle' : ''}`}
+                src={activeImage.src}
+                alt={activeImage.kind === 'plain' ? galleryLabel(activeImage.kind) : productName}
+                width={activeIsCover ? '1400' : '800'}
+                height={activeIsCover ? '1000' : '800'}
+                decoding="async"
+                onLoad={(e) => e.target.closest('.pd__hero').classList.add('is-photo-loaded')}
+                onError={(e) => {
+                  if (activeImage.kind === 'lifestyle') {
+                    setLifestyleOk(false);
+                    setGalleryIdx(0);
+                  } else if (activeImage.kind === 'imaj' && product.foto_dosya_adi && !e.target.__triedPng) {
+                    e.target.__triedPng = true;
+                    e.target.src = `./img/${product.foto_dosya_adi}.png`;
+                  } else {
+                    e.target.style.display = 'none';
+                  }
+                }}
+              />
             )}
             <div className="pd__placeholder">
               <span className="pd__placeholder-sku">{product.sku}</span>
@@ -4097,7 +4112,7 @@ function ProductDetail({ lang, product, onBack, navigate }) {
                   <button
                     key={i} type="button" role="tab"
                     aria-selected={i === galleryIdx}
-                    aria-label={g.kind === 'lifestyle' ? (lang === 'tr' ? 'Kullanımda' : 'In use') : (lang === 'tr' ? 'Ürün' : 'Product')}
+                    aria-label={galleryLabel(g.kind)}
                     className={i === galleryIdx ? 'is-on' : ''}
                     onClick={() => setGalleryIdx(i)}
                   />
@@ -4112,7 +4127,7 @@ function ProductDetail({ lang, product, onBack, navigate }) {
                   key={i} type="button"
                   className={`pd__thumb pd__thumb--photo ${i === galleryIdx ? 'is-on' : ''}`}
                   onClick={() => setGalleryIdx(i)}
-                  aria-label={g.kind === 'lifestyle' ? (lang === 'tr' ? 'Kullanımda' : 'In use') : (lang === 'tr' ? 'Ürün' : 'Product')}
+                  aria-label={galleryLabel(g.kind)}
                 >
                   <img src={g.src} alt="" loading="lazy" decoding="async"
                        onError={(e) => { e.target.closest('button').style.display = 'none'; }} />
