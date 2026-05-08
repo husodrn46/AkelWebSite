@@ -1453,6 +1453,14 @@ body { overflow-x: hidden; }
 .reference-logo--compact img {
   max-height: 86px;
 }
+.reference-logo-grid .reference-logo:last-child:nth-child(3n + 1),
+.references-page__grid .reference-logo:last-child:nth-child(3n + 1) {
+  grid-column: span 3;
+}
+.reference-logo-grid .reference-logo:last-child:nth-child(3n + 1) img,
+.references-page__grid .reference-logo:last-child:nth-child(3n + 1) img {
+  max-width: min(420px, 82%);
+}
 .reference-logo--dark {
   background: #151514;
   border-color: rgba(17,17,16,0.28);
@@ -2528,6 +2536,8 @@ body { overflow-x: hidden; }
   .stats-strip__small { font-size: 10px; }
   .reference-logo-grid,
   .references-page__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .reference-logo-grid .reference-logo:last-child:nth-child(3n + 1),
+  .references-page__grid .reference-logo:last-child:nth-child(3n + 1) { grid-column: auto; }
   .reference-logo { min-height: 104px; padding: 20px 16px; }
   .reference-logo img { max-height: 68px; }
   .cat-card__label { font-size: 15px; }
@@ -3343,18 +3353,18 @@ window.MarqueeBand = MarqueeBand;
 // never reads as a blank poster.
 function EditorialSpread({ lang }) {
   const t = lang === 'tr'
-    ? { eyebrow: 'Sofrada', title: 'Her ayrıntıda hizmet.', body: 'Otel, restoran ve catering için tasarlanmış; bir restoran servisinin yoğunluğuna göre üretilmiş, estetiği koruyan melamin sofra.' }
-    : { eyebrow: 'At the table', title: 'Service in every detail.', body: 'Built for hotels, restaurants and catering — melamine tableware that keeps its look under the pace of a real service.' };
+    ? { eyebrow: 'Özel logolu üretim', title: 'Markanı sofrada görünür kıl.', body: 'Belediye, restoran, kafe ve promosyon projeleri için logolu melamin üretimi; baskı, renk ve ürün seçimi birlikte netleşir.', alt: 'Özel logolu melamin ürün örnekleri' }
+    : { eyebrow: 'Custom-logo production', title: 'Put your brand on the table.', body: 'Custom-logo melamine production for municipalities, restaurants, cafes and promotional projects, with product, colour and print details aligned together.', alt: 'Custom-logo melamine product examples' };
   return (
     <section className="editorial" data-anim="section" aria-label={t.title}>
       <img
-        src="./img/editorial-dining.webp"
-        alt=""
+        src="./img/promosyon-imaj.webp"
+        alt={t.alt}
         className="editorial__photo"
         loading="lazy"
         decoding="async"
-        width="1800"
-        height="800"
+        width="1122"
+        height="1402"
       />
       <div className="editorial__caption">
         <span className="eyebrow eyebrow--light">{t.eyebrow}</span>
@@ -3375,6 +3385,8 @@ const REFERENCE_LOGOS = [
   { id: 'nevada-coffee', no: '04', logo: './img/references/nevada-coffee.png', name: 'Nevada Coffee', tone: 'dark' },
   { id: 'era-koleji', no: '05', logo: './img/references/era-koleji.svg', name: 'Era Koleji' },
   { id: 'inci', no: '06', logo: './img/references/inci.png', name: 'İnci', size: 'compact' },
+  { id: 'fortes', no: '07', logo: './img/references/fortes.png', name: 'Fortes' },
+  { id: 'milli-egitim-akademisi-kayseri', no: '08', logo: './img/references/milli-egitim-akademisi-kayseri.png', name: 'Milli Eğitim Akademisi Kayseri' },
 ];
 
 function ReferenceLogo({ item, lang }) {
