@@ -1334,12 +1334,12 @@ body { overflow-x: hidden; }
 /* ---------- EDITORIAL SPREAD ---------- */
 .editorial {
   position: relative; width: 100%;
-  max-width: var(--page-max); margin: var(--space-8) auto 0;
+  max-width: 1120px; margin: var(--space-7) auto 0;
   padding: 0 var(--page-gutter);
 }
 .editorial__photo {
-  width: 100%; aspect-ratio: 9 / 4;
-  object-fit: cover; object-position: center 60%;
+  width: 100%; height: clamp(320px, 42vw, 520px);
+  object-fit: cover; object-position: center 48%;
   border-radius: 4px; display: block;
   box-shadow: var(--shadow-2);
   animation: editorial-kenburns 22s ease-in-out infinite alternate;
@@ -1374,7 +1374,7 @@ body { overflow-x: hidden; }
   margin: 0;
 }
 @media (max-width: 720px) {
-  .editorial__photo { aspect-ratio: 3 / 2; object-position: center 60%; }
+  .editorial__photo { height: 360px; object-position: center 52%; }
   .editorial__caption { left: calc(var(--page-gutter) + 16px); right: calc(var(--page-gutter) + 16px); bottom: 16px; padding: 18px 20px; max-width: none; }
   .editorial__body { font-size: 13.5px; }
 }
@@ -3170,35 +3170,25 @@ function Hero({ lang, navigate }) {
 
   const photos = [
     {
-      src: './img/imaj-akel0225.webp',
+      src: './img/akel-hero-1.webp',
       displayLabel: lang === 'tr' ? 'Akel Melamin - Kare seri sofra sunumu' : 'Akel Melamin - Square series table setting',
       displayTag:   lang === 'tr' ? 'KARE SERI - SOFRA'                     : 'SQUARE - TABLE',
       label: lang === 'tr' ? 'Akel Melamin · Restoran Sofra Serisi' : 'Akel Melamin · Restaurant Tabletop',
       tag:   lang === 'tr' ? 'SOFRA · SERVİS'                        : 'TABLE · SERVICE',
     },
     {
-      src: './img/imaj-akel0514.webp',
+      src: './img/akel-hero-2.webp',
       displayLabel: lang === 'tr' ? 'Akel Melamin - Renkli servis sunumu' : 'Akel Melamin - Color service presentation',
       displayTag:   lang === 'tr' ? 'RENKLI - SERVIS'                    : 'COLOR - SERVICE',
       label: lang === 'tr' ? 'Akel Melamin · Yemek Servisi'    : 'Akel Melamin · Dining Service',
       tag:   lang === 'tr' ? 'YEMEK · SUNUM'                   : 'DINING · PRESENTATION',
     },
     {
-      src: './img/imaj-akel0543.webp',
+      src: './img/akel-hero-3.webp',
       displayLabel: lang === 'tr' ? 'Akel Melamin - Siyah kare seri' : 'Akel Melamin - Black square series',
       displayTag:   lang === 'tr' ? 'SIYAH - KARE'                   : 'BLACK - SQUARE',
       label: lang === 'tr' ? 'Akel Melamin · Kase Serisi' : 'Akel Melamin · Bowl Series',
       tag:   lang === 'tr' ? 'KASE · KOLEKSİYON'          : 'BOWL · COLLECTION',
-    },
-    {
-      src: './img/imaj-akel0481.webp',
-      label: lang === 'tr' ? 'Akel Melamin · Desenli servis koleksiyonu' : 'Akel Melamin · Patterned service collection',
-      tag:   lang === 'tr' ? 'DESENLI · SUNUM'                          : 'PATTERN · SERVICE',
-    },
-    {
-      src: './img/imaj-akel0492.webp',
-      label: lang === 'tr' ? 'Akel Melamin · Modern renkli sunum' : 'Akel Melamin · Modern color presentation',
-      tag:   lang === 'tr' ? 'MODERN · SUNUM'                     : 'MODERN · PRESENTATION',
     },
   ];
   const [active, setActive] = React.useState(0);
@@ -3387,6 +3377,7 @@ const REFERENCE_LOGOS = [
   { id: 'inci', no: '06', logo: './img/references/inci.png', name: 'İnci', size: 'compact' },
   { id: 'fortes', no: '07', logo: './img/references/fortes.png', name: 'Fortes' },
   { id: 'milli-egitim-akademisi-kayseri', no: '08', logo: './img/references/milli-egitim-akademisi-kayseri.png', name: 'Milli Eğitim Akademisi Kayseri' },
+  { id: 'bulut-toptan', no: '09', logo: './img/references/bulut-toptan.png', name: 'Bulut Toptan' },
 ];
 
 function ReferenceLogo({ item, lang }) {
