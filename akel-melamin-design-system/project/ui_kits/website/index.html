@@ -3354,10 +3354,17 @@ window.EditorialSpread = EditorialSpread;
 
 
 /* ====== References.jsx ====== */
-const REFERENCE_LOGOS = Array.from({ length: 12 }, (_, index) => {
-  const no = String(index + 1).padStart(2, '0');
-  return { id: `reference-${no}`, no, logo: null, name: '' };
-});
+const REFERENCE_LOGOS = [
+  { id: 'esenler-belediyesi', no: '01', logo: './img/references/esenler-belediyesi.jpg', name: 'Esenler Belediyesi' },
+  { id: 'ak-parti-istanbul', no: '02', logo: './img/references/ak-parti-istanbul.png', name: 'AK Parti İstanbul' },
+  { id: 'bagcilar-belediyesi', no: '03', logo: './img/references/bagcilar-belediyesi.png', name: 'Bağcılar Belediyesi' },
+  { id: 'nevada-coffee', no: '04', logo: './img/references/nevada-coffee.png', name: 'Nevada Coffee' },
+  { id: 'era-koleji', no: '05', logo: './img/references/era-koleji.svg', name: 'Era Koleji' },
+  ...Array.from({ length: 7 }, (_, index) => {
+    const no = String(index + 6).padStart(2, '0');
+    return { id: `reference-${no}`, no, logo: null, name: '' };
+  }),
+];
 
 function ReferenceLogo({ item, lang }) {
   const label = item.name || (lang === 'tr' ? `Referans ${item.no}` : `Reference ${item.no}`);
@@ -3425,13 +3432,13 @@ function ReferencesPage({ lang }) {
         eyebrow: 'Referanslar',
         title: 'Referanslar',
         lead: 'Akel Melamin ürünlerinin yer aldığı kurumsal projeler, işletmeler ve iş birlikleri için ayrılmış logo vitrini.',
-        note: 'Firma logoları geldiğinde bu alan izinli gerçek görsellerle güncellenecek.',
+        note: 'Yeni referans logoları geldikçe bu vitrin aynı düzenle genişletilecek.',
       }
     : {
         eyebrow: 'References',
         title: 'References',
         lead: 'A logo showcase prepared for corporate projects, venues and collaborations that use Akel Melamin products.',
-        note: 'Once logo files are provided, these slots will be updated with approved real images.',
+        note: 'As new reference logos arrive, this showcase will keep expanding in the same layout.',
       };
   return (
     <section className="section" data-anim="section" aria-labelledby="references-page-title">
