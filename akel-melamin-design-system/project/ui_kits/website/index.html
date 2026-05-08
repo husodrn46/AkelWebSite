@@ -1447,10 +1447,22 @@ body { overflow-x: hidden; }
   pointer-events: none;
 }
 .reference-logo img {
-  max-width: 78%;
-  max-height: 52px;
+  max-width: 86%;
+  max-height: 66px;
   object-fit: contain;
   filter: grayscale(1);
+}
+.reference-logo--dark {
+  background:
+    linear-gradient(135deg, rgba(205,24,30,0.32) 0 28%, transparent 28%),
+    var(--ink);
+  border-color: rgba(17,17,16,0.32);
+}
+.reference-logo--dark::after {
+  border-color: rgba(247,246,243,0.22);
+}
+.reference-logo--dark img {
+  filter: none;
 }
 .reference-logo__slot {
   display: flex;
@@ -3358,7 +3370,7 @@ const REFERENCE_LOGOS = [
   { id: 'esenler-belediyesi', no: '01', logo: './img/references/esenler-belediyesi.jpg', name: 'Esenler Belediyesi' },
   { id: 'ak-parti-istanbul', no: '02', logo: './img/references/ak-parti-istanbul.png', name: 'AK Parti İstanbul' },
   { id: 'bagcilar-belediyesi', no: '03', logo: './img/references/bagcilar-belediyesi.png', name: 'Bağcılar Belediyesi' },
-  { id: 'nevada-coffee', no: '04', logo: './img/references/nevada-coffee.png', name: 'Nevada Coffee' },
+  { id: 'nevada-coffee', no: '04', logo: './img/references/nevada-coffee.png', name: 'Nevada Coffee', tone: 'dark' },
   { id: 'era-koleji', no: '05', logo: './img/references/era-koleji.svg', name: 'Era Koleji' },
   ...Array.from({ length: 7 }, (_, index) => {
     const no = String(index + 6).padStart(2, '0');
@@ -3370,7 +3382,7 @@ function ReferenceLogo({ item, lang }) {
   const label = item.name || (lang === 'tr' ? `Referans ${item.no}` : `Reference ${item.no}`);
   const aria = item.name || (lang === 'tr' ? `Referans logo alanı ${item.no}` : `Reference logo slot ${item.no}`);
   return (
-    <div className="reference-logo" aria-label={aria} data-anim="stagger-item">
+    <div className={`reference-logo ${item.tone === 'dark' ? 'reference-logo--dark' : ''}`} aria-label={aria} data-anim="stagger-item">
       {item.logo ? (
         <img src={item.logo} alt={label} loading="lazy" decoding="async" />
       ) : (
