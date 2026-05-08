@@ -1417,19 +1417,17 @@ body { overflow-x: hidden; }
 .reference-logo-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 10px;
+  gap: 12px;
 }
 .reference-logo {
   position: relative;
-  min-height: 96px;
-  padding: 18px 16px;
+  min-height: 118px;
+  padding: 24px 22px;
   display: grid;
   place-items: center;
   overflow: hidden;
   border: 1px solid var(--border);
-  background:
-    linear-gradient(135deg, rgba(205,24,30,0.08) 0 28%, transparent 28%),
-    var(--paper-soft);
+  background: rgba(251,250,247,0.82);
   color: var(--graphite);
 }
 .reference-logo::before {
@@ -1442,24 +1440,25 @@ body { overflow-x: hidden; }
 .reference-logo::after {
   content: "";
   position: absolute;
-  inset: 8px;
+  inset: 10px;
   border: 1px solid rgba(17,17,16,0.08);
   pointer-events: none;
 }
 .reference-logo img {
-  max-width: 86%;
-  max-height: 66px;
+  max-width: 92%;
+  max-height: 76px;
   object-fit: contain;
   filter: grayscale(1);
 }
+.reference-logo--compact img {
+  max-height: 86px;
+}
 .reference-logo--dark {
-  background:
-    linear-gradient(135deg, rgba(205,24,30,0.32) 0 28%, transparent 28%),
-    var(--ink);
-  border-color: rgba(17,17,16,0.32);
+  background: #151514;
+  border-color: rgba(17,17,16,0.28);
 }
 .reference-logo--dark::after {
-  border-color: rgba(247,246,243,0.22);
+  border-color: rgba(247,246,243,0.16);
 }
 .reference-logo--dark img {
   filter: none;
@@ -1494,13 +1493,14 @@ body { overflow-x: hidden; }
   max-width: 68ch;
 }
 .references-page__grid {
-  margin-top: var(--space-7);
+  margin-top: var(--space-6);
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
+  max-width: 980px;
 }
 .references-page__note {
-  margin-top: var(--space-6);
+  margin-top: var(--space-5);
   padding-top: 24px;
   border-top: 1px solid var(--border);
   color: var(--slate);
@@ -2449,7 +2449,7 @@ body { overflow-x: hidden; }
 
   /* References */
   .references-preview__panel { grid-template-columns: 1fr; gap: 24px; }
-  .references-page__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .references-page__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); max-width: none; }
 
   /* Categories — 2 columns on tablet */
   .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 12px; }
@@ -2528,6 +2528,8 @@ body { overflow-x: hidden; }
   .stats-strip__small { font-size: 10px; }
   .reference-logo-grid,
   .references-page__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .reference-logo { min-height: 104px; padding: 20px 16px; }
+  .reference-logo img { max-height: 68px; }
   .cat-card__label { font-size: 15px; }
   .product-card__ph { aspect-ratio: 1/1; }
   .about__facts { grid-template-columns: 1fr 1fr; }
@@ -2563,7 +2565,7 @@ body { overflow-x: hidden; }
   .catalog-page__action .btn { width: 100%; justify-content: center; }
   .reference-logo-grid,
   .references-page__grid { grid-template-columns: 1fr; }
-  .reference-logo { min-height: 84px; }
+  .reference-logo { min-height: 96px; }
   .products-toolbar { grid-template-columns: 1fr; gap: 12px; }
   .products-toolbar__meta { justify-content: flex-start; }
   .product-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px 12px; }
@@ -3372,18 +3374,14 @@ const REFERENCE_LOGOS = [
   { id: 'bagcilar-belediyesi', no: '03', logo: './img/references/bagcilar-belediyesi.png', name: 'Bağcılar Belediyesi' },
   { id: 'nevada-coffee', no: '04', logo: './img/references/nevada-coffee.png', name: 'Nevada Coffee', tone: 'dark' },
   { id: 'era-koleji', no: '05', logo: './img/references/era-koleji.svg', name: 'Era Koleji' },
-  { id: 'inci', no: '06', logo: './img/references/inci.png', name: 'İnci' },
-  ...Array.from({ length: 6 }, (_, index) => {
-    const no = String(index + 7).padStart(2, '0');
-    return { id: `reference-${no}`, no, logo: null, name: '' };
-  }),
+  { id: 'inci', no: '06', logo: './img/references/inci.png', name: 'İnci', size: 'compact' },
 ];
 
 function ReferenceLogo({ item, lang }) {
   const label = item.name || (lang === 'tr' ? `Referans ${item.no}` : `Reference ${item.no}`);
   const aria = item.name || (lang === 'tr' ? `Referans logo alanı ${item.no}` : `Reference logo slot ${item.no}`);
   return (
-    <div className={`reference-logo ${item.tone === 'dark' ? 'reference-logo--dark' : ''}`} aria-label={aria} data-anim="stagger-item">
+    <div className={`reference-logo ${item.tone === 'dark' ? 'reference-logo--dark' : ''} ${item.size === 'compact' ? 'reference-logo--compact' : ''}`} aria-label={aria} data-anim="stagger-item">
       {item.logo ? (
         <img src={item.logo} alt={label} loading="lazy" decoding="async" />
       ) : (
@@ -3445,13 +3443,13 @@ function ReferencesPage({ lang }) {
         eyebrow: 'Referanslar',
         title: 'Referanslar',
         lead: 'Akel Melamin ürünlerinin yer aldığı kurumsal projeler, işletmeler ve iş birlikleri için ayrılmış logo vitrini.',
-        note: 'Yeni referans logoları geldikçe bu vitrin aynı düzenle genişletilecek.',
+        note: 'Kurumsal projelerde tercih edilen Akel Melamin ürünlerinden seçili referanslar.',
       }
     : {
         eyebrow: 'References',
         title: 'References',
         lead: 'A logo showcase prepared for corporate projects, venues and collaborations that use Akel Melamin products.',
-        note: 'As new reference logos arrive, this showcase will keep expanding in the same layout.',
+        note: 'Selected references from corporate projects that choose Akel Melamin products.',
       };
   return (
     <section className="section" data-anim="section" aria-labelledby="references-page-title">
