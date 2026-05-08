@@ -3372,8 +3372,9 @@ const REFERENCE_LOGOS = [
   { id: 'bagcilar-belediyesi', no: '03', logo: './img/references/bagcilar-belediyesi.png', name: 'Bağcılar Belediyesi' },
   { id: 'nevada-coffee', no: '04', logo: './img/references/nevada-coffee.png', name: 'Nevada Coffee', tone: 'dark' },
   { id: 'era-koleji', no: '05', logo: './img/references/era-koleji.svg', name: 'Era Koleji' },
-  ...Array.from({ length: 7 }, (_, index) => {
-    const no = String(index + 6).padStart(2, '0');
+  { id: 'inci', no: '06', logo: './img/references/inci.png', name: 'İnci' },
+  ...Array.from({ length: 6 }, (_, index) => {
+    const no = String(index + 7).padStart(2, '0');
     return { id: `reference-${no}`, no, logo: null, name: '' };
   }),
 ];
