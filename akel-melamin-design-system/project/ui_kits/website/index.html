@@ -1241,7 +1241,7 @@ body { overflow-x: hidden; }
   position: absolute;
   left: 0; top: 0;
   width: 100%;
-  aspect-ratio: var(--cat-frame-aspect, 4 / 3);
+  aspect-ratio: 4 / 3;
   border: 1px solid rgba(205,24,30,0.22);
   border-radius: 4px;
   background:
@@ -1269,7 +1269,7 @@ body { overflow-x: hidden; }
     var(--shadow-3);
 }
 .cat-card__ph {
-  aspect-ratio: var(--cat-frame-aspect, 4 / 3); background: #fff;
+  aspect-ratio: 4 / 3; background: #fff;
   border: 1px solid rgba(17,17,16,0.2);
   border-radius: 4px; overflow: hidden;
   display: grid; place-items: center;
@@ -3547,13 +3547,6 @@ function Categories({ lang, navigate }) {
                     alt={`${c.label} — Akel Melamin`}
                     loading="lazy"
                     decoding="async"
-                    onLoad={(e) => {
-                      const img = e.currentTarget;
-                      const card = img.closest('.cat-card');
-                      if (card && img.naturalWidth && img.naturalHeight) {
-                        card.style.setProperty('--cat-frame-aspect', `${img.naturalWidth} / ${img.naturalHeight}`);
-                      }
-                    }}
                   />
                 : <div className={`cat-shape cat-shape--${c.shape}`}></div>}
             </div>
