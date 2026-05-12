@@ -3018,7 +3018,7 @@ function Header({ lang, setLang, currentPath, navigate }) {
       <div className="site-header__inner">
         <a
           className="site-header__brand"
-          href={pathToURL('home')}
+          href={pathToURL('home', undefined, lang)}
           onClick={(e) => { e.preventDefault(); goto('home'); }}
           title="Akel Melamin Plastik San.Tic.Ltd.Şti."
           aria-label="Akel Melamin — anasayfa"
@@ -3032,7 +3032,7 @@ function Header({ lang, setLang, currentPath, navigate }) {
           {nav.map((item) => (
             <a
               key={item.path}
-              href={pathToURL(item.path)}
+              href={pathToURL(item.path, undefined, lang)}
               className={currentPath === item.path ? 'is-active' : ''}
               onClick={(e) => { e.preventDefault(); goto(item.path); }}
               aria-current={currentPath === item.path ? 'page' : undefined}
@@ -3085,13 +3085,13 @@ function Header({ lang, setLang, currentPath, navigate }) {
               </button>
             </div>
             <nav className="mobile-drawer__nav" aria-label={lang === 'tr' ? 'Mobil menü' : 'Mobile menu'}>
-              <a href={pathToURL('home')} className={currentPath === 'home' ? 'is-active' : ''} onClick={(e) => { e.preventDefault(); goto('home'); }} aria-current={currentPath === 'home' ? 'page' : undefined}>
+              <a href={pathToURL('home', undefined, lang)} className={currentPath === 'home' ? 'is-active' : ''} onClick={(e) => { e.preventDefault(); goto('home'); }} aria-current={currentPath === 'home' ? 'page' : undefined}>
                 {lang === 'tr' ? 'Anasayfa' : 'Home'}
               </a>
               {nav.map((item) => (
                 <a
                   key={item.path}
-                  href={pathToURL(item.path)}
+                  href={pathToURL(item.path, undefined, lang)}
                   className={currentPath === item.path ? 'is-active' : ''}
                   onClick={(e) => { e.preventDefault(); goto(item.path); }}
                   aria-current={currentPath === item.path ? 'page' : undefined}
@@ -3438,7 +3438,7 @@ function ReferencesPreview({ lang, navigate }) {
           <p className="references-preview__body" data-anim="fade-up" data-anim-delay="80">{t.body}</p>
           <a
             className="btn btn--link"
-            href={pathToURL('references')}
+            href={pathToURL('references', undefined, lang)}
             onClick={(e) => { e.preventDefault(); navigate('references'); }}
             data-anim="fade-up"
             data-anim-delay="140"
@@ -3539,7 +3539,7 @@ function Categories({ lang, navigate }) {
           <span className="eyebrow" data-anim="fade-up">{t.eyebrow}</span>
           <h2 className="section__title"><span data-split-text>{t.heading}</span></h2>
         </div>
-        <a className="btn btn--link" href={pathToURL('products')} onClick={(e) => { e.preventDefault(); navigate('products'); }} data-anim="fade-up" data-anim-delay="120">
+        <a className="btn btn--link" href={pathToURL('products', undefined, lang)} onClick={(e) => { e.preventDefault(); navigate('products'); }} data-anim="fade-up" data-anim-delay="120">
           {t.cta} →
         </a>
       </div>
@@ -3547,7 +3547,7 @@ function Categories({ lang, navigate }) {
         {cats.filter(c => c.key !== 'logolu').map((c, i) => (
           <a
             key={c.key}
-            href={pathToURL('products', { cat: c.key })}
+            href={pathToURL('products', { cat: c.key }, lang)}
             className={`cat-card cat-card--${c.key} tilt`}
             onClick={(e) => { e.preventDefault(); navigate('products', { cat: c.key }); }}
             data-anim="stagger-item"
@@ -4990,7 +4990,7 @@ function Footer({ lang, navigate }) {
                       >{label}</a>
                     ) : (
                       <a
-                        href={pathToURL(pathOrHref)}
+                        href={pathToURL(pathOrHref, undefined, lang)}
                         onClick={(e) => { e.preventDefault(); navigate(pathOrHref); }}
                       >{label}</a>
                     )}
@@ -5032,14 +5032,62 @@ window.Footer = Footer;
 // Static Assets (wrangler.toml: not_found_handling = "single-page-application")
 // rewrites unknown routes back to index.html so deep links load.
 const ROUTES = {
-  home:     '/',
-  products: '/urunler',
-  references: '/referanslar',
-  about:    '/hakkimizda',
-  contact:  '/iletisim',
-  catalog:  '/katalog',
+  tr: {
+    home:     '/',
+    products: '/urunler',
+    references: '/referanslar',
+    about:    '/hakkimizda',
+    contact:  '/iletisim',
+    catalog:  '/katalog',
+  },
+  en: {
+    home:     '/en',
+    products: '/en/products',
+    references: '/en/references',
+    about:    '/en/about',
+    contact:  '/en/contact',
+    catalog:  '/en/catalog',
+  },
 };
-const URL_TO_PATH = { '/': 'home', '/urunler': 'products', '/referanslar': 'references', '/hakkimizda': 'about', '/iletisim': 'contact', '/katalog': 'catalog' };
+const URL_TO_PATH = {
+  tr: { '/': 'home', '/urunler': 'products', '/referanslar': 'references', '/hakkimizda': 'about', '/iletisim': 'contact', '/katalog': 'catalog' },
+  en: { '/': 'home', '/products': 'products', '/references': 'references', '/about': 'about', '/contact': 'contact', '/catalog': 'catalog' },
+};
+const CATEGORY_SLUGS = {
+  tr: {
+    kare: 'kare-seri',
+    'kare-siyah': 'kare-seri-siyah',
+    international: 'international-seri',
+    masaustu: 'masaustu-aksesuarlari',
+    acikbufe: 'acik-bufe-servis',
+    elegant: 'elegant-seri',
+    kids: 'cocuk-tabaklari',
+    bolmeli: 'bolmeli-tabaklar',
+    tepsiler: 'tepsiler',
+    eco: 'eco-seri',
+    diplomat: 'diplomat-kayik-seri',
+    gunluk: 'gunluk-desenli-seri',
+  },
+  en: {
+    kare: 'square-series',
+    'kare-siyah': 'square-series-black',
+    international: 'international-series',
+    masaustu: 'tabletop-accessories',
+    acikbufe: 'buffet-serving',
+    elegant: 'elegant-series',
+    kids: 'kids-plates',
+    bolmeli: 'compartment-plates',
+    tepsiler: 'trays',
+    eco: 'eco-series',
+    diplomat: 'diplomat-oval-serving-range',
+    gunluk: 'everyday-pattern-series',
+  },
+};
+const CATEGORY_BY_SLUG = Object.fromEntries(
+  Object.entries(CATEGORY_SLUGS).flatMap(([lang, map]) =>
+    Object.entries(map).map(([key, slug]) => [`${lang}:${slug}`, key])
+  )
+);
 const BASE = (() => {
   // Dev server serves from /ui_kits/website/; strip that prefix.
   const p = window.location.pathname;
@@ -5051,23 +5099,41 @@ function parseURL() {
   let p = window.location.pathname;
   if (BASE && p.startsWith(BASE)) p = p.slice(BASE.length) || '/';
   p = p.replace(/\/+$/, '') || '/';
+  let lang = p === '/en' || p.startsWith('/en/') ? 'en' : 'tr';
+  if (lang === 'en') p = p.slice(3) || '/';
   const qs = new URLSearchParams(window.location.search);
   const cat = qs.get('cat') || null;
-  if (p.startsWith('/urunler/')) return { path: 'product', slug: decodeURIComponent(p.slice('/urunler/'.length)) };
-  const base = { path: URL_TO_PATH[p] || 'home' };
+  const productBase = lang === 'tr' ? '/urunler/' : '/products/';
+  if (p.startsWith(productBase)) {
+    const slug = decodeURIComponent(p.slice(productBase.length));
+    const categoryKey = CATEGORY_BY_SLUG[`${lang}:${slug}`];
+    if (categoryKey) return { path: 'products', cat: categoryKey, lang };
+    return { path: 'product', slug, lang };
+  }
+  const base = { path: URL_TO_PATH[lang][p] || 'home', lang };
   if (base.path === 'products' && cat) base.cat = cat;
   return base;
 }
-function pathToURL(path, opts) {
-  if (path === 'product' && typeof opts === 'string') return BASE + '/urunler/' + opts;
-  if (path === 'products' && opts && typeof opts === 'object' && opts.cat) return BASE + '/urunler?cat=' + encodeURIComponent(opts.cat);
-  return BASE + (ROUTES[path] || '/');
+function currentURLLang() {
+  const p = window.location.pathname;
+  if (p === `${BASE}/en` || p.startsWith(`${BASE}/en/`) || p === '/en' || p.startsWith('/en/')) return 'en';
+  return document.documentElement.lang === 'en' ? 'en' : 'tr';
+}
+function categoryURL(cat, lang) {
+  const slug = CATEGORY_SLUGS[lang] && CATEGORY_SLUGS[lang][cat];
+  return slug ? `${ROUTES[lang].products}/${slug}` : ROUTES[lang].products;
+}
+function pathToURL(path, opts, lang) {
+  const targetLang = lang || currentURLLang();
+  if (path === 'product' && typeof opts === 'string') return BASE + `${ROUTES[targetLang].products}/${opts}`;
+  if (path === 'products' && opts && typeof opts === 'object' && opts.cat) return BASE + categoryURL(opts.cat, targetLang);
+  return BASE + (ROUTES[targetLang][path] || ROUTES[targetLang].home);
 }
 function productSlug(p) { return p.foto_dosya_adi || String(p.sku).toLowerCase(); }
 
 function App() {
-  const [lang, setLang] = React.useState(() => localStorage.getItem('akel-lang') || 'tr');
   const initial = React.useMemo(parseURL, []);
+  const [lang, setLang] = React.useState(() => initial.lang || localStorage.getItem('akel-lang') || 'tr');
   const [path, setPath] = React.useState(initial.path);
   const [product, setProduct] = React.useState(null);
   const [pendingSlug, setPendingSlug] = React.useState(initial.slug || null);
@@ -5081,15 +5147,16 @@ function App() {
       fetch('./data/products.json').then(r => r.json()).then(d => {
         const hit = d.products.find(p => productSlug(p) === pendingSlug);
         if (hit) { setProduct(hit); setPendingSlug(null); }
-        else { setPath('products'); setPendingSlug(null); history.replaceState(null, '', BASE + ROUTES.products); }
+        else { setPath('products'); setPendingSlug(null); history.replaceState(null, '', pathToURL('products', undefined, lang)); }
       }).catch(() => { setPath('home'); setPendingSlug(null); });
     }
-  }, [path, pendingSlug, product]);
+  }, [path, pendingSlug, product, lang]);
 
   // Browser back/forward
   React.useEffect(() => {
     const onPop = () => {
       const s = parseURL();
+      setLang(s.lang || 'tr');
       setPath(s.path);
       setCatHint(s.cat || null);
       if (s.slug) { setPendingSlug(s.slug); setProduct(null); }
@@ -5105,20 +5172,27 @@ function App() {
     setPath(p); setProduct(null); setPendingSlug(null);
     const cat = (p === 'products' && opts && typeof opts === 'object') ? (opts.cat || null) : null;
     setCatHint(cat);
-    pushURL(pathToURL(p, cat ? { cat } : undefined));
+    pushURL(pathToURL(p, cat ? { cat } : undefined, lang));
     scrollTop();
   };
   const openProduct = (p) => {
     setProduct(p); setPath('product'); setPendingSlug(null);
-    pushURL(pathToURL('product', productSlug(p)));
+    pushURL(pathToURL('product', productSlug(p), lang));
     scrollTop();
   };
   // Lets ProductGrid update the URL when user clicks a filter chip, without
   // going through a full navigate() that would reset state.
   const replaceCat = (cat) => {
     setCatHint(cat);
-    const url = pathToURL('products', cat ? { cat } : undefined);
+    const url = pathToURL('products', cat ? { cat } : undefined, lang);
     if (window.location.pathname + window.location.search !== url) history.replaceState(null, '', url);
+  };
+  const switchLang = (nextLang) => {
+    setLang(nextLang);
+    const routeOpts = path === 'product'
+      ? (product ? productSlug(product) : pendingSlug)
+      : (path === 'products' && catHint ? { cat: catHint } : undefined);
+    pushURL(pathToURL(path, routeOpts, nextLang));
   };
 
   React.useEffect(() => {
@@ -5130,7 +5204,7 @@ function App() {
       <a href="#main" className="skip-link" onClick={(e) => { e.preventDefault(); const m = document.getElementById('main'); if (m) m.focus(); }}>
         {lang === 'tr' ? 'İçeriğe geç' : 'Skip to content'}
       </a>
-      <Header lang={lang} setLang={setLang} currentPath={path} navigate={navigate} />
+      <Header lang={lang} setLang={switchLang} currentPath={path} navigate={navigate} />
       <main id="main" tabIndex="-1" key={path} className="page-fade">
       {path === 'home' && <>
         <Hero lang={lang} navigate={navigate} />
