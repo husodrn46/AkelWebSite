@@ -1373,6 +1373,16 @@ body { overflow-x: hidden; }
   color: rgba(247,246,243,0.86);
   margin: 0;
 }
+.editorial__cta {
+  margin-top: 16px;
+  color: var(--paper);
+  border-color: rgba(247,246,243,0.42);
+  background: rgba(247,246,243,0.08);
+}
+.editorial__cta:hover {
+  color: var(--paper);
+  background: rgba(247,246,243,0.16);
+}
 @media (max-width: 720px) {
   .editorial__photo { height: 360px; object-position: center 52%; }
   .editorial__caption { left: calc(var(--page-gutter) + 16px); right: calc(var(--page-gutter) + 16px); bottom: 16px; padding: 18px 20px; max-width: none; }
@@ -3341,10 +3351,10 @@ window.MarqueeBand = MarqueeBand;
 // Full-bleed tabletop photo as a breather between Categories and the
 // production band. Two-line caption overlay, bottom-left, so the frame
 // never reads as a blank poster.
-function EditorialSpread({ lang }) {
+function EditorialSpread({ lang, navigate }) {
   const t = lang === 'tr'
-    ? { eyebrow: 'Özel logolu üretim', title: 'Markanı sofrada görünür kıl.', body: 'Belediye, restoran, kafe ve promosyon projeleri için logolu melamin üretimi; baskı, renk ve ürün seçimi birlikte netleşir.', alt: 'Özel logolu melamin ürün örnekleri' }
-    : { eyebrow: 'Custom-logo production', title: 'Put your brand on the table.', body: 'Custom-logo melamine production for municipalities, restaurants, cafes and promotional projects, with product, colour and print details aligned together.', alt: 'Custom-logo melamine product examples' };
+    ? { eyebrow: 'Özel logolu üretim', title: 'Markanı sofrada görünür kıl.', body: 'Belediye, restoran, kafe ve promosyon projeleri için logolu melamin üretimi; baskı, renk ve ürün seçimi birlikte netleşir.', cta: 'Daha fazla gör', alt: 'Özel logolu melamin ürün örnekleri' }
+    : { eyebrow: 'Custom-logo production', title: 'Put your brand on the table.', body: 'Custom-logo melamine production for municipalities, restaurants, cafes and promotional projects, with product, colour and print details aligned together.', cta: 'See more', alt: 'Custom-logo melamine product examples' };
   return (
     <section className="editorial" data-anim="section" aria-label={t.title}>
       <img
@@ -3360,6 +3370,9 @@ function EditorialSpread({ lang }) {
         <span className="eyebrow eyebrow--light">{t.eyebrow}</span>
         <h2 className="editorial__title">{t.title}</h2>
         <p className="editorial__body">{t.body}</p>
+        <button type="button" className="btn btn--ghost btn--sm editorial__cta" onClick={() => navigate('contact')}>
+          {t.cta}
+        </button>
       </div>
     </section>
   );
@@ -5124,7 +5137,7 @@ function App() {
         <StatsRow lang={lang} />
         <Categories lang={lang} navigate={navigate} />
         <ReferencesPreview lang={lang} navigate={navigate} />
-        <EditorialSpread lang={lang} />
+        <EditorialSpread lang={lang} navigate={navigate} />
         <CatalogBand lang={lang} navigate={navigate} />
       </>}
       {path === 'products' && <ProductGrid lang={lang} navigate={navigate} openProduct={openProduct} initialCat={catHint} onCatChange={replaceCat} />}
