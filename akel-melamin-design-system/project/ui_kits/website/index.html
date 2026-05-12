@@ -1949,43 +1949,44 @@ body { overflow-x: hidden; }
 .plate--kids   { background: var(--red); border-color: var(--red-dark); }
 
 /* ---------- PRODUCT DETAIL ---------- */
-.pd { display: grid; grid-template-columns: 1.3fr 1fr; gap: 64px; margin-top: 24px; }
-.pd__hero {
-  aspect-ratio: var(--pd-frame-aspect, 1 / 1); min-height: 520px;
-  background: #fff;
-  border: 1px solid rgba(17,17,16,0.22);
-  border-radius: 4px; display: grid; place-items: center;
-  box-shadow:
-    inset 0 0 0 10px rgba(255,255,255,0.72),
-    var(--shadow-1);
-  position: relative; overflow: hidden;
+.pd-shell { margin-top: 24px; }
+.pd-back { margin-bottom: 24px; }
+.pd {
+  display: grid;
+  grid-template-columns: minmax(0, 1.18fr) minmax(360px, 0.82fr);
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
 }
-.pd__hero::before,
-.pd__hero::after {
-  content: "";
-  position: absolute;
-  pointer-events: none;
+.pd__gallery { min-width: 0; }
+.pd__hero {
+  aspect-ratio: var(--pd-frame-aspect, 1 / 1);
+  min-height: clamp(420px, 58vw, 700px);
+  background:
+    radial-gradient(circle at 50% 45%, rgba(255,255,255,0.98) 0 31%, rgba(242,240,235,0.92) 32% 100%);
+  border: 1px solid rgba(17,17,16,0.12);
+  border-radius: 6px;
+  display: grid;
+  place-items: center;
+  box-shadow: var(--shadow-2);
+  position: relative;
+  overflow: hidden;
 }
 .pd__hero::before {
-  inset: 12px;
-  background:
-    linear-gradient(var(--ink), var(--ink)) left top / 64px 1px no-repeat,
-    linear-gradient(var(--ink), var(--ink)) left top / 1px 64px no-repeat,
-    linear-gradient(var(--ink), var(--ink)) right bottom / 64px 1px no-repeat,
-    linear-gradient(var(--ink), var(--ink)) right bottom / 1px 64px no-repeat;
-  opacity: 0.72;
+  content: "";
+  position: absolute;
+  inset: 24px;
+  border: 1px solid rgba(17,17,16,0.08);
+  border-radius: 4px;
+  pointer-events: none;
   z-index: 3;
 }
-.pd__hero::after {
-  inset: 16px;
-  background:
-    linear-gradient(var(--red), var(--red)) left top / 46px 4px no-repeat,
-    linear-gradient(var(--red), var(--red)) left top / 4px 46px no-repeat,
-    linear-gradient(var(--red), var(--red)) right bottom / 46px 4px no-repeat,
-    linear-gradient(var(--red), var(--red)) right bottom / 4px 46px no-repeat;
+.pd__caption {
+  position: absolute;
+  bottom: 18px;
+  left: 22px;
+  color: rgba(17,17,16,0.5);
   z-index: 4;
 }
-.pd__caption { position: absolute; bottom: 16px; left: 20px; color: var(--slate); z-index: 4; }
 .pd__photo { position: relative; z-index: 2; }
 .pd__placeholder {
   position: absolute; inset: 0;
@@ -2004,9 +2005,9 @@ body { overflow-x: hidden; }
   color: var(--slate); opacity: 0.72;
 }
 .pd__hero.is-photo-loaded .pd__placeholder { display: none; }
-.pd__thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 8px; }
+.pd__thumbs { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin-top: 14px; }
 .pd__thumb {
-  aspect-ratio: 1; background: var(--bone); border-radius: 2px;
+  aspect-ratio: 1; background: var(--bone); border-radius: 4px;
   border: 1px solid var(--border); cursor: pointer;
 }
 .pd__thumb--0 { background: var(--paper-soft); }
@@ -2018,7 +2019,7 @@ body { overflow-x: hidden; }
 .pd__thumb--photo.is-on { outline: 2px solid var(--ink); outline-offset: 2px; border-color: var(--ink); }
 .pd__photo {
   width: 100%; height: 100%; object-fit: contain;
-  padding: 6%;
+  padding: clamp(18px, 4vw, 48px);
   transition: opacity 240ms var(--ease-out);
 }
 .pd__hero--imaj,
@@ -2029,7 +2030,7 @@ body { overflow-x: hidden; }
   width: 100%;
   height: 100%;
   object-fit: contain;
-  padding: 0;
+  padding: clamp(12px, 2.5vw, 28px);
 }
 .pd__nav {
   position: absolute; bottom: 16px; right: 16px;
@@ -2042,70 +2043,75 @@ body { overflow-x: hidden; }
   transition: background 200ms, width 300ms;
 }
 .pd__nav button.is-on { background: var(--red); width: 36px; }
-.pd__thumbs--gallery { grid-template-columns: repeat(auto-fit, minmax(80px, 1fr)); max-width: 220px; }
-.pd__summary {
-  display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 1px; margin-top: 12px;
-  background: var(--border); border: 1px solid var(--border);
+.pd__thumbs--gallery { grid-template-columns: repeat(auto-fit, minmax(92px, 1fr)); max-width: 260px; }
+.pd__quick {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1px;
+  margin: 28px 0;
+  background: var(--border);
+  border: 1px solid var(--border);
 }
-.pd__summary-item {
-  padding: 16px 14px;
-  background: rgba(247,246,243,0.94);
-  display: flex; flex-direction: column; gap: 8px;
+.pd__quick-item {
+  min-height: 94px;
+  padding: 18px 16px;
+  background: rgba(251,250,247,0.96);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 14px;
 }
-.pd__summary-item .meta { color: var(--stone); }
-.pd__summary-item strong {
-  font-family: var(--font-display); font-weight: 700;
-  font-size: 15px; line-height: 1.3;
+.pd__quick-item .meta { color: var(--stone); }
+.pd__quick-item strong {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(1rem, 1.5vw, 1.18rem);
+  line-height: 1.22;
   color: var(--ink);
   letter-spacing: -0.012em;
 }
 .swatch--btn { padding: 0; cursor: pointer; }
 .swatch--btn.is-on { outline: 1.5px solid var(--ink); outline-offset: 3px; }
-.pd__title { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.75rem, 3vw, 2.5rem); letter-spacing: -0.025em; color: var(--ink); line-height: 1.05; margin: 10px 0 14px; text-wrap: balance; }
-.pd__spec { color: rgba(17,17,16,0.68); margin: 0 0 24px; font-size: 16px; line-height: 1.65; }
+.pd__title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: clamp(2.35rem, 5.2vw, 5rem);
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  line-height: 0.98;
+  margin: 12px 0 18px;
+  text-wrap: balance;
+}
+.pd__spec {
+  color: rgba(17,17,16,0.7);
+  margin: 0;
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  line-height: 1.65;
+  max-width: 50ch;
+}
 .pd__info { align-self: start; position: sticky; top: 104px; }
-.pd__cta-card {
-  padding: 22px;
-  margin-bottom: 24px;
-  border: 1px solid rgba(17,17,16,0.1);
-  background: linear-gradient(180deg, rgba(247,246,243,0.98) 0%, rgba(242,239,233,0.98) 100%);
-  box-shadow: var(--shadow-2);
-  border-radius: 4px;
+.pd__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 22px 0 0;
+  margin-top: 4px;
+  border-top: 1px solid var(--border);
 }
-.pd__cta-title {
-  font-family: var(--font-display); font-weight: 700;
-  font-size: clamp(1.15rem, 2vw, 1.4rem);
-  letter-spacing: -0.02em; color: var(--ink);
-  line-height: 1.12; margin: 8px 0 10px;
-}
-.pd__cta-body {
-  font-size: 14px; line-height: 1.65;
-  color: rgba(17,17,16,0.68);
-  margin: 0 0 16px;
-}
-.pd__cta-actions {
-  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
-  margin-bottom: 16px;
-}
-.pd__cta-actions .btn { width: 100%; justify-content: center; }
-.pd__cta-direct {
-  display: flex; flex-direction: column; gap: 10px;
-  padding-top: 16px;
-  border-top: 1px solid rgba(17,17,16,0.08);
-}
-.pd__cta-link {
-  display: inline-flex; align-items: center; gap: 10px;
-  color: var(--graphite); text-decoration: none;
-  font-size: 14px; font-weight: 600;
-}
-.pd__cta-link:hover { color: var(--red); }
-.pd__cta-link svg { width: 16px; height: 16px; stroke-width: 1.75; }
+.pd__actions .btn { min-width: 148px; justify-content: center; }
 .pd__colors { display: flex; gap: 16px; align-items: center; padding: 20px 0; border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); margin-bottom: 28px; }
 .pd__swatches { display: flex; gap: 8px; }
 .swatch { width: 22px; height: 22px; border-radius: 50%; border: 1px solid var(--border); display: inline-block; cursor: pointer; }
-.spec-block { margin-bottom: 28px; }
-.spec-block > .meta { display: block; margin-bottom: 10px; }
+.pd__details {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 32px 48px;
+  margin-top: var(--space-7);
+  padding-top: var(--space-7);
+  border-top: 1px solid var(--border);
+}
+.spec-block { margin-bottom: 0; }
+.spec-block > .meta { display: block; margin-bottom: 10px; color: var(--ink); }
 .spec-table { width: 100%; border-collapse: collapse; font-size: 13.5px; font-variant-numeric: tabular-nums; }
 .spec-table td { padding: 10px 0; border-bottom: 1px solid var(--border); }
 .spec-table td.k { color: rgba(17,17,16,0.72); width: 52%; }
@@ -2497,10 +2503,10 @@ body { overflow-x: hidden; }
   /* Product detail */
   .pd { grid-template-columns: 1fr; gap: 32px; }
   .pd__info { position: static; }
-  .pd__title { font-size: clamp(1.5rem, 6vw, 2rem); }
+  .pd__title { font-size: clamp(2rem, 8vw, 3.25rem); }
   .pd__hero { min-height: 0; }
-  .pd__summary { grid-template-columns: 1fr 1fr 1fr; }
-  .pd__cta-actions { grid-template-columns: 1fr; }
+  .pd__quick { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .pd__details { grid-template-columns: 1fr; }
 
   /* About */
   .about__facts { grid-template-columns: repeat(2, 1fr); }
@@ -2597,7 +2603,8 @@ body { overflow-x: hidden; }
   .product-card__code { top: 10px; right: 10px; font-size: 9.5px; padding: 3px 7px; }
   .about__market-grid { grid-template-columns: 1fr; }
   .about__facts { grid-template-columns: 1fr 1fr; }
-  .pd__summary { grid-template-columns: 1fr; }
+  .pd__quick { grid-template-columns: 1fr; }
+  .pd__actions .btn { width: 100%; }
 
   .site-footer__top { grid-template-columns: 1fr; gap: 28px; }
   .site-footer__brand { grid-column: span 1; }
@@ -4118,16 +4125,13 @@ function ProductDetail({ lang, product, onBack, navigate }) {
         plainImage: 'Sade ürün görseli',
         color: 'Renk', useArea: 'Kullanım alanı', logo: 'Özel logolu',
         yes: 'Evet', no: 'Hayır',
-        ctaEyebrow: 'Teklif & numune',
-        ctaTitle: 'Bu ürünü teklif dosyana hızlıca ekleyelim.',
-        ctaBody: (sku) => `${sku ? sku + ' SKU' : 'Bu ürün'} için teklif, numune ve koli bilgilerini paylaşalım. Gerekirse yakın ölçüleri ve özel logolu uygunluğu da birlikte netleştiririz.`,
-        ctaPrimary: 'Teklif / numune iste',
+        ctaPrimary: 'Teklif al',
         ctaSecondary: 'Katalog PDF',
-        callNow: 'Telefon ile ulaş',
-        showroom: 'Showroom',
         carton: 'Kolileme',
         pieces: 'adet / koli',
         onRequest: 'Talep üzerine',
+        dimensions: 'Boyut',
+        barcode: 'Barkod',
         matList: ['Melaminden üretilmiştir', 'ISO 9001:2015 kalite yönetimi', 'ISO 22000:2018 gıda güvenliği', 'Intertek test raporlu', 'FQC kalite kontrol'],
       }
     : {
@@ -4139,16 +4143,13 @@ function ProductDetail({ lang, product, onBack, navigate }) {
         plainImage: 'Plain product photo',
         color: 'Color', useArea: 'Use case', logo: 'Custom logo',
         yes: 'Yes', no: 'No',
-        ctaEyebrow: 'Quote & samples',
-        ctaTitle: 'Add this product to your quote flow.',
-        ctaBody: (sku) => `We can share pricing, sample details and carton information for ${sku ? 'SKU ' + sku : 'this product'}. We can also align on nearby sizes and custom-logo suitability if needed.`,
-        ctaPrimary: 'Request quote / sample',
+        ctaPrimary: 'Get a quote',
         ctaSecondary: 'Catalog PDF',
-        callNow: 'Call now',
-        showroom: 'Showroom',
         carton: 'Carton pack',
         pieces: 'pcs / carton',
         onRequest: 'On request',
+        dimensions: 'Size',
+        barcode: 'Barcode',
         matList: ['Made from melamine', 'ISO 9001:2015 quality management', 'ISO 22000:2018 food safety', 'Intertek-tested', 'FQC quality control'],
       };
 
@@ -4195,11 +4196,11 @@ function ProductDetail({ lang, product, onBack, navigate }) {
     .slice(0, 3)
     .join(' · ');
   const summary = [
+    { k: t.dimensions, v: dimVal || product.boyut || '—' },
     { k: 'SKU', v: product.sku || '—' },
     { k: t.carton, v: product.koli_adet ? `${product.koli_adet} ${t.pieces}` : t.onRequest },
-    { k: t.useArea, v: compactUse || (lang === 'tr' ? 'Profesyonel servis' : 'Professional service') },
+    { k: t.color, v: colorLabel || '—' },
   ];
-  const mailHref = `mailto:info@akelmelamin.com?subject=${encodeURIComponent(`Akel Melamin · ${productName}${product.sku ? ` (${product.sku})` : ''}`)}`;
 
   // Gallery: selected imaj shot and original plain product shot.
   const gallery = [
@@ -4219,8 +4220,8 @@ function ProductDetail({ lang, product, onBack, navigate }) {
   };
 
   return (
-    <section className="section" data-anim="section">
-      <button type="button" className="btn btn--link" onClick={onBack}>{t.back}</button>
+    <section className="section pd-shell" data-anim="section">
+      <button type="button" className="btn btn--link pd-back" onClick={onBack}>{t.back}</button>
 
       <div className="pd">
         <div className="pd__gallery" data-anim="fade-up">
@@ -4296,9 +4297,9 @@ function ProductDetail({ lang, product, onBack, navigate }) {
               ))}
             </div>
           )}
-          <div className="pd__summary">
+          <div className="pd__quick" aria-label={lang === 'tr' ? 'Ürün özeti' : 'Product summary'}>
             {summary.map((item) => (
-              <div key={item.k} className="pd__summary-item">
+              <div key={item.k} className="pd__quick-item">
                 <span className="meta">{item.k}</span>
                 <strong>{item.v}</strong>
               </div>
@@ -4313,36 +4314,28 @@ function ProductDetail({ lang, product, onBack, navigate }) {
             <p className="pd__spec lead">{productDesc}</p>
           )}
 
-          <div className="pd__cta-card">
-            <span className="meta">{t.ctaEyebrow}</span>
-            <h2 className="pd__cta-title">{t.ctaTitle}</h2>
-            <p className="pd__cta-body">{t.ctaBody(product.sku)}</p>
-            <div className="pd__cta-actions">
-              <button type="button" className="btn btn--primary magnetic" onClick={() => navigate('contact')}>
-                {t.ctaPrimary}
-              </button>
-              <button type="button" className="btn btn--ghost" onClick={() => navigate('catalog')}>
-                {t.ctaSecondary}
-              </button>
-            </div>
-            <div className="pd__cta-direct">
-              <a className="pd__cta-link" href="tel:+905074253446"><i data-lucide="phone"></i> {t.callNow}: +90 507 425 34 46</a>
-              <a className="pd__cta-link" href={mailHref}><i data-lucide="mail"></i> info@akelmelamin.com</a>
-              <a className="pd__cta-link" href="https://maps.google.com/?q=İSTOÇ+10.Ada+No:9/11+Bağcılar+İstanbul" target="_blank" rel="noopener"><i data-lucide="map-pin"></i> {t.showroom}: İSTOÇ 10. Ada No:9/11</a>
-            </div>
+          <div className="pd__actions">
+            <button type="button" className="btn btn--primary magnetic" onClick={() => navigate('contact')}>
+              {t.ctaPrimary}
+            </button>
+            <button type="button" className="btn btn--ghost" onClick={() => navigate('catalog')}>
+              {t.ctaSecondary}
+            </button>
           </div>
+        </div>
+      </div>
 
-          <SpecBlock title={t.specs} rows={rows} />
-          <SpecBlock title={t.pack} rows={pack} />
-          <ProductCareInfo lang={lang} variant="detail" />
-          <div className="pd__mat">
-            <span className="meta">{t.materials}</span>
-            <ul className="pd__matlist">
-              {t.matList.map((m, i) => (
-                <li key={i}><i data-lucide="check"></i> {m}</li>
-              ))}
-            </ul>
-          </div>
+      <div className="pd__details">
+        <SpecBlock title={t.specs} rows={rows} />
+        <SpecBlock title={t.pack} rows={pack} />
+        <ProductCareInfo lang={lang} variant="detail" />
+        <div className="pd__mat">
+          <span className="meta">{t.materials}</span>
+          <ul className="pd__matlist">
+            {t.matList.map((m, i) => (
+              <li key={i}><i data-lucide="check"></i> {m}</li>
+            ))}
+          </ul>
         </div>
       </div>
     </section>
